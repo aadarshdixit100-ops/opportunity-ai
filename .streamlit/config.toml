@@ -1,0 +1,26 @@
+# OpportunityAI — Streamlit theme.
+#
+# WHY THIS FILE EXISTS (defect fix):
+# Streamlit's theme.base defaults to "auto", which follows the viewer's OS/browser
+# colour preference. On a machine set to dark, Streamlit applies its DARK theme —
+# light text (#FAFAFA) on dark surfaces — while app.py paints its own LIGHT
+# backgrounds. The result was light-on-light text: invisible tab labels, sidebar
+# labels and captions. Pinning the base to "light" removes the conflict at the
+# source instead of trying to out-specify the framework in CSS.
+#
+# Palette: deep navy text on a soft neutral background, indigo/violet accent.
+
+[theme]
+base = "light"
+primaryColor = "#2563eb"            # indigo/blue accent
+backgroundColor = "#f5f7fc"         # soft neutral
+secondaryBackgroundColor = "#ffffff" # cards / sidebar
+textColor = "#0b1220"               # deep navy — primary text
+font = "sans serif"
+
+[client]
+# Keep the viewer's browser from choosing a dark rendering of the page chrome.
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false

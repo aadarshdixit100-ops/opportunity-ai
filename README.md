@@ -10,6 +10,27 @@ predict your future, it helps you decide what to do next.
 
 ---
 
+## 0. Two ways to run this
+
+| | Browser website | Python app |
+|---|---|---|
+| **Entry point** | `index.html` — double-click it | `streamlit run app.py` |
+| **Needs** | nothing (no Python, no server, no install) | Python 3.10+ and `pip install -r requirements.txt` |
+| **Hosting** | any static host (GitHub Pages, Netlify, Cloudflare Pages) | needs a Python host |
+| **Engine** | the same engine, ported to JavaScript | Python |
+| **AI features** | off — deterministic engine only | Sarvam AI explanations, `/translate`, PDF resume parsing |
+| **Storage** | browser `localStorage` | SQLite |
+
+The website is a single self-contained file: no external requests, no dependencies, works offline.
+Its engine is a faithful port of `recommender.py` — a Node cross-check (`web/crosscheck.js`)
+compares every fit score, eligibility verdict, timing status, radar pane, ranked action and
+evidence label against the Python output, and currently reports **max delta 0.0000 across all 21
+records with zero mismatches**. Rebuild it after editing the sources with `python3 web/build.py`.
+
+See `WEBSITE.md` for local use and deploy steps.
+
+---
+
 ## 1. The three concerns are kept separate
 
 Mixing them is what makes such apps dishonest.
@@ -136,9 +157,49 @@ opportunity-ai/
 │   ├── opportunities.json     # 21 illustrative SAMPLE records (fictional organisations)
 │   └── knowledge.json         # skill_synonyms, skill_playbook (+hours), domain_bridges
 ├── scripts/ingest_github.py   # OPTIONAL discovery → data/ingested_cache.json (app never calls the network)
-├── tests/{conftest.py,test_core.py}   # 27 tests, frozen "today"
+├── web/                       # browser website sources (engine.js, app.js, styles.css, template.html, build.py)
+├── index.html                 # the built website — self-contained, no dependencies
+├── .streamlit/config.toml     # pins theme.base=light (fixes the contrast defect)
+├── tests/
+│   ├── test_core.py           # engine, tracker, evidence
+│   └── test_ui_theme.py       # contrast/theme regression guards
 ├── requirements.txt · .env.example · README.md · demo_script.md · master_prompt.md
 ```
+
+---
+
+## 6b. UI theme and the contrast fix
+
+**The defect.** The dashboard rendered unreadable text on some machines: tab labels came out as
+empty boxes, sidebar labels and captions vanished, and metric values were barely visible. It only
+affected users whose OS/browser prefers dark.
+
+**Why it happened** — three causes, all now fixed:
+
+1. **No `.streamlit/config.toml`.** `theme.base` defaults to `auto`, which follows the viewer's
+   colour preference. On a dark-preferring machine Streamlit applied its dark theme — near-white
+   text (`#FAFAFA`) — while `app.py` painted its own light backgrounds. Light text on light
+   surfaces. **Fix:** `base = "light"` plus an explicit palette, so the framework and the stylesheet
+   agree instead of fighting.
+2. **A dead selector.** `html, body, [class*="css"]{color:…}` — `[class*="css"]` was a pre-emotion
+   Streamlit hack and matches nothing in Streamlit 1.66 (classes are `st-emotion-cache-*`), so the
+   intended colour never applied. **Fix:** the selector is gone; colour is now set on the containers
+   Streamlit actually paints (`.stApp`, `[data-testid="stAppViewContainer"]`, the sidebar).
+3. **Repainted backgrounds with no explicit colour.** The app forced a white sidebar and white cards
+   but never set the text colour inside them, so they inherited the theme's. **Fix:** every surface
+   the app repaints now sets its own colour.
+
+Also hardened: tabs are coloured with both `.stTabs [data-baseweb="tab"]` and a defensive
+`[role="tab"]` rule (Streamlit has shipped more than one tab markup); primary buttons are covered
+under both `kind="primary"` and `data-testid="stBaseButton-primary"`; muted slate was darkened to
+`#5b6b82` to clear WCAG AA on white; hover, focus-visible, selected and disabled states are styled;
+and no blanket white-text rule exists anywhere.
+
+**How it was verified.** `tests/test_ui_theme.py` pins each cause as a regression guard — including
+a computed WCAG contrast check on the muted colour — so the defect cannot silently return. Visually,
+the shipped stylesheet was rendered under harnesses mimicking Streamlit's light *and* dark theme
+text colours: before the fix the dark harness showed blank tab labels and invisible sidebar labels;
+after it, every label is legible in both.
 
 ---
 
@@ -233,7 +294,7 @@ and `top_skill_gains`; **field-level Information quality panel**; **"Why isn't t
 Evidence Matrix; 7-Day Prep Kit; SQLite tracker with stage history and funnel; Skills & Gap with
 learning plan, roadmap and skill-state tracking; CSV export; profile-completeness meter; Career Goal;
 Demo Mode; English/Hindi UI with Sarvam translation for dynamic text; delete-my-data; **evaluation
-suite**; 27 tests.
+suite**; 34 tests.
 
 **Not implemented (deliberately deferred):** the full Opportunity Graph as a separate structure (the
 ROI engine's pathway is its first version); *Projected fit* from skill states (states are tracked and

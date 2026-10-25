@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpportunityAI — Personal Opportunity Intelligence Platform</title>
+<meta name="description" content="OpportunityAI helps Indian college students find, qualify for and prepare for internships, scholarships, hackathons and research programmes — with explainable matching and a prioritised next action. Runs fully in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand">Opportunity<span>AI</span></div>
+    <div class="tabs">
+      <button class="tab active" data-tab="radar"><span data-i18n="radar">Radar</span></button>
+      <button class="tab" data-tab="nextmove"><span data-i18n="nextmove">Next Move</span></button>
+      <button class="tab" data-tab="copilot"><span data-i18n="copilot">Copilot</span></button>
+      <button class="tab" data-tab="skills"><span data-i18n="skills">Skills &amp; Gap</span></button>
+      <button class="tab" data-tab="whynot"><span data-i18n="whynot">Why Not?</span></button>
+      <button class="tab" data-tab="tracker"><span data-i18n="tracker">Tracker</span></button>
+      <button class="tab" data-tab="assistant"><span data-i18n="assistant">Assistant</span></button>
+    </div>
+    <div class="nav-right">
+      <span class="muted" data-i18n="nav_language">Language</span>
+      <button class="btn sm" id="lang-toggle"><span id="lang-label">English</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">OpportunityAI · Student Opportunity Finder</div>
+    <h1 data-i18n="hero_title">Find the opportunities that fit you — and know what to do next.</h1>
+    <p data-i18n="hero_body">Internships, scholarships, hackathons, research programmes and competitions, matched to your
+    skills, interests, academics and goals. Eligibility, timing and fit are kept as three separate
+    facts, every unknown field is labelled, and one prioritised action is put in front of you.</p>
+    <div class="tags">
+      <span>Explainable matching</span><span>Next-best-move planner</span>
+      <span>Resume evidence</span><span>Runs offline</span><span>No sign-up</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn primary" id="btn-demo-hero">⚡ <span data-i18n="hero_cta1">Try Demo Profile</span></button>
+      <button class="btn" id="btn-goto-app"><span data-i18n="hero_cta2">Open the app</span> ↓</button>
+    </div>
+  </header>
+
+  <div class="metrics" id="metrics"></div>
+
+  <div class="layout" id="layout">
+
+    <aside>
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="profile">Your profile</span></h3>
+        <button class="btn primary block" id="btn-demo">⚡ <span data-i18n="demo_profile">Try Demo Profile</span></button>
+        <label for="pf-name" data-i18n="name">Name</label>
+        <input type="text" id="pf-name" placeholder="e.g. Aarav Sharma">
+        <label for="pf-college" data-i18n="college">College</label>
+        <input type="text" id="pf-college" placeholder="e.g. IIT (BHU), Varanasi">
+        <label for="pf-degree" data-i18n="degree">Degree</label>
+        <select id="pf-degree">
+          <option>B.Tech</option><option>B.E.</option><option>B.Sc</option><option>BCA</option>
+          <option>MCA</option><option>M.Tech</option><option>M.Sc</option><option>MBA</option>
+          <option>B.Com</option><option>Other</option>
+        </select>
+        <label for="pf-branch" data-i18n="branch">Branch</label>
+        <input type="text" id="pf-branch" placeholder="e.g. Chemical Engineering">
+        <div class="row">
+          <div style="flex:1">
+            <label for="pf-year" data-i18n="year">Year</label>
+            <select id="pf-year"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          </div>
+          <div style="flex:1">
+            <label for="pf-cgpa" data-i18n="cgpa">CGPA (0–10)</label>
+            <input type="text" id="pf-cgpa" placeholder="e.g. 8.2">
+          </div>
+        </div>
+        <label for="pf-exp" data-i18n="experience">Experience level</label>
+        <select id="pf-exp"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        <label for="pf-gender" data-i18n="gender">Gender (optional)</label>
+        <select id="pf-gender">
+          <option>Prefer not to say</option><option>Female</option><option>Male</option><option>Other</option>
+        </select>
+        <label for="pf-mode" data-i18n="work_mode">Preferred work mode</label>
+        <select id="pf-mode"><option>Any</option><option>Remote</option><option>On-site</option><option>Hybrid</option></select>
+        <label for="pf-location" data-i18n="location">Preferred location</label>
+        <input type="text" id="pf-location" placeholder="Any / Remote / a city">
+        <label data-i18n="skills_pick">Technical skills</label>
+        <div class="multi" id="pf-skills"></div>
+        <label data-i18n="interests_pick">Areas of interest</label>
+        <div class="multi" id="pf-interests"></div>
+        <div style="margin-top:12px">
+          <button class="btn primary block" id="btn-apply-profile">🔍 <span data-i18n="find_opportunities">Find My Opportunities</span></button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="preferences">Preferences</span></h3>
+        <label for="pf-goal" data-i18n="career_goal">Career goal</label>
+        <select id="pf-goal">
+          <option>Industry job</option><option>Higher studies</option><option>Research</option>
+          <option>Startup</option><option>Undecided</option>
+        </select>
+        <div class="row" style="margin-top:10px">
+          <label style="margin:0;display:flex;align-items:center;gap:7px">
+            <input type="checkbox" id="demo-toggle" checked> <span data-i18n="demo_mode">Demo Mode</span>
+          </label>
+        </div>
+        <div class="muted" style="margin-top:4px">Sample deadlines are shown as illustrative dates and badged DEMO.</div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="weights">Matching weights</span></h3>
+        <label for="w-skill">Skill overlap · <span id="w-skill-val">35%</span></label>
+        <input type="range" id="w-skill" min="0" max="100" step="5">
+        <label for="w-interest">Interest alignment · <span id="w-interest-val">25%</span></label>
+        <input type="range" id="w-interest" min="0" max="100" step="5">
+        <label for="w-academic">Academic &amp; eligibility · <span id="w-academic-val">20%</span></label>
+        <input type="range" id="w-academic" min="0" max="100" step="5">
+        <label for="w-workmode">Work-mode &amp; location · <span id="w-workmode-val">10%</span></label>
+        <input type="range" id="w-workmode" min="0" max="100" step="5">
+        <label for="w-experience">Experience fit · <span id="w-experience-val">10%</span></label>
+        <input type="range" id="w-experience" min="0" max="100" step="5">
+        <div class="muted" style="margin-top:6px">Weights are normalised — they need not sum to 100%.</div>
+        <button class="btn sm block" id="btn-reset-weights" style="margin-top:8px"><span data-i18n="reset_weights">Reset weights</span></button>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="filters">Filters</span></h3>
+        <label for="f-cat" data-i18n="category">Category</label>
+        <select id="f-cat"></select>
+        <label for="f-skill" data-i18n="required_skill">Required skill</label>
+        <select id="f-skill"></select>
+        <label for="f-mode" data-i18n="filter_mode">Work mode</label>
+        <select id="f-mode">
+          <option>All</option><option>Remote</option><option>On-site</option><option>Hybrid</option>
+        </select>
+        <label for="f-min"><span data-i18n="min_fit">Minimum fit</span> · <span id="f-min-val">0%</span></label>
+        <input type="range" id="f-min" min="0" max="100" step="5" value="0">
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="resume_title">Resume</span></h3>
+        <div class="muted">Paste your resume text — it stays in this browser tab and is never uploaded.</div>
+        <textarea id="resume-text" placeholder="Paste your resume text here…"></textarea>
+        <label for="resume-file" style="margin-top:8px">Or load a .txt / .md file</label>
+        <input type="file" id="resume-file" accept=".txt,.md,.pdf">
+        <div style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:7px;font-weight:500">
+            <input type="checkbox" id="consent"> <span data-i18n="consent">I consent to sending redacted resume text to an AI service</span>
+          </label>
+        </div>
+        <div class="muted" style="margin-top:6px">Only used by the Python app's AI features. This website
+        runs the deterministic engine and never sends your resume anywhere.</div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="data_title">Data</span></h3>
+        <button class="btn block" id="btn-csv">⬇️ <span data-i18n="export_csv">Export Radar as CSV</span></button>
+        <button class="btn block" id="btn-wipe" style="margin-top:8px">🗑️ <span data-i18n="delete_data">Delete my data</span></button>
+        <div class="muted" style="margin-top:8px">Profile, tracker and chat are stored in this browser's
+        localStorage. Nothing is sent to a server.</div>
+      </div>
+
+      <div class="panel">
+        <div class="muted" data-i18n="ai_off">AI features off. This website runs the deterministic engine only. Sarvam AI explanations, translation and PDF parsing are available in the Python app.</div>
+      </div>
+    </aside>
+
+    <main id="main"></main>
+  </div>
+
+  <footer class="footer">
+    <div id="notice"></div>
+    <div style="margin-top:10px">Fit scores are guidance, not a prediction of selection. The dataset is
+    illustrative sample data with fictional organisations; no deadline, link or eligibility claim is
+    asserted as true.</div>
+  </footer>
+</div>
+
+<script>
+/*__DATA__*/
+</script>
+<script>
+/*__ENGINE__*/
+</script>
+<script>
+/*__APP__*/
+</script>
+</body>
+</html>

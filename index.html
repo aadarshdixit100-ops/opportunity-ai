@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpportunityAI — Personal Opportunity Intelligence Platform</title>
+<meta name="description" content="OpportunityAI helps Indian college students find, qualify for and prepare for internships, scholarships, hackathons and research programmes — with explainable matching and a prioritised next action. Runs fully in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<style>
+/* OpportunityAI — website styles. Light background, navy text, blue/violet accents. */
+:root{
+  --navy:#0b1220; --soft:#334155; --muted:#64748b; --blue:#2563eb; --violet:#7c3aed;
+  --bg:#f5f7fc; --card:#ffffff; --line:#e7ebf3; --green:#059669; --amber:#b45309; --red:#b91c1c;
+  --radius:16px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;color:var(--navy);
+  background:
+    radial-gradient(1100px 460px at 10% -8%, #e8efff 0, rgba(232,239,255,0) 60%),
+    radial-gradient(900px 420px at 92% 0, #f2eaff 0, rgba(242,234,255,0) 55%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--blue);}
+h1,h2,h3,h4{letter-spacing:-.015em;margin:0 0 8px;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px;}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;gap:18px;padding:10px 20px;max-width:1280px;margin:0 auto;flex-wrap:wrap;}
+.brand{font-weight:800;font-size:1.12rem;white-space:nowrap;}
+.brand span{background:linear-gradient(135deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.tabs{display:flex;gap:4px;flex:1;flex-wrap:wrap;}
+.tab{
+  border:0;background:transparent;font:inherit;font-weight:600;font-size:.87rem;color:var(--muted);
+  padding:7px 12px;border-radius:10px;cursor:pointer;white-space:nowrap;
+}
+.tab:hover{background:#eef2fb;color:var(--navy);}
+.tab.active{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;}
+.nav-right{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted);}
+
+/* ---------- hero ---------- */
+.hero{
+  background:linear-gradient(118deg,#101a35 0,#1d3a8a 40%,#2563eb 68%,#7c3aed 100%);
+  border-radius:24px;padding:38px 36px;color:#fff;margin:22px 0 20px;position:relative;overflow:hidden;
+  box-shadow:0 26px 60px -28px rgba(37,99,235,.72);
+}
+.hero:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:radial-gradient(600px 300px at 85% 10%,#000,transparent);
+}
+.hero .kicker{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;background:rgba(255,255,255,.16);padding:5px 13px;border-radius:999px;margin-bottom:14px;}
+.hero h1{color:#fff;font-size:2.2rem;font-weight:800;max-width:820px;line-height:1.15;}
+.hero p{opacity:.95;max-width:760px;line-height:1.6;margin:10px 0 0;font-size:1rem;}
+.hero .tags{margin-top:16px;}
+.hero .tags span{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  padding:4px 12px;border-radius:999px;font-size:.76rem;margin:3px 6px 0 0;}
+.hero-cta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;}
+
+/* ---------- buttons ---------- */
+.btn{
+  font:inherit;font-weight:600;font-size:.87rem;border-radius:11px;padding:10px 16px;cursor:pointer;
+  border:1px solid var(--line);background:#fff;color:var(--navy);transition:.15s;
+}
+.btn:hover{border-color:#cfdaf2;box-shadow:0 6px 16px -12px rgba(37,99,235,.6);}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--violet));border:0;color:#fff;
+  box-shadow:0 12px 26px -14px rgba(37,99,235,.85);}
+.btn.primary:hover{filter:brightness(1.06);}
+.btn.sm{padding:6px 11px;font-size:.79rem;border-radius:9px;}
+.btn.block{width:100%;}
+
+/* ---------- layout ---------- */
+.layout{display:grid;grid-template-columns:322px 1fr;gap:20px;align-items:start;padding-bottom:60px;}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:0 10px 26px -20px rgba(11,18,32,.55);margin-bottom:14px;}
+.panel h3{font-size:.95rem;display:flex;align-items:center;gap:8px;}
+.dot{display:inline-block;width:8px;height:8px;border-radius:3px;
+  background:linear-gradient(135deg,var(--blue),var(--violet));flex:0 0 auto;}
+.muted{color:var(--muted);font-size:.82rem;}
+.small{font-size:.84rem;color:var(--soft);}
+
+/* ---------- metrics ---------- */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+  box-shadow:0 10px 22px -20px rgba(11,18,32,.5);transition:.16s;}
+.metric:hover{transform:translateY(-2px);}
+.metric .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;}
+.metric .value{font-size:1.65rem;font-weight:800;margin-top:4px;}
+.metric .sub{font-size:.78rem;color:var(--muted);margin-top:2px;}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:0 10px 26px -20px rgba(11,18,32,.55);margin-bottom:12px;transition:.16s;}
+.card:hover{transform:translateY(-2px);box-shadow:0 20px 38px -24px rgba(37,99,235,.5);border-color:#dbe4f7;}
+.card-top{display:flex;gap:16px;align-items:flex-start;}
+.opp-title{font-size:1.05rem;font-weight:700;line-height:1.3;}
+.opp-org{color:var(--muted);font-size:.85rem;margin:2px 0 7px;font-weight:500;}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.col-head{font-size:.98rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+
+/* ---------- badges / chips ---------- */
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:600;margin:2px 5px 2px 0;}
+.b-blue{background:#e8f0ff;color:#1d4ed8;} .b-violet{background:#f1e9ff;color:#6d28d9;}
+.b-green{background:#e6f7ef;color:#047857;} .b-amber{background:#fdf1dd;color:#b45309;}
+.b-grey{background:#eef1f6;color:#475569;} .b-red{background:#fdeaea;color:#b91c1c;}
+.chip{display:inline-block;background:#eef2fb;color:#334155;border-radius:8px;padding:3px 9px;
+  font-size:.77rem;margin:2px 5px 2px 0;border:1px solid #e4eaf6;}
+.chip-miss{background:#fdeaea;color:#b91c1c;border-color:#f8d5d5;}
+.chip-have{background:#e6f7ef;color:#047857;border-color:#cdeee0;}
+
+/* ---------- component bars ---------- */
+.cbrow{display:flex;align-items:center;gap:9px;margin:4px 0;font-size:.78rem;}
+.cblab{width:100px;color:var(--soft);}
+.cbtrack{flex:1;height:7px;border-radius:999px;background:#eef2f9;overflow:hidden;}
+.cbtrack>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));}
+.cbval{width:38px;text-align:right;font-weight:600;}
+
+/* ---------- forms ---------- */
+label{display:block;font-size:.79rem;font-weight:600;color:var(--soft);margin:9px 0 3px;}
+input[type=text],input[type=number],select,textarea{
+  width:100%;font:inherit;font-size:.85rem;padding:8px 10px;border:1px solid var(--line);
+  border-radius:9px;background:#fff;color:var(--navy);}
+input:focus,select:focus,textarea:focus{outline:2px solid #c7d8fb;border-color:#c7d8fb;}
+textarea{min-height:120px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;}
+.multi{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;max-height:170px;overflow:auto;padding:2px;}
+.multi label{display:inline-flex;align-items:center;gap:5px;font-weight:500;font-size:.76rem;
+  background:#f4f7fd;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:0;cursor:pointer;color:var(--navy);}
+.multi input{width:auto;margin:0;}
+.multi label:hover{border-color:#c7d8fb;}
+input[type=range]{width:100%;}
+.row{display:flex;gap:10px;align-items:center;}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:.82rem;}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #f0f3fa;vertical-align:top;}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;}
+tbody tr:hover{background:#fafcff;}
+
+/* ---------- misc ---------- */
+.q{border-left:3px solid #cbd5e1;padding:4px 10px;margin:4px 0;color:var(--soft);font-size:.82rem;font-style:italic;}
+.note{background:#f4f7fd;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.81rem;color:var(--soft);}
+.path-step{display:flex;gap:10px;align-items:flex-start;margin:7px 0;}
+.path-step .n{flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:#eef2fb;color:#334155;
+  font-size:.72rem;font-weight:700;display:grid;place-items:center;}
+.chat{max-height:420px;overflow:auto;padding-right:6px;}
+.msg{padding:10px 13px;border-radius:12px;margin-bottom:9px;font-size:.86rem;line-height:1.55;white-space:pre-wrap;}
+.msg.user{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;margin-left:14%;}
+.msg.bot{background:#f4f7fd;border:1px solid var(--line);margin-right:14%;}
+.empty{color:var(--muted);font-size:.85rem;padding:14px 0;}
+.footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:.79rem;line-height:1.6;}
+.hidden{display:none !important;}
+
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;}
+  .cols3{grid-template-columns:1fr;}
+  .metrics{grid-template-columns:repeat(2,1fr);}
+  .hero h1{font-size:1.6rem;}
+  .msg.user{margin-left:0;} .msg.bot{margin-right:0;}
+}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand">Opportunity<span>AI</span></div>
+    <div class="tabs">
+      <button class="tab active" data-tab="radar"><span data-i18n="radar">Radar</span></button>
+      <button class="tab" data-tab="nextmove"><span data-i18n="nextmove">Next Move</span></button>
+      <button class="tab" data-tab="copilot"><span data-i18n="copilot">Copilot</span></button>
+      <button class="tab" data-tab="skills"><span data-i18n="skills">Skills &amp; Gap</span></button>
+      <button class="tab" data-tab="whynot"><span data-i18n="whynot">Why Not?</span></button>
+      <button class="tab" data-tab="tracker"><span data-i18n="tracker">Tracker</span></button>
+      <button class="tab" data-tab="assistant"><span data-i18n="assistant">Assistant</span></button>
+    </div>
+    <div class="nav-right">
+      <span class="muted" data-i18n="nav_language">Language</span>
+      <button class="btn sm" id="lang-toggle"><span id="lang-label">English</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">OpportunityAI · Student Opportunity Finder</div>
+    <h1 data-i18n="hero_title">Find the opportunities that fit you — and know what to do next.</h1>
+    <p data-i18n="hero_body">Internships, scholarships, hackathons, research programmes and competitions, matched to your
+    skills, interests, academics and goals. Eligibility, timing and fit are kept as three separate
+    facts, every unknown field is labelled, and one prioritised action is put in front of you.</p>
+    <div class="tags">
+      <span>Explainable matching</span><span>Next-best-move planner</span>
+      <span>Resume evidence</span><span>Runs offline</span><span>No sign-up</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn primary" id="btn-demo-hero">⚡ <span data-i18n="hero_cta1">Try Demo Profile</span></button>
+      <button class="btn" id="btn-goto-app"><span data-i18n="hero_cta2">Open the app</span> ↓</button>
+    </div>
+  </header>
+
+  <div class="metrics" id="metrics"></div>
+
+  <div class="layout" id="layout">
+
+    <aside>
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="profile">Your profile</span></h3>
+        <button class="btn primary block" id="btn-demo">⚡ <span data-i18n="demo_profile">Try Demo Profile</span></button>
+        <label for="pf-name" data-i18n="name">Name</label>
+        <input type="text" id="pf-name" placeholder="e.g. Aarav Sharma">
+        <label for="pf-college" data-i18n="college">College</label>
+        <input type="text" id="pf-college" placeholder="e.g. IIT (BHU), Varanasi">
+        <label for="pf-degree" data-i18n="degree">Degree</label>
+        <select id="pf-degree">
+          <option>B.Tech</option><option>B.E.</option><option>B.Sc</option><option>BCA</option>
+          <option>MCA</option><option>M.Tech</option><option>M.Sc</option><option>MBA</option>
+          <option>B.Com</option><option>Other</option>
+        </select>
+        <label for="pf-branch" data-i18n="branch">Branch</label>
+        <input type="text" id="pf-branch" placeholder="e.g. Chemical Engineering">
+        <div class="row">
+          <div style="flex:1">
+            <label for="pf-year" data-i18n="year">Year</label>
+            <select id="pf-year"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          </div>
+          <div style="flex:1">
+            <label for="pf-cgpa" data-i18n="cgpa">CGPA (0–10)</label>
+            <input type="text" id="pf-cgpa" placeholder="e.g. 8.2">
+          </div>
+        </div>
+        <label for="pf-exp" data-i18n="experience">Experience level</label>
+        <select id="pf-exp"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        <label for="pf-gender" data-i18n="gender">Gender (optional)</label>
+        <select id="pf-gender">
+          <option>Prefer not to say</option><option>Female</option><option>Male</option><option>Other</option>
+        </select>
+        <label for="pf-mode" data-i18n="work_mode">Preferred work mode</label>
+        <select id="pf-mode"><option>Any</option><option>Remote</option><option>On-site</option><option>Hybrid</option></select>
+        <label for="pf-location" data-i18n="location">Preferred location</label>
+        <input type="text" id="pf-location" placeholder="Any / Remote / a city">
+        <label data-i18n="skills_pick">Technical skills</label>
+        <div class="multi" id="pf-skills"></div>
+        <label data-i18n="interests_pick">Areas of interest</label>
+        <div class="multi" id="pf-interests"></div>
+        <div style="margin-top:12px">
+          <button class="btn primary block" id="btn-apply-profile">🔍 <span data-i18n="find_opportunities">Find My Opportunities</span></button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="preferences">Preferences</span></h3>
+        <label for="pf-goal" data-i18n="career_goal">Career goal</label>
+        <select id="pf-goal">
+          <option>Industry job</option><option>Higher studies</option><option>Research</option>
+          <option>Startup</option><option>Undecided</option>
+        </select>
+        <div class="row" style="margin-top:10px">
+          <label style="margin:0;display:flex;align-items:center;gap:7px">
+            <input type="checkbox" id="demo-toggle" checked> <span data-i18n="demo_mode">Demo Mode</span>
+          </label>
+        </div>
+        <div class="muted" style="margin-top:4px">Sample deadlines are shown as illustrative dates and badged DEMO.</div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="weights">Matching weights</span></h3>
+        <label for="w-skill">Skill overlap · <span id="w-skill-val">35%</span></label>
+        <input type="range" id="w-skill" min="0" max="100" step="5">
+        <label for="w-interest">Interest alignment · <span id="w-interest-val">25%</span></label>
+        <input type="range" id="w-interest" min="0" max="100" step="5">
+        <label for="w-academic">Academic &amp; eligibility · <span id="w-academic-val">20%</span></label>
+        <input type="range" id="w-academic" min="0" max="100" step="5">
+        <label for="w-workmode">Work-mode &amp; location · <span id="w-workmode-val">10%</span></label>
+        <input type="range" id="w-workmode" min="0" max="100" step="5">
+        <label for="w-experience">Experience fit · <span id="w-experience-val">10%</span></label>
+        <input type="range" id="w-experience" min="0" max="100" step="5">
+        <div class="muted" style="margin-top:6px">Weights are normalised — they need not sum to 100%.</div>
+        <button class="btn sm block" id="btn-reset-weights" style="margin-top:8px"><span data-i18n="reset_weights">Reset weights</span></button>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="filters">Filters</span></h3>
+        <label for="f-cat" data-i18n="category">Category</label>
+        <select id="f-cat"></select>
+        <label for="f-skill" data-i18n="required_skill">Required skill</label>
+        <select id="f-skill"></select>
+        <label for="f-mode" data-i18n="filter_mode">Work mode</label>
+        <select id="f-mode">
+          <option>All</option><option>Remote</option><option>On-site</option><option>Hybrid</option>
+        </select>
+        <label for="f-min"><span data-i18n="min_fit">Minimum fit</span> · <span id="f-min-val">0%</span></label>
+        <input type="range" id="f-min" min="0" max="100" step="5" value="0">
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="resume_title">Resume</span></h3>
+        <div class="muted">Paste your resume text — it stays in this browser tab and is never uploaded.</div>
+        <textarea id="resume-text" placeholder="Paste your resume text here…"></textarea>
+        <label for="resume-file" style="margin-top:8px">Or load a .txt / .md file</label>
+        <input type="file" id="resume-file" accept=".txt,.md,.pdf">
+        <div style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:7px;font-weight:500">
+            <input type="checkbox" id="consent"> <span data-i18n="consent">I consent to sending redacted resume text to an AI service</span>
+          </label>
+        </div>
+        <div class="muted" style="margin-top:6px">Only used by the Python app's AI features. This website
+        runs the deterministic engine and never sends your resume anywhere.</div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="dot"></span><span data-i18n="data_title">Data</span></h3>
+        <button class="btn block" id="btn-csv">⬇️ <span data-i18n="export_csv">Export Radar as CSV</span></button>
+        <button class="btn block" id="btn-wipe" style="margin-top:8px">🗑️ <span data-i18n="delete_data">Delete my data</span></button>
+        <div class="muted" style="margin-top:8px">Profile, tracker and chat are stored in this browser's
+        localStorage. Nothing is sent to a server.</div>
+      </div>
+
+      <div class="panel">
+        <div class="muted" data-i18n="ai_off">AI features off. This website runs the deterministic engine only. Sarvam AI explanations, translation and PDF parsing are available in the Python app.</div>
+      </div>
+    </aside>
+
+    <main id="main"></main>
+  </div>
+
+  <footer class="footer">
+    <div id="notice"></div>
+    <div style="margin-top:10px">Fit scores are guidance, not a prediction of selection. The dataset is
+    illustrative sample data with fictional organisations; no deadline, link or eligibility claim is
+    asserted as true.</div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"opportunities": [{"id": "OPP001", "title": "Data Analytics Intern (Business Intelligence)", "organization": "Meridian Retail (sample)", "category": "Data Science / ML Internship", "description": "Build dashboards and answer business questions with SQL and BI tools. A good first data role for beginners.", "required_skills": ["SQL", "Excel", "Data Visualization", "Machine Learning"], "preferred_skills": ["Python", "Pandas", "Communication"], "interests": ["Data Science", "Software Engineering"], "tags": ["data", "internship"], "min_cgpa": 6.0, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "B.Sc", "B.Com", "Any"], "eligible_branches": null, "work_mode": "On-site", "location": "Mumbai, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 12, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Enrolled in any quantitative programme", "Comfortable with spreadsheets"]}, {"id": "OPP002", "title": "Open Source ML Programme (Contributor)", "organization": "ML Commons Circle (sample)", "category": "Open Source Program", "description": "Contribute to open machine-learning libraries with a mentor, from documentation to model tooling.", "required_skills": ["Python", "Data Visualization"], "preferred_skills": ["scikit-learn", "Git", "Technical Writing"], "interests": ["Open Source", "Machine Learning", "Data Science"], "tags": ["open-source", "ml"], "min_cgpa": null, "eligible_years": null, "eligible_degrees": ["B.Tech", "B.E.", "B.Sc", "M.Sc", "Any"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Stipend for accepted contributors (varies)", "deadline": null, "deadline_kind": "rolling", "opens_on": null, "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to students and beginners", "Able to communicate progress in writing"]}, {"id": "OPP003", "title": "Merit Scholarship for Engineering Undergraduates", "organization": "Vidya Foundation (sample)", "category": "Scholarship", "description": "A merit-based grant for high-performing engineering undergraduates. Requires an application essay and transcripts.", "required_skills": ["Python", "Pandas", "Excel", "Data Visualization", "SQL"], "preferred_skills": ["Technical Writing"], "interests": ["Research"], "tags": ["scholarship", "merit"], "min_cgpa": 8.5, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["B.Tech", "B.E."], "eligible_branches": null, "work_mode": "Remote", "location": "India (all states)", "stipend_or_award": "Scholarship grant (annual)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 20, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Enrolled undergraduate in engineering", "Demonstrated academic merit", "Household income criteria may apply"]}, {"id": "OPP004", "title": "Deep Learning Research Intern", "organization": "Vision & Language Lab (sample)", "category": "Research Internship", "description": "Work on computer-vision or language-modelling experiments under a PhD mentor. Expect to read papers and implement baselines.", "required_skills": ["Python", "Deep Learning", "PyTorch"], "preferred_skills": ["Computer Vision", "NLP", "Technical Writing"], "interests": ["Machine Learning", "Research", "Artificial Intelligence"], "tags": ["research", "dl"], "min_cgpa": 7.5, "eligible_years": [3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech", "M.Sc"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Stipend available (varies)", "deadline": null, "deadline_kind": "fixed", "opens_on": "2026-12-01", "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Advanced", "eligibility": ["Prior project or coursework in deep learning", "Able to read research papers"]}, {"id": "OPP005", "title": "Industrial Process Optimisation with ML", "organization": "Shakti Renewables (sample)", "category": "Chemical Engineering Internship", "description": "Apply machine learning to sensor data from a process plant to predict yield and flag anomalies.", "required_skills": ["Process Simulation", "Machine Learning"], "preferred_skills": ["Python", "Data Visualization", "Aspen Plus"], "interests": ["Chemical Engineering", "Machine Learning", "Sustainability"], "tags": ["process", "ml"], "min_cgpa": 7.0, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech"], "eligible_branches": null, "work_mode": "Hybrid", "location": "Pune, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "unknown", "opens_on": null, "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Chemical Engineering students with simulation coursework", "Final-year students preferred"]}, {"id": "OPP006", "title": "National Student Hackathon (48-hour Build)", "organization": "BuildForBharat (sample)", "category": "Hackathon", "description": "A weekend hackathon where teams build a working prototype around a theme and present it to judges.", "required_skills": ["Python", "JavaScript", "Git"], "preferred_skills": ["React", "FastAPI", "Docker"], "interests": ["Software Engineering", "Web Development", "Entrepreneurship"], "tags": ["hackathon"], "min_cgpa": null, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["Any"], "eligible_branches": null, "work_mode": "On-site", "location": "Multiple host cities", "stipend_or_award": "Cash prizes for winners (varies)", "deadline": "2025-12-31", "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "closed", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to all enrolled college students", "Teams of up to 4"]}, {"id": "OPP007", "title": "Women in STEM Scholarship", "organization": "Pragati Education Trust (sample)", "category": "Scholarship", "description": "A needs-and-merit grant supporting women in STEM fields, with mentoring and a small professional network.", "required_skills": ["Technical Writing"], "preferred_skills": ["Communication"], "interests": ["Research"], "tags": ["scholarship", "women"], "min_cgpa": 7.0, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "B.Sc", "M.Sc", "Any"], "eligible_branches": null, "work_mode": "Remote", "location": "India", "stipend_or_award": "Scholarship grant (annual)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 30, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": true, "experience_level": "Beginner", "eligibility": ["Women students enrolled in a STEM programme", "Demonstrated need and merit"]}, {"id": "OPP008", "title": "Software Engineering Intern (Summer)", "organization": "Nimbus Systems (sample)", "category": "Software Engineering Internship", "description": "Work with a backend platform team on API services, internal tooling and bug fixes.", "required_skills": ["Python", "Git"], "preferred_skills": ["FastAPI", "SQL", "Linux"], "interests": ["Software Engineering", "Web Development"], "tags": ["swe", "internship"], "min_cgpa": 7.0, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "MCA"], "eligible_branches": null, "work_mode": "Hybrid", "location": "Bengaluru, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 5, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Currently enrolled in a B.Tech/B.E. programme", "Comfortable with at least one programming language"]}, {"id": "OPP009", "title": "Data Science & Machine Learning Intern", "organization": "Arcline Analytics (sample)", "category": "Data Science / ML Internship", "description": "Build and evaluate predictive models on tabular business data.", "required_skills": ["Python", "Pandas", "Machine Learning"], "preferred_skills": ["scikit-learn", "SQL", "Data Visualization"], "interests": ["Data Science", "Machine Learning"], "tags": ["ds", "internship"], "min_cgpa": 6.5, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "B.Sc", "M.Sc"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 25, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Enrolled in an engineering, science or statistics programme", "Basic statistics knowledge"]}, {"id": "OPP010", "title": "Chemical Process Engineering Intern", "organization": "Vidyut Petrochem (sample)", "category": "Chemical Engineering Internship", "description": "Support process design and mass/energy balance studies for a petrochemical unit.", "required_skills": ["Process Engineering", "Thermodynamics", "Excel"], "preferred_skills": ["Aspen Plus", "Process Simulation", "MATLAB"], "interests": ["Chemical Engineering", "Energy"], "tags": ["process", "internship"], "min_cgpa": 6.0, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech"], "eligible_branches": null, "work_mode": "On-site", "location": "Vadodara, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 18, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Enrolled in a Chemical Engineering programme", "Completed core process courses"]}, {"id": "OPP011", "title": "Undergraduate Research Internship (AI Lab)", "organization": "Institute AI Research Group (sample)", "category": "Research Internship", "description": "Join an ongoing research project in machine learning: reproduce papers, run experiments, help draft a short write-up.", "required_skills": ["Python", "Machine Learning"], "preferred_skills": ["PyTorch", "Technical Writing", "NLP"], "interests": ["Research", "Artificial Intelligence"], "tags": ["research", "ai"], "min_cgpa": 8.0, "eligible_years": [3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech", "M.Sc"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Unpaid or small stipend (varies by lab)", "deadline": null, "deadline_kind": "fixed", "opens_on": "2026-11-15", "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Advanced", "eligibility": ["Strong academic record", "Willingness to commit to a research project", "Faculty reference usually expected"]}, {"id": "OPP012", "title": "Student Innovation Competition (Sustainability)", "organization": "GreenSpark Challenge (sample)", "category": "Innovation Competition", "description": "Pitch an innovation addressing sustainability, energy or waste. Shortlisted teams get mentorship and a final pitch round.", "required_skills": ["Technical Writing", "Communication"], "preferred_skills": ["Process Engineering", "Data Visualization", "Excel"], "interests": ["Entrepreneurship", "Sustainability", "Research"], "tags": ["competition", "sustainability"], "min_cgpa": null, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "B.Sc", "Any"], "eligible_branches": null, "work_mode": "Hybrid", "location": "India", "stipend_or_award": "Grants and prizes for shortlisted teams", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 40, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to undergraduate and postgraduate students", "Idea-stage and prototype-stage entries both accepted"]}, {"id": "OPP013", "title": "Open Source Contribution Programme (Beginner Track)", "organization": "OpenWorks Community (sample)", "category": "Open Source Program", "description": "Contribute to real open-source projects with mentor support — a strong beginner pathway to a public track record.", "required_skills": ["Git", "Python"], "preferred_skills": ["JavaScript", "Technical Writing", "Linux"], "interests": ["Open Source", "Software Engineering"], "tags": ["open-source"], "min_cgpa": null, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["Any"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Stipend for accepted contributors (varies)", "deadline": null, "deadline_kind": "rolling", "opens_on": null, "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to all students and beginners", "No prior open-source experience required"]}, {"id": "OPP014", "title": "Competitive Programming Fellowship", "organization": "AlgoForge (sample)", "category": "Software Engineering Internship", "description": "Intensive fellowship on algorithms and competitive programming with weekly contests.", "required_skills": ["Data Structures", "C++"], "preferred_skills": ["Python", "Java"], "interests": ["Software Engineering"], "tags": ["algorithms"], "min_cgpa": 8.4, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E."], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Fellowship stipend (varies)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 15, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Strong problem-solving record", "Weekly contest participation expected"]}, {"id": "OPP015", "title": "Summer Analytics Challenge (past cohort)", "organization": "Insight Guild (sample)", "category": "Hackathon", "description": "A data-analytics challenge run over two weeks with a public leaderboard.", "required_skills": ["Python", "Pandas"], "preferred_skills": ["Data Visualization"], "interests": ["Data Science"], "tags": ["analytics"], "min_cgpa": null, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["Any"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Prizes for top teams", "deadline": "2026-01-15", "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": null, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "closed", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to all students"]}, {"id": "OPP016", "title": "Robotics & Embedded Systems Hackathon", "organization": "Makers Guild (sample)", "category": "Hackathon", "description": "Design and build a working robotics prototype in a team over a weekend.", "required_skills": ["C++", "Embedded C"], "preferred_skills": ["Python", "Linux", "Verilog"], "interests": ["Robotics", "Software Engineering"], "tags": ["robotics"], "min_cgpa": null, "eligible_years": [1, 2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech", "Any"], "eligible_branches": null, "work_mode": "On-site", "location": "Chennai, India", "stipend_or_award": "Prizes and component kits for winners", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 22, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Open to engineering students", "Hardware access helpful but not mandatory"]}, {"id": "OPP017", "title": "Computational Chemistry Research Internship", "organization": "Advanced Materials Group (sample)", "category": "Research Internship", "description": "Use computational tools to study material properties and reaction behaviour.", "required_skills": ["Python", "Thermodynamics"], "preferred_skills": ["MATLAB", "Process Simulation", "Technical Writing"], "interests": ["Research", "Chemical Engineering"], "tags": ["research", "chem"], "min_cgpa": 7.0, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Sc", "M.Tech"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Unpaid or small stipend (varies by project)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 28, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Advanced", "eligibility": ["Chemical/Materials Engineering or Chemistry students", "Interest in modelling and simulation"]}, {"id": "OPP018", "title": "Frontend Web Development Intern", "organization": "Lumen Labs (sample)", "category": "Software Engineering Internship", "description": "Build responsive UI components for a customer dashboard.", "required_skills": ["JavaScript", "HTML/CSS", "Git"], "preferred_skills": ["React", "Data Visualization"], "interests": ["Web Development", "Software Engineering"], "tags": ["frontend"], "min_cgpa": null, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "BCA", "Any"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 10, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Beginner", "eligibility": ["Enrolled student or recent graduate", "Portfolio of web projects preferred"]}, {"id": "OPP019", "title": "Backend Engineering Intern (Cloud Services)", "organization": "Skylake Cloud (sample)", "category": "Software Engineering Internship", "description": "Work on scalable backend services and learn cloud deployment practices.", "required_skills": ["Java", "Data Structures", "SQL"], "preferred_skills": ["Docker", "Linux", "Cloud (AWS)"], "interests": ["Software Engineering", "Cybersecurity"], "tags": ["backend", "cloud"], "min_cgpa": 7.0, "eligible_years": [3, 4], "eligible_degrees": ["B.Tech", "B.E.", "MCA", "M.Tech"], "eligible_branches": null, "work_mode": "On-site", "location": "Hyderabad, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 35, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Enrolled in a CS/IT-related programme", "Strong fundamentals in data structures"]}, {"id": "OPP020", "title": "Process Simulation & Optimisation Intern", "organization": "Aarohi Energy (sample)", "category": "Chemical Engineering Internship", "description": "Model and optimise a renewable-fuel process flowsheet, comparing energy and yield across design cases.", "required_skills": ["Process Simulation", "Aspen Plus", "Thermodynamics"], "preferred_skills": ["MATLAB", "Heat Transfer", "Excel"], "interests": ["Chemical Engineering", "Energy", "Sustainability"], "tags": ["process", "simulation"], "min_cgpa": 6.5, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "M.Tech"], "eligible_branches": null, "work_mode": "Hybrid", "location": "Pune, India", "stipend_or_award": "Paid (monthly stipend)", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 8, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Intermediate", "eligibility": ["Chemical Engineering students with simulation coursework", "Final-year students preferred"]}, {"id": "OPP021", "title": "Green Chemistry Innovation Sprint", "organization": "Vasundhara Labs (sample)", "category": "Innovation Competition", "description": "A short sprint to propose greener routes for a common industrial reaction. Adjacent to chemical engineering.", "required_skills": ["Process Simulation", "MATLAB"], "preferred_skills": ["Thermodynamics"], "interests": ["Sustainability", "Energy"], "tags": ["sustainability", "green-chem"], "min_cgpa": 6.5, "eligible_years": [2, 3, 4], "eligible_degrees": ["B.Tech", "B.E.", "B.Sc"], "eligible_branches": null, "work_mode": "Remote", "location": "Remote", "stipend_or_award": "Prizes for shortlisted teams", "deadline": null, "deadline_kind": "fixed", "opens_on": null, "demo_deadline_offset_days": 45, "apply_url": null, "source_url": null, "last_verified": "2026-10-20", "verification_status": "sample", "women_only": null, "experience_level": "Advanced", "eligibility": ["Open to science and engineering students", "Team or individual entry"]}], "knowledge": {"skill_synonyms": {"ml": "Machine Learning", "machine learning": "Machine Learning", "sklearn": "scikit-learn", "scikit learn": "scikit-learn", "sci-kit learn": "scikit-learn", "torch": "PyTorch", "pytorch": "PyTorch", "tensor flow": "TensorFlow", "dl": "Deep Learning", "deep learning": "Deep Learning", "nlp": "NLP", "natural language processing": "NLP", "cv": "Computer Vision", "computer vision": "Computer Vision", "js": "JavaScript", "javascript": "JavaScript", "node": "Node.js", "nodejs": "Node.js", "node js": "Node.js", "py": "Python", "python3": "Python", "python 3": "Python", "sql": "SQL", "mysql": "SQL", "postgres": "SQL", "postgresql": "SQL", "aws": "Cloud (AWS)", "amazon web services": "Cloud (AWS)", "gcp": "Cloud (AWS)", "github": "Git", "git/github": "Git", "excel": "Excel", "ms excel": "Excel", "spreadsheets": "Excel", "matlab": "MATLAB", "aspen": "Aspen Plus", "aspen plus": "Aspen Plus", "hysys": "Process Simulation", "process simulation": "Process Simulation", "thermo": "Thermodynamics", "thermodynamics": "Thermodynamics", "data viz": "Data Visualization", "data visualisation": "Data Visualization", "data visualization": "Data Visualization", "dsa": "Data Structures", "data structures and algorithms": "Data Structures", "embedded": "Embedded C", "technical writing": "Technical Writing", "communication skills": "Communication"}, "skill_playbook": {"python": {"project": "Build a CLI tool that cleans a messy CSV and prints a summary report.", "task": "Complete 20 small scripting exercises and push them to one repo.", "resource_type": "Official Python tutorial + one beginner video series.", "hours": 20}, "git": {"project": "Create a repo, branch, open a pull request and resolve a merge conflict.", "task": "Practise add/commit/branch/merge on a throwaway repo for 30 minutes.", "resource_type": "The Pro Git book (free, official).", "hours": 6}, "sql": {"project": "Load a public dataset into SQLite and answer 10 business questions with joins.", "task": "Write 15 queries covering GROUP BY, JOIN and subqueries.", "resource_type": "SQLBolt interactive lessons.", "hours": 18}, "data structures": {"project": "Implement a stack, queue and hash map from scratch with tests.", "task": "Solve 30 easy problems across arrays, strings and maps.", "resource_type": "Any standard DSA practice platform.", "hours": 40}, "pandas": {"project": "Analyse a public tabular dataset end-to-end and write up 5 findings.", "task": "Practise groupby, merge, pivot and time-series resampling.", "resource_type": "Official pandas user guide.", "hours": 14}, "numpy": {"project": "Re-implement matrix operations with NumPy only.", "task": "Work through 10 array-broadcasting exercises.", "resource_type": "Official NumPy quickstart.", "hours": 8}, "machine learning": {"project": "Train and compare 3 models on one dataset; report accuracy and errors honestly.", "task": "Complete one end-to-end supervised-learning notebook.", "resource_type": "scikit-learn user guide + a beginner ML course.", "hours": 50}, "scikit-learn": {"project": "Build a pipeline with preprocessing, cross-validation and metrics.", "task": "Reproduce 5 examples from the scikit-learn docs.", "resource_type": "Official scikit-learn tutorials.", "hours": 16}, "deep learning": {"project": "Train a small CNN on an image dataset and document what improved accuracy.", "task": "Work through one neural-network fundamentals course module.", "resource_type": "A well-known free deep-learning course.", "hours": 60}, "pytorch": {"project": "Re-implement a short tutorial model from scratch and add a custom layer.", "task": "Complete the official 60-minute blitz.", "resource_type": "Official PyTorch tutorials.", "hours": 30}, "tensorflow": {"project": "Train a small model and export it for inference.", "task": "Complete one official Keras guide end to end.", "resource_type": "Official TensorFlow/Keras guides.", "hours": 25}, "nlp": {"project": "Classify text (e.g. sentiment) and inspect the misclassified examples.", "task": "Build a simple bag-of-words baseline before any neural model.", "resource_type": "A standard NLP intro course.", "hours": 35}, "computer vision": {"project": "Build an image classifier and a small real-time demo.", "task": "Practise image transforms and augmentation.", "resource_type": "An introductory CV course.", "hours": 40}, "data visualization": {"project": "Turn one dataset into a 3-chart dashboard that answers a question.", "task": "Recreate 5 chart types from a public gallery.", "resource_type": "Matplotlib/Plotly documentation.", "hours": 12}, "javascript": {"project": "Build an interactive to-do app with local storage.", "task": "Practise DOM events, fetch and promises.", "resource_type": "MDN web docs.", "hours": 30}, "html/css": {"project": "Recreate a landing page pixel-close from a screenshot.", "task": "Build 3 responsive layouts with flexbox and grid.", "resource_type": "MDN web docs.", "hours": 14}, "react": {"project": "Build a small app that fetches an API and manages state.", "task": "Complete the official React tutorial.", "resource_type": "Official React documentation.", "hours": 32}, "fastapi": {"project": "Expose a small model as a REST endpoint with request validation.", "task": "Build 3 endpoints with typed models and error handling.", "resource_type": "Official FastAPI tutorial.", "hours": 16}, "docker": {"project": "Containerise one of your apps and run it with a single command.", "task": "Write a Dockerfile for an existing project and slim the image.", "resource_type": "Official Docker get-started guide.", "hours": 8}, "linux": {"project": "Complete a command-line challenge set and script an automated backup.", "task": "Practise pipes, permissions and process management daily for a week.", "resource_type": "A standard Linux command-line guide.", "hours": 12}, "cloud (aws)": {"project": "Deploy a small web app to a free-tier cloud instance.", "task": "Set up one VM, open a port and serve an app.", "resource_type": "Cloud provider free-tier tutorials.", "hours": 24}, "process engineering": {"project": "Draw and explain a P&ID for a simple unit operation.", "task": "Work through mass and energy balance problems for 3 units.", "resource_type": "Standard chemical engineering textbook.", "hours": 30}, "process simulation": {"project": "Simulate a 3-unit flowsheet and run a sensitivity analysis.", "task": "Rebuild a textbook example flowsheet from scratch.", "resource_type": "Simulator vendor tutorials (free tier).", "hours": 36}, "aspen plus": {"project": "Model a distillation column and validate against hand calculations.", "task": "Complete 3 guided flowsheet tutorials.", "resource_type": "Simulator vendor tutorial library.", "hours": 32}, "matlab": {"project": "Solve a heat-transfer problem numerically and plot the result.", "task": "Write 5 small scripts covering loops, functions and plotting.", "resource_type": "Official MATLAB Onramp.", "hours": 18}, "thermodynamics": {"project": "Work through 20 solved problems on phase equilibria.", "task": "Derive and apply the key relations for one system.", "resource_type": "Standard thermodynamics textbook.", "hours": 25}, "heat transfer": {"project": "Model steady-state conduction in a wall with code.", "task": "Solve 10 problems on conduction and convection.", "resource_type": "Standard heat-transfer textbook.", "hours": 20}, "excel": {"project": "Build a small dashboard with pivot tables and charts.", "task": "Practise lookups, pivot tables and conditional formatting.", "resource_type": "Spreadsheet vendor tutorials.", "hours": 8}, "communication": {"project": "Present one technical topic to a peer group in 5 minutes.", "task": "Record yourself explaining a project and review it.", "resource_type": "Public-speaking fundamentals guide.", "hours": 10}, "technical writing": {"project": "Write a 2-page technical report on a project you built.", "task": "Rewrite one messy document with clear structure.", "resource_type": "Technical-writing style guide.", "hours": 12}, "c++": {"project": "Implement a small data-structure library with tests.", "task": "Practise pointers, templates and STL containers.", "resource_type": "A standard C++ reference.", "hours": 35}, "java": {"project": "Build a small console application with classes and file I/O.", "task": "Practise collections and exception handling.", "resource_type": "Official Java tutorials.", "hours": 35}, "embedded c": {"project": "Blink and control an LED pattern on a microcontroller.", "task": "Write and flash 5 small firmware programs.", "resource_type": "Microcontroller vendor getting-started guide.", "hours": 28}, "verilog": {"project": "Design and simulate a 4-bit counter.", "task": "Simulate 5 basic combinational and sequential circuits.", "resource_type": "A standard digital-design reference.", "hours": 30}, "r": {"project": "Reproduce a statistical analysis with plots in R.", "task": "Practise data frames and ggplot basics.", "resource_type": "R for Data Science (free online book).", "hours": 20}, "_generic": {"project": "Build one small, complete project that uses this skill end to end.", "task": "Spend 3 focused sessions covering the basics, then apply them.", "resource_type": "The official documentation, plus one beginner tutorial.", "hours": 16}}, "domain_bridges": {"chemical engineering": [{"area": "Industrial AI", "rationale": "Process plants generate sensor data; ML helps with monitoring and optimisation."}, {"area": "Sustainability", "rationale": "Process design is central to emissions and waste reduction."}, {"area": "Energy", "rationale": "Reaction and separation engineering underpin energy systems."}, {"area": "Data Science", "rationale": "Mass/energy balances are quantitative modelling — a natural bridge to analytics."}], "mechanical engineering": [{"area": "Robotics", "rationale": "Dynamics, control and mechanics map directly onto robotics."}, {"area": "Energy", "rationale": "Thermofluids underpin energy systems."}, {"area": "Industrial AI", "rationale": "Predictive maintenance uses sensor data from machines."}], "civil engineering": [{"area": "Sustainability", "rationale": "Materials and construction drive environmental impact."}, {"area": "Data Science", "rationale": "Structural and traffic data support analytics roles."}], "electrical engineering": [{"area": "Robotics", "rationale": "Control systems and embedded electronics are core to robotics."}, {"area": "Industrial AI", "rationale": "Signal processing overlaps heavily with ML."}], "computer science": [{"area": "Data Science", "rationale": "Programming and algorithms transfer directly."}, {"area": "Open Source", "rationale": "Software skills are the main currency of open-source programmes."}, {"area": "Cybersecurity", "rationale": "Systems and networking knowledge is the foundation."}], "biotechnology": [{"area": "Data Science", "rationale": "Bioinformatics is data analysis on biological datasets."}, {"area": "Research", "rationale": "Lab work leads naturally into research programmes."}]}}, "notice": "ALL records are ILLUSTRATIVE SAMPLE DATA with FICTIONAL organisations marked '(sample)'. No deadline, URL, stipend or eligibility claim is asserted as true. Unknown fields are null and shown as 'Not verified'. Never treat an unverified or absent value as a confirmed requirement."};
+</script>
+<script>
+/*
+ * engine.js — OpportunityAI engine, ported from recommender.py.
+ *
+ * Kept behaviourally identical to the Python implementation:
+ *   eligibility gates · timing status · weighted fit · radar panes ·
+ *   counterfactuals · ROI ("Next Best Move") · evidence matrix · prep kit.
+ *
+ * No AI is used here. Every number comes from the formulas below.
+ */
+(function (root) {
+  "use strict";
+
+  const DEFAULT_WEIGHTS = { skill: 0.35, interest: 0.25, academic: 0.20, workmode: 0.10, experience: 0.10 };
+
+  const RADAR_THRESHOLDS = {
+    apply_min_fit: 55.0,
+    apply_min_coverage: 0.60,
+    prepare_min_fit: 40.0,
+    closing_soon_days: 7,
+    explore_max: 5
+  };
+
+  const FUZZY_THRESHOLD = 92;
+  const SYNONYM_CREDIT = 0.9;
+  const SIMILAR_CREDIT = 0.7;
+  const COUNTERFACTUAL_MIN_DELTA = 0.5;
+  const QUOTE_MAX = 200;
+
+  const EXPERIENCE_ORDER = { Beginner: 0, Intermediate: 1, Advanced: 2 };
+  const VERIFICATION_WEIGHT = { verified: 1.0, fetched: 0.6, sample: 0.35, closed: 0.0 };
+
+  const MASTER_SKILLS = [
+    "Python", "Java", "C++", "JavaScript", "SQL", "R", "HTML/CSS",
+    "React", "Node.js", "FastAPI", "Django", "Data Structures",
+    "Machine Learning", "Deep Learning", "PyTorch", "TensorFlow",
+    "scikit-learn", "Pandas", "NumPy", "NLP", "Computer Vision",
+    "Data Visualization", "Process Engineering", "Process Simulation",
+    "Aspen Plus", "MATLAB", "Thermodynamics", "Fluid Mechanics",
+    "Heat Transfer", "Reaction Engineering", "Git", "Linux", "Docker",
+    "Cloud (AWS)", "Excel", "Embedded C", "Verilog", "Communication",
+    "Technical Writing"
+  ];
+
+  const INTEREST_OPTIONS = [
+    "Artificial Intelligence", "Machine Learning", "Data Science",
+    "Web Development", "Software Engineering", "Chemical Engineering",
+    "Research", "Sustainability", "Energy", "Robotics", "Open Source",
+    "Entrepreneurship", "Cybersecurity", "Biotechnology"
+  ];
+
+  const CATEGORY_ORDER = [
+    "Software Engineering Internship", "Data Science / ML Internship",
+    "Chemical Engineering Internship", "Research Internship", "Scholarship",
+    "Hackathon", "Innovation Competition", "Open Source Program"
+  ];
+
+  const CATEGORY_BADGE = {
+    "Software Engineering Internship": "b-blue",
+    "Data Science / ML Internship": "b-violet",
+    "Chemical Engineering Internship": "b-green",
+    "Research Internship": "b-violet",
+    "Scholarship": "b-amber",
+    "Hackathon": "b-blue",
+    "Innovation Competition": "b-green",
+    "Open Source Program": "b-grey"
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* Text / skill normalisation                                          */
+  /* ------------------------------------------------------------------ */
+  function norm(v) { return v === null || v === undefined ? "" : String(v).trim().toLowerCase(); }
+
+  function normSkill(v) {
+    return norm(v).replace(/[^a-z0-9+#./ ]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  const CANON = {};
+  MASTER_SKILLS.forEach(function (s) { CANON[normSkill(s)] = s; });
+
+  function synonymCanon(synonyms) {
+    const out = {};
+    Object.keys(synonyms || {}).forEach(function (k) { out[normSkill(k)] = normSkill(synonyms[k]); });
+    return out;
+  }
+
+  function canonicalSkill(value, synonyms) {
+    const key = normSkill(value);
+    if (CANON[key]) return CANON[key];
+    if (synonyms) {
+      const mapped = synonyms[key] || synonyms[norm(value)];
+      if (mapped) {
+        const mk = normSkill(mapped);
+        return CANON[mk] || mapped;
+      }
+    }
+    return String(value).trim();
+  }
+
+  /* Levenshtein-based ratio, matching rapidfuzz's fuzz.ratio semantics. */
+  function levDistance(a, b) {
+    a = a || ""; b = b || "";
+    const m = a.length, n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    let prev = new Array(n + 1), cur = new Array(n + 1);
+    for (let j = 0; j <= n; j++) prev[j] = j;
+    for (let i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (let j = 1; j <= n; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      }
+      const t = prev; prev = cur; cur = t;
+    }
+    return prev[n];
+  }
+
+  /* Longest common subsequence — the basis of difflib/rapidfuzz's ratio. */
+  function lcsLength(a, b) {
+    const m = a.length, n = b.length;
+    if (!m || !n) return 0;
+    let prev = new Array(n + 1).fill(0), cur = new Array(n + 1).fill(0);
+    for (let i = 1; i <= m; i++) {
+      cur[0] = 0;
+      for (let j = 1; j <= n; j++) {
+        cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]);
+      }
+      const t = prev; prev = cur; cur = t;
+    }
+    return prev[n];
+  }
+
+  /* Matches rapidfuzz fuzz.ratio: 100 * 2*M / (len(a)+len(b)). */
+  function levRatio(a, b) {
+    a = a || ""; b = b || "";
+    if (!a.length && !b.length) return 100;
+    const m = lcsLength(a, b);
+    return (200 * m) / (a.length + b.length);
+  }
+
+  function tokenize(s) { return normSkill(s).split(" ").filter(Boolean); }
+
+  /* rapidfuzz token_set_ratio: max of the three canonical set combinations. */
+  function tokenSetRatio(a, b) {
+    const ta = Array.from(new Set(tokenize(a))).sort();
+    const tb = Array.from(new Set(tokenize(b))).sort();
+    const inter = ta.filter(function (x) { return tb.indexOf(x) >= 0; });
+    const restA = ta.filter(function (x) { return inter.indexOf(x) < 0; });
+    const restB = tb.filter(function (x) { return inter.indexOf(x) < 0; });
+    const t0 = inter.join(" ");
+    const t1 = inter.concat(restA).join(" ");
+    const t2 = inter.concat(restB).join(" ");
+    return Math.max(levRatio(t0, t1), levRatio(t0, t2), levRatio(t1, t2));
+  }
+
+  /* Best credit one target skill gets from the student's skills. */
+  function skillCredit(studentSkills, target, synonyms) {
+    const t = normSkill(target);
+    const syn = synonymCanon(synonyms);
+    const tCanon = syn[t] || t;
+    let best = 0.0, via = null;
+    const list = studentSkills || [];
+    for (let i = 0; i < list.length; i++) {
+      const s = normSkill(list[i]);
+      if (!s) continue;
+      if (s === t) return { credit: 1.0, via: "exact" };
+      const sCanon = syn[s] || s;
+      if (sCanon === tCanon && s !== t) {
+        if (SYNONYM_CREDIT > best) { best = SYNONYM_CREDIT; via = "synonym"; }
+        continue;
+      }
+      if (tokenSetRatio(s, t) >= FUZZY_THRESHOLD) {
+        if (SIMILAR_CREDIT > best) { best = SIMILAR_CREDIT; via = "similar"; }
+      }
+    }
+    return { credit: best, via: via };
+  }
+
+  function canonList(values, synonyms) {
+    const out = {};
+    (values || []).forEach(function (v) { if (norm(v)) out[canonicalSkill(v, synonyms)] = true; });
+    return Object.keys(out).sort();
+  }
+
+  function parseCgpa(raw) {
+    if (raw === null || raw === undefined) return null;
+    const text = String(raw).trim();
+    if (text === "") return null;
+    const value = Number(text);
+    if (!isFinite(value)) throw new Error("CGPA must be a number between 0 and 10.");
+    if (value < 0 || value > 10) throw new Error("CGPA must be between 0 and 10.");
+    return value;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Time                                                               */
+  /* ------------------------------------------------------------------ */
+  function today() {
+    if (root && root.OPP_TODAY) return asDate(root.OPP_TODAY);
+    const d = new Date();
+    return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  }
+
+  function isoDate(v) { return typeof v === "string" && v.trim() ? v : null; }
+
+  function asDate(v) {
+    if (!v) return null;
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(v));
+    if (!m) return null;
+    return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  }
+
+  function daysBetween(a, b) { return Math.round((b.getTime() - a.getTime()) / 86400000); }
+
+  function isoOf(d) { return d.toISOString().slice(0, 10); }
+
+  /* ------------------------------------------------------------------ */
+  /* Stage 1 — eligibility gates (skills are never gates)               */
+  /* ------------------------------------------------------------------ */
+  function gateDegree(profile, opp) {
+    const allowed = opp.eligible_degrees;
+    if (!allowed || !allowed.length) return { gate: "Degree", status: "pass", detail: "No degree restriction stated." };
+    if (allowed.map(norm).indexOf("any") >= 0) return { gate: "Degree", status: "pass", detail: "Open to any degree." };
+    if (allowed.map(norm).indexOf(norm(profile.degree)) >= 0) return { gate: "Degree", status: "pass", detail: profile.degree + " is listed." };
+    return { gate: "Degree", status: "fail", detail: "Requires " + allowed.join("/") + "; you are " + (profile.degree || "unspecified") + "." };
+  }
+
+  function gateBranch(profile, opp) {
+    const allowed = opp.eligible_branches;
+    if (!allowed || !allowed.length) return { gate: "Branch", status: "pass", detail: "No branch restriction stated." };
+    const pb = norm(profile.branch);
+    for (let i = 0; i < allowed.length; i++) {
+      const na = norm(allowed[i]);
+      if (na === "any" || (pb && (pb.indexOf(na) >= 0 || na.indexOf(pb) >= 0))) {
+        return { gate: "Branch", status: "pass", detail: "Your branch matches '" + allowed[i] + "'." };
+      }
+    }
+    return { gate: "Branch", status: "fail", detail: "Restricted to " + allowed.join("/") + "; you are " + (profile.branch || "unspecified") + "." };
+  }
+
+  function gateYear(profile, opp) {
+    const years = opp.eligible_years;
+    if (!years || !years.length) return { gate: "Year", status: "unknown", detail: "No preferred year stated." };
+    if (years.indexOf(profile.year) >= 0) return { gate: "Year", status: "pass", detail: "Year " + profile.year + " is accepted." };
+    return { gate: "Year", status: "fail", detail: "Open to year(s) " + years.join(", ") + "; you are year " + profile.year + "." };
+  }
+
+  function gateCgpa(profile, opp) {
+    const min = opp.min_cgpa, cgpa = profile.cgpa;
+    if (min === null || min === undefined) return { gate: "CGPA", status: "unknown", detail: "No minimum CGPA stated." };
+    if (cgpa === null || cgpa === undefined) return { gate: "CGPA", status: "unknown", detail: "Requires " + min + "; your CGPA is not provided." };
+    if (cgpa >= min) return { gate: "CGPA", status: "pass", detail: "Requires " + min + "; you have " + cgpa + "." };
+    return { gate: "CGPA", status: "fail", detail: "Requires " + min + "; you have " + cgpa + " (short by " + (Math.round((min - cgpa) * 100) / 100) + ")." };
+  }
+
+  function gateWomen(profile, opp) {
+    if (!opp.women_only) return null;
+    const g = norm(profile.gender);
+    if (g === "female") return { gate: "Women only", status: "pass", detail: "Restricted to women; you qualify." };
+    if (g === "male") return { gate: "Women only", status: "fail", detail: "Restricted to women applicants." };
+    return { gate: "Women only", status: "unknown", detail: "Restricted to women; your gender is not specified in the profile." };
+  }
+
+  function evaluateEligibility(profile, opp, t) {
+    const gates = [gateDegree(profile, opp), gateBranch(profile, opp), gateYear(profile, opp), gateCgpa(profile, opp)];
+    const wg = gateWomen(profile, opp);
+    if (wg) gates.push(wg);
+    let status;
+    if (gates.some(function (g) { return g.status === "fail"; })) status = "Ineligible";
+    else if (gates.some(function (g) { return g.status === "unknown"; })) status = "Potentially Eligible";
+    else status = "Eligible";
+    const verify = gates.filter(function (g) { return g.status === "unknown"; })
+      .map(function (g) { return g.gate + ": " + g.detail; });
+    return { status: status, gates: gates, verify: verify };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Stage 2 — timing (separate from eligibility)                        */
+  /* ------------------------------------------------------------------ */
+  function resolveDeadline(opp, t, demoMode) {
+    if (isoDate(opp.deadline)) return opp.deadline;
+    const off = opp.demo_deadline_offset_days;
+    if (demoMode && off !== null && off !== undefined && opp.verification_status === "sample") {
+      return isoOf(new Date(t.getTime() + Number(off) * 86400000));
+    }
+    return null;
+  }
+
+  function timingStatus(opp, t, demoMode) {
+    if (norm(opp.verification_status) === "closed") return "closed";
+    if (norm(opp.deadline_kind) === "rolling") return "rolling";
+    const opens = asDate(isoDate(opp.opens_on));
+    if (opens && opens.getTime() > t.getTime()) return "not_yet_open";
+    const dl = asDate(resolveDeadline(opp, t, demoMode));
+    if (dl) {
+      if (dl.getTime() < t.getTime()) return "closed";
+      if (daysBetween(t, dl) <= RADAR_THRESHOLDS.closing_soon_days) return "closing_soon";
+      return "open";
+    }
+    return "unknown";
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Stage 3 — fit                                                      */
+  /* ------------------------------------------------------------------ */
+  function skillComponent(profile, opp, synonyms) {
+    const student = profile.skills || [];
+    const required = opp.required_skills || [];
+    const preferred = opp.preferred_skills || [];
+    const matched = [], reqCredits = [], prefCredits = [];
+
+    required.forEach(function (s) {
+      const r = skillCredit(student, s, synonyms);
+      reqCredits.push(r.credit);
+      if (r.credit > 0) matched.push({ skill: canonicalSkill(s, synonyms), via: r.via || "exact" });
+    });
+    preferred.forEach(function (s) {
+      const r = skillCredit(student, s, synonyms);
+      prefCredits.push(r.credit);
+      if (r.credit > 0) matched.push({ skill: canonicalSkill(s, synonyms), via: r.via || "exact" });
+    });
+
+    const reqCov = reqCredits.length ? reqCredits.reduce(function (a, b) { return a + b; }, 0) / reqCredits.length : 1.0;
+    const num = 2.0 * reqCredits.reduce(function (a, b) { return a + b; }, 0) + prefCredits.reduce(function (a, b) { return a + b; }, 0);
+    const den = 2.0 * reqCredits.length + prefCredits.length;
+    const coverage = den ? num / den : 0.6;
+
+    const missing = canonList(required.filter(function (s, i) { return reqCredits[i] === 0.0; }), synonyms);
+    const seen = {}, dedup = [];
+    matched.forEach(function (m) { if (!seen[m.skill]) { seen[m.skill] = 1; dedup.push(m); } });
+
+    return { score: Math.round(coverage * 10000) / 10000, required_coverage: Math.round(reqCov * 10000) / 10000, matched: dedup, missing: missing };
+  }
+
+  function interestComponent(profile, opp) {
+    const mine = (profile.interests || []).map(norm).filter(Boolean);
+    const theirs = (opp.interests || []).map(norm).filter(Boolean);
+    if (!mine.length || !theirs.length) return 0.5;
+    const overlap = theirs.filter(function (x) { return mine.indexOf(x) >= 0; }).length;
+    return Math.round(Math.min(1.0, overlap / Math.min(3, theirs.length)) * 10000) / 10000;
+  }
+
+  function academicComponent(profile, opp) {
+    const min = opp.min_cgpa, cgpa = profile.cgpa;
+    const unconfirmed = [];
+    if (min === null || min === undefined || cgpa === null || cgpa === undefined) {
+      unconfirmed.push("Minimum CGPA could not be checked (not stated, or not provided).");
+      return { score: 0.5, unconfirmed: unconfirmed };
+    }
+    const parts = [];
+    const years = opp.eligible_years;
+    parts.push(!years || !years.length || years.indexOf(profile.year) >= 0 ? 1.0 : 0.4);
+    parts.push(cgpa >= min ? 1.0 : 0.0);
+    const degrees = opp.eligible_degrees;
+    if (!degrees || !degrees.length || degrees.map(norm).indexOf("any") >= 0) parts.push(1.0);
+    else parts.push(degrees.map(norm).indexOf(norm(profile.degree)) >= 0 ? 1.0 : 0.4);
+    const mean = parts.reduce(function (a, b) { return a + b; }, 0) / parts.length;
+    return { score: Math.round(mean * 10000) / 10000, unconfirmed: unconfirmed };
+  }
+
+  function workmodeComponent(profile, opp) {
+    const pref = norm(profile.work_mode), mode = norm(opp.work_mode);
+    let modePart;
+    if (!pref || pref === "any" || pref === mode) modePart = 1.0;
+    else if (pref.indexOf(mode) >= 0 || mode.indexOf(pref) >= 0) modePart = 0.8;
+    else modePart = 0.2;
+    const pl = norm(profile.location), ol = norm(opp.location);
+    const locPart = (!pl || pl === "any" || !ol || pl.indexOf(ol) >= 0 || ol.indexOf(pl) >= 0) ? 1.0 : 0.6;
+    return Math.round((0.7 * modePart + 0.3 * locPart) * 10000) / 10000;
+  }
+
+  function experienceComponent(profile, opp) {
+    const student = EXPERIENCE_ORDER[profile.experience] !== undefined ? EXPERIENCE_ORDER[profile.experience] : 1;
+    const required = EXPERIENCE_ORDER[opp.experience_level || "Intermediate"] !== undefined ? EXPERIENCE_ORDER[opp.experience_level || "Intermediate"] : 1;
+    const gap = required - student;
+    return gap <= 0 ? 1.0 : (gap === 1 ? 0.5 : 0.2);
+  }
+
+  function scoreOpportunity(profile, opp, weights, synonyms, t) {
+    weights = weights || DEFAULT_WEIGHTS;
+    synonyms = synonyms || {};
+    const totalWeight = Object.keys(weights).reduce(function (a, k) { return a + weights[k]; }, 0) || 1.0;
+
+    const sk = skillComponent(profile, opp, synonyms);
+    const interest = interestComponent(profile, opp);
+    const ac = academicComponent(profile, opp);
+    const wm = workmodeComponent(profile, opp);
+    const ex = experienceComponent(profile, opp);
+
+    const components = { skill: sk.score, interest: interest, academic: ac.score, workmode: wm, experience: ex };
+    let total = 0;
+    Object.keys(components).forEach(function (k) { total += components[k] * (weights[k] || 0); });
+    total = total / totalWeight;
+
+    const unconfirmed = ac.unconfirmed.slice();
+    if (!opp.verified && opp.verification_status === "sample") {
+      unconfirmed.push("Sample record — verify eligibility and dates on the official site.");
+    }
+    if (!resolveDeadline(opp, t || today(), true) && opp.deadline_kind !== "rolling") {
+      unconfirmed.push("No deadline available to check.");
+    }
+
+    const pct = {};
+    Object.keys(components).forEach(function (k) { pct[k] = Math.round(components[k] * 1000) / 10; });
+
+    return {
+      opportunity: opp,
+      total: Math.round(total * 10000) / 10000,
+      score_pct: Math.round(total * 1000) / 10,
+      components: pct,
+      required_coverage: sk.required_coverage,
+      matched: sk.matched,
+      missing: sk.missing,
+      unconfirmed: unconfirmed,
+      matched_skills: sk.matched.map(function (m) { return m.skill; }),
+      missing_required: sk.missing
+    };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Stage 4 — counterfactuals                                          */
+  /* ------------------------------------------------------------------ */
+  function counterfactuals(profile, opp, weights, synonyms, maxN) {
+    synonyms = synonyms || {};
+    maxN = maxN || 3;
+    const base = scoreOpportunity(profile, opp, weights, synonyms).score_pct;
+    const out = [];
+    (opp.required_skills || []).forEach(function (skill) {
+      if (skillCredit(profile.skills || [], skill, synonyms).credit > 0) return;
+      const trial = Object.assign({}, profile, { skills: (profile.skills || []).concat([skill]) });
+      const after = scoreOpportunity(trial, opp, weights, synonyms).score_pct;
+      const delta = Math.round((after - base) * 10) / 10;
+      if (delta >= COUNTERFACTUAL_MIN_DELTA) {
+        out.push({ skill: canonicalSkill(skill, synonyms), before_pct: base, after_pct: after, delta: delta });
+      }
+    });
+    out.sort(function (a, b) { return b.delta - a.delta; });
+    return out.slice(0, maxN);
+  }
+
+  function topSkillGains(profile, opps, weights, t, synonyms, demoMode) {
+    synonyms = synonyms || {};
+    const pool = opps.filter(function (o) {
+      return evaluateEligibility(profile, o, t).status !== "Ineligible" && timingStatus(o, t, demoMode !== false) !== "closed";
+    });
+    pool.sort(function (a, b) { return scoreOpportunity(profile, b, weights, synonyms).score_pct - scoreOpportunity(profile, a, weights, synonyms).score_pct; });
+    const agg = {};
+    pool.slice(0, 10).forEach(function (o) {
+      counterfactuals(profile, o, weights, synonyms, 99).forEach(function (c) {
+        (agg[c.skill] = agg[c.skill] || []).push(c.delta);
+      });
+    });
+    const out = Object.keys(agg).map(function (s) {
+      const d = agg[s];
+      const avg = d.reduce(function (a, b) { return a + b; }, 0) / d.length;
+      return { skill: s, opportunities_lifted: d.length, avg_gain: Math.round(avg * 10) / 10 };
+    });
+    out.sort(function (a, b) { return (b.avg_gain - a.avg_gain) || (b.opportunities_lifted - a.opportunities_lifted); });
+    return out;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Opportunity Radar                                                  */
+  /* ------------------------------------------------------------------ */
+  function exclusionReason(elig, timing) {
+    if (elig.status === "Ineligible") {
+      const fails = elig.gates.filter(function (g) { return g.status === "fail"; });
+      const reason = fails.length ? fails[0].detail : "Does not meet a stated requirement.";
+      const fixes = {
+        "CGPA": "Improve your CGPA, or look for a similar role with a lower cutoff.",
+        "Year": "Revisit this in a later year of study.",
+        "Degree": "Look for an opportunity open to your degree.",
+        "Branch": "Look for an opportunity open to your branch.",
+        "Women only": "This programme is restricted to women applicants."
+      };
+      return [reason, fails.length ? (fixes[fails[0].gate] || "Check whether an exception applies.") : ""];
+    }
+    if (timing === "closed") {
+      return ["Applications are closed for this listing.", "Look for the next intake, or a similar currently-open opportunity."];
+    }
+    return null;
+  }
+
+  function bridgeFor(opp, branchBridges) {
+    const tags = (opp.interests || []).map(norm);
+    for (let i = 0; i < (branchBridges || []).length; i++) {
+      const b = branchBridges[i];
+      const area = norm(b.area);
+      if (!area) continue;
+      if (tags.some(function (t) { return area.indexOf(t) >= 0 || t.indexOf(area) >= 0; })) return b;
+    }
+    return null;
+  }
+
+  function nextActionFor(profile, opp, sc, knowledge) {
+    const playbook = (knowledge || {}).skill_playbook || {};
+    const missing = sc.missing || [];
+    if (missing.length) {
+      const skill = missing[0];
+      const entry = playbook[norm(skill)] || playbook._generic || {};
+      return "Build the missing skill '" + skill + "': " + (entry.project || "start a small project using it.");
+    }
+    if (sc.required_coverage >= RADAR_THRESHOLDS.apply_min_coverage) {
+      return "You already cover the required skills — polish your CV and apply.";
+    }
+    return "Strengthen your profile with one portfolio project in this area.";
+  }
+
+  function buildRadar(profile, opps, weights, t, demoMode, knowledge) {
+    weights = weights || DEFAULT_WEIGHTS;
+    t = t || today();
+    knowledge = knowledge || {};
+    const synonyms = knowledge.skill_synonyms || {};
+    const bridges = knowledge.domain_bridges || {};
+    const branchBridges = bridges[norm(profile.branch)] || [];
+
+    const panes = { apply_now: [], prepare_for: [], explore: [], excluded: [] };
+
+    opps.forEach(function (opp) {
+      const elig = evaluateEligibility(profile, opp, t);
+      const timing = timingStatus(opp, t, demoMode);
+      const sc = scoreOpportunity(profile, opp, weights, synonyms, t);
+      const fit = sc.score_pct;
+      const cov = sc.required_coverage;
+
+      const reason = exclusionReason(elig, timing);
+      if (reason) {
+        panes.excluded.push({
+          opportunity: opp, eligibility: elig, timing: timing, score: sc, fit: fit,
+          required_coverage: cov, deadline: resolveDeadline(opp, t, demoMode),
+          reason: reason[0], fix: reason[1]
+        });
+        return;
+      }
+
+      const deadline = resolveDeadline(opp, t, demoMode);
+      const hasSignal = !!deadline || norm(opp.deadline_kind) === "rolling";
+      const eligibleish = elig.status === "Eligible" || elig.status === "Potentially Eligible";
+      const openish = timing === "open" || timing === "closing_soon" || timing === "rolling";
+
+      const item = {
+        opportunity: opp, eligibility: elig, timing: timing, score: sc, fit: fit,
+        required_coverage: cov, deadline: deadline
+      };
+
+      if (eligibleish && openish && hasSignal && cov >= RADAR_THRESHOLDS.apply_min_coverage && fit >= RADAR_THRESHOLDS.apply_min_fit) {
+        item.next_action = "Apply now — check the official listing for the current dates.";
+        panes.apply_now.push(item);
+        return;
+      }
+      if (eligibleish && fit >= RADAR_THRESHOLDS.prepare_min_fit &&
+          (cov < RADAR_THRESHOLDS.apply_min_coverage || timing === "not_yet_open" || timing === "unknown")) {
+        item.next_action = nextActionFor(profile, opp, sc, knowledge);
+        panes.prepare_for.push(item);
+        return;
+      }
+      item.bridge = bridgeFor(opp, branchBridges);
+      item.next_action = nextActionFor(profile, opp, sc, knowledge);
+      panes.explore.push(item);
+    });
+
+    function sortPane(items) {
+      return items.sort(function (a, b) {
+        if (b.fit !== a.fit) return b.fit - a.fit;
+        const da = a.deadline || "9999-12-31", db = b.deadline || "9999-12-31";
+        if (da !== db) return da < db ? -1 : 1;
+        return a.opportunity.id < b.opportunity.id ? -1 : 1;
+      });
+    }
+    panes.apply_now = sortPane(panes.apply_now);
+    panes.prepare_for = sortPane(panes.prepare_for);
+    panes.explore = sortPane(panes.explore);
+    panes.excluded.sort(function (a, b) { return a.opportunity.id < b.opportunity.id ? -1 : 1; });
+    return panes;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Information quality — never mixed with fit                          */
+  /* ------------------------------------------------------------------ */
+  function informationCompleteness(opp) {
+    const present = {
+      source: !!opp.source_url,
+      deadline: !!opp.deadline || norm(opp.deadline_kind) === "rolling",
+      eligibility: !!(opp.eligibility && opp.eligibility.length),
+      apply_url: !!opp.apply_url
+    };
+    const keys = Object.keys(present);
+    const n = keys.filter(function (k) { return present[k]; }).length;
+    const status = opp.verification_status || "sample";
+    return {
+      fields: present, present_count: n, total: keys.length,
+      completeness_pct: Math.round(100 * n / keys.length),
+      verification_status: status, human_verified: status === "verified",
+      last_verified: opp.last_verified, label: "Information completeness",
+      note: "Measures how much of this record is actually stated, and whether a human has checked it. It is NOT a guarantee of legitimacy and is NOT part of your fit score."
+    };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* ROI engine — Your Next Best Move                                    */
+  /* ------------------------------------------------------------------ */
+  function maxnorm(values) {
+    const hi = values.length ? Math.max.apply(null, values) : 0;
+    if (hi <= 1e-9) return values.map(function () { return 1.0; });
+    return values.map(function (v) { return v / hi; });
+  }
+
+  function targetOpportunities(profile, opps, weights, t, synonyms, n, demoMode) {
+    const scored = [];
+    opps.forEach(function (o) {
+      const st = evaluateEligibility(profile, o, t).status;
+      if (st === "Ineligible") return;
+      if (timingStatus(o, t, demoMode !== false) === "closed") return;
+      scored.push([st === "Eligible" ? 0 : 1, -scoreOpportunity(profile, o, weights, synonyms).score_pct, o.id, o]);
+    });
+    scored.sort(function (a, b) { return (a[0] - b[0]) || (a[1] - b[1]) || (a[2] < b[2] ? -1 : 1); });
+    return scored.slice(0, n).map(function (s) { return s[3]; });
+  }
+
+  function actionPriority(profile, opps, weights, t, knowledge, demoMode, targetN) {
+    knowledge = knowledge || {};
+    const synonyms = knowledge.skill_synonyms || {};
+    const playbook = knowledge.skill_playbook || {};
+    weights = weights || DEFAULT_WEIGHTS;
+    t = t || today();
+    targetN = targetN || 5;
+
+    const targets = targetOpportunities(profile, opps, weights, t, synonyms, targetN, demoMode);
+    if (!targets.length) return [];
+
+    const cand = {};
+    targets.forEach(function (opp) {
+      const base = scoreOpportunity(profile, opp, weights, synonyms).score_pct;
+      const eligStatus = evaluateEligibility(profile, opp, t).status;
+      (opp.required_skills || []).forEach(function (skill) {
+        if (skillCredit(profile.skills || [], skill, synonyms).credit > 0) return;
+        const trial = Object.assign({}, profile, { skills: (profile.skills || []).concat([skill]) });
+        const after = scoreOpportunity(trial, opp, weights, synonyms).score_pct;
+        const gain = after - base;
+        if (gain < COUNTERFACTUAL_MIN_DELTA) return;
+        const canon = canonicalSkill(skill, synonyms);
+        const e = cand[canon] || (cand[canon] = { skill: canon, targets: [], gains: [], conf: [], eligWeights: [] });
+        e.targets.push({ id: opp.id, title: opp.title, before: base, after: after, eligibility: eligStatus });
+        e.gains.push(gain);
+        e.conf.push(VERIFICATION_WEIGHT[opp.verification_status] !== undefined ? VERIFICATION_WEIGHT[opp.verification_status] : 0.35);
+        e.eligWeights.push(eligStatus === "Eligible" ? 1.0 : 0.6);
+      });
+    });
+
+    const items = Object.keys(cand).map(function (k) { return cand[k]; });
+    if (!items.length) return [];
+
+    const rRaw = items.map(function (it) {
+      let s = 0;
+      it.targets.forEach(function (tt, i) { s += tt.before * it.eligWeights[i]; });
+      return s / 100.0;
+    });
+    const gRaw = items.map(function (it) { return it.gains.reduce(function (a, b) { return a + b; }, 0) / it.gains.length; });
+    const cRaw = items.map(function (it) { return it.conf.reduce(function (a, b) { return a + b; }, 0) / it.conf.length; });
+    const hours = items.map(function (it) {
+      const entry = playbook[norm(it.skill)] || playbook._generic || {};
+      return Number(entry.hours !== undefined ? entry.hours : 16);
+    });
+
+    const rN = maxnorm(rRaw), gN = maxnorm(gRaw), cN = maxnorm(cRaw);
+    const tMax = Math.max.apply(null, hours) || 1.0;
+
+    items.forEach(function (it, i) {
+      const tN = Math.max(0.05, hours[i] / tMax);
+      it.relevance = Math.round(rRaw[i] * 1000) / 1000;
+      it.needs_verification = it.targets.some(function (tt) { return tt.eligibility === "Potentially Eligible"; });
+      it.gap = Math.round(gRaw[i] * 100) / 100;
+      it.confidence = Math.round(cRaw[i] * 100) / 100;
+      it.hours = Math.round(hours[i]);
+      it.opportunities_lifted = it.targets.length;
+      it.priority = Math.round(((rN[i] * gN[i] * cN[i]) / tN) * 10000) / 10000;
+      const entry = playbook[norm(it.skill)] || playbook._generic || {};
+      it.project = entry.project || "Start a small project that uses it end to end.";
+      it.task = entry.task || "Spend focused sessions on the basics.";
+      it.resource_type = entry.resource_type || "Official documentation.";
+      const caveat = it.needs_verification ? " One of these still needs its eligibility confirmed — check that first." : "";
+      it.why = it.skill + " is asked for by " + it.targets.length + " of your top " + targets.length +
+        " target opportunities. Learning it lifts your fit by an average of +" + it.gap.toFixed(1) +
+        " points on " + it.opportunities_lifted + " of them. Estimated effort: " + it.hours + " hours (estimate)." + caveat;
+    });
+
+    items.sort(function (a, b) {
+      return (b.priority - a.priority) || (b.gap - a.gap) || (a.hours - b.hours) || (a.skill < b.skill ? -1 : 1);
+    });
+    return items;
+  }
+
+  function nextBestMove(profile, opps, weights, t, knowledge, demoMode, targetN) {
+    const acts = actionPriority(profile, opps, weights, t, knowledge, demoMode, targetN);
+    return acts.length ? acts[0] : null;
+  }
+
+  function pathway(action) {
+    const steps = [
+      { stage: "You now", detail: action.skill + " is not yet on your profile." },
+      { stage: "Learn " + action.skill, detail: action.task + " (~" + action.hours + " hours)." },
+      { stage: "Show it", detail: action.project }
+    ];
+    action.targets.slice(0, 3).forEach(function (t) {
+      steps.push({
+        stage: t.title,
+        detail: "Fit moves " + Math.round(t.before) + "% → " + Math.round(t.after) + "% (+" + (Math.round((t.after - t.before) * 10) / 10) + " pts)."
+      });
+    });
+    steps.push({ stage: "Improved readiness", detail: "A stronger profile for the roles you are already targeting." });
+    return steps;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Why isn't this in Apply Now?                                        */
+  /* ------------------------------------------------------------------ */
+  function whyNotApplyNow(item) {
+    const reasons = [];
+    const elig = item.eligibility || {}, timing = item.timing, cov = item.required_coverage || 0, fit = item.fit || 0;
+    const thr = RADAR_THRESHOLDS;
+
+    if (elig.status === "Potentially Eligible") {
+      reasons.push({ check: "Eligibility", status: "Potentially eligible",
+        detail: "Not a failure — these still need confirming: " + (elig.verify || []).slice(0, 2).join("; "),
+        action: "Verify the listed fields on the official page." });
+    } else {
+      reasons.push({ check: "Eligibility", status: elig.status || "unknown", detail: "All stated gates passed.", action: "No action needed." });
+    }
+
+    if (timing === "unknown" || timing === "not_yet_open") {
+      reasons.push({ check: "Timing", status: timing === "unknown" ? "Window not verified" : "Opens later",
+        detail: "No verified open application window, so it cannot sit in Apply Now.",
+        action: "Check the official page for the current window." });
+    } else if (timing === "closed") {
+      reasons.push({ check: "Timing", status: "Closed", detail: "The deadline has passed.", action: "Look for the next intake." });
+    } else {
+      reasons.push({ check: "Timing", status: timing.replace(/_/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); }),
+        detail: "There is a live window.", action: "Apply once the other checks pass." });
+    }
+
+    reasons.push({
+      check: "Required-skill coverage",
+      status: Math.round(cov * 100) + "% (needs " + Math.round(thr.apply_min_coverage * 100) + "%)",
+      detail: cov < thr.apply_min_coverage ? "You do not yet cover enough of the listed required skills." : "You cover enough of the required skills.",
+      action: cov < thr.apply_min_coverage ? "See the Next Move tab for the highest-value skill to add." : "No action needed."
+    });
+    reasons.push({
+      check: "Overall fit",
+      status: Math.round(fit) + "% (needs " + Math.round(thr.apply_min_fit) + "%)",
+      detail: fit < thr.apply_min_fit ? "Below the Apply Now threshold." : "Above the Apply Now threshold.",
+      action: fit < thr.apply_min_fit ? "Raise your fit by closing skill gaps." : "No action needed."
+    });
+    return reasons;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Resume → Evidence Matrix                                            */
+  /* ------------------------------------------------------------------ */
+  const SECTION_HEADINGS = {
+    skills: ["skills", "technical skills", "technologies", "tech stack"],
+    projects: ["projects", "personal projects", "academic projects"],
+    experience: ["experience", "work experience", "internship", "internships", "employment"],
+    education: ["education", "academics"]
+  };
+
+  function splitSentences(text) {
+    if (!text) return [];
+    const parts = [];
+    text.split("\n").forEach(function (line) {
+      line = line.trim();
+      if (!line) return;
+      line.split(/(?<=[.!?;])\s+/).forEach(function (chunk) {
+        chunk = chunk.trim();
+        if (chunk) parts.push(chunk);
+      });
+    });
+    return parts;
+  }
+
+  function sectionOf(line) {
+    const low = norm(line).replace(/:$/, "");
+    const keys = Object.keys(SECTION_HEADINGS);
+    for (let i = 0; i < keys.length; i++) {
+      const section = keys[i];
+      const list = SECTION_HEADINGS[section];
+      for (let j = 0; j < list.length; j++) {
+        const k = list[j];
+        if (low === k || low.indexOf(k + ":") === 0 || (low.length < 30 && low.indexOf(k) >= 0)) return section;
+      }
+    }
+    return null;
+  }
+
+  function evidenceMatrix(resumeText, opp, synonyms) {
+    synonyms = synonyms || {};
+    const rows = [];
+    const sentences = splitSentences(resumeText || "");
+    const sectionFor = {};
+    let current = "Other";
+    (resumeText || "").split("\n").forEach(function (line) {
+      const s = sectionOf(line);
+      if (s) current = s;
+      sectionFor[line.trim()] = current;
+    });
+    const syn = synonymCanon(synonyms);
+
+    (opp.required_skills || []).forEach(function (req) {
+      const canon = canonicalSkill(req, synonyms);
+      const candidates = {};
+      candidates[normSkill(req)] = 1;
+      candidates[normSkill(canon)] = 1;
+      if (syn[normSkill(req)]) candidates[syn[normSkill(req)]] = 1;
+      Object.keys(syn).forEach(function (k) { if (syn[k] === normSkill(canon)) candidates[k] = 1; });
+
+      let quote = null, section = "Other";
+      for (let i = 0; i < sentences.length && !quote; i++) {
+        const ns = normSkill(sentences[i]);
+        const keys = Object.keys(candidates).filter(Boolean);
+        for (let j = 0; j < keys.length; j++) {
+          const re = new RegExp("(?<![a-z0-9])" + keys[j].replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![a-z0-9])");
+          if (re.test(ns)) {
+            quote = sentences[i].slice(0, QUOTE_MAX);
+            const lineKeys = Object.keys(sectionFor);
+            for (let k = 0; k < lineKeys.length; k++) {
+              if (lineKeys[k].indexOf(sentences[i]) >= 0) { section = sectionFor[lineKeys[k]]; break; }
+            }
+            break;
+          }
+        }
+      }
+
+      let label;
+      if (!quote) label = "No evidence";
+      else if (section === "projects" || section === "experience") label = "Demonstrated";
+      else label = "Listed only";
+
+      rows.push({
+        requirement: canon, label: label, quote: quote,
+        section: (section || "Other").replace(/\b\w/g, function (c) { return c.toUpperCase(); })
+      });
+    });
+    return rows;
+  }
+
+  function validateQuote(quote, resumeText) {
+    if (!quote) return false;
+    if ((resumeText || "").indexOf(quote) >= 0) return true;
+    const nq = quote.replace(/\s+/g, " ").trim().toLowerCase();
+    const nr = (resumeText || "").replace(/\s+/g, " ").trim().toLowerCase();
+    return !!nq && nr.indexOf(nq) >= 0;
+  }
+
+  function prepKitTemplate(profile, resumeText, opp, knowledge, synonyms) {
+    knowledge = knowledge || {};
+    const playbook = knowledge.skill_playbook || {};
+    synonyms = synonyms !== undefined ? synonyms : (knowledge.skill_synonyms || {});
+    const rows = evidenceMatrix(resumeText, opp, synonyms);
+
+    const checklist = [];
+    rows.forEach(function (r) {
+      if (r.label === "No evidence") {
+        checklist.push("Add evidence for **" + r.requirement + "** — add a bullet only if you have actually done this work; otherwise do not claim it.");
+      } else if (r.label === "Listed only") {
+        checklist.push("**" + r.requirement + "** is listed but not shown in a project. Add a project bullet only if it is real; otherwise build one small project first.");
+      }
+    });
+
+    const missing = rows.filter(function (r) { return r.label !== "Demonstrated"; }).map(function (r) { return r.requirement; });
+    const topics = [
+      "Typical topics for " + (opp.category || "this kind of role") + " — not confirmed by the organisation:",
+      "Fundamentals of the required skills listed above.",
+      "One walkthrough of a project from your resume, end to end.",
+      "How you would approach a small task typical of the role."
+    ];
+
+    const focusPool = missing.length ? missing : rows.map(function (r) { return r.requirement; });
+    const plan = [];
+    for (let day = 1; day <= 7; day++) {
+      const skill = focusPool.length ? focusPool[(day - 1) % focusPool.length] : "General preparation";
+      const entry = playbook[norm(skill)] || playbook._generic || {};
+      plan.push({
+        day: day, focus: skill,
+        tasks: [entry.task || "Spend a focused session on the basics.", entry.project || "Start a small project using it."],
+        hours: 2,
+        output: entry.project || "A small artefact you can show."
+      });
+    }
+
+    return {
+      evidence: rows, resume_checklist: checklist, interview_topics: topics, plan: plan,
+      note: "Guidance only. This does not predict selection and is not confirmed by the organisation."
+    };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Skill-gap analyzer + roadmap                                        */
+  /* ------------------------------------------------------------------ */
+  function skillGap(profile, selected, knowledge) {
+    knowledge = knowledge || {};
+    const synonyms = knowledge.skill_synonyms || {};
+    const have = {};
+    (profile.skills || []).forEach(function (s) { have[normSkill(s)] = 1; });
+    const requiredUnion = {}, matched = {};
+    selected.forEach(function (item) {
+      const opp = item.opportunity || item;
+      (opp.required_skills || []).forEach(function (s) { requiredUnion[normSkill(s)] = 1; });
+      (item.matched || []).forEach(function (m) { matched[normSkill(m.skill)] = 1; });
+    });
+    const missing = Object.keys(requiredUnion).filter(function (s) { return !have[s]; });
+    return {
+      matching_skills: canonList(Object.keys(matched), synonyms),
+      missing_skills: canonList(missing, synonyms),
+      learning_plan: learningPlan(canonList(missing, synonyms), knowledge)
+    };
+  }
+
+  function learningPlan(missing, knowledge) {
+    const playbook = (knowledge || {}).skill_playbook || {};
+    const rank = { python: 0, git: 1, sql: 2, "data structures": 3, excel: 4, linux: 5, communication: 6, "technical writing": 7 };
+    const ordered = missing.slice().sort(function (a, b) {
+      const ra = rank[a.toLowerCase()] !== undefined ? rank[a.toLowerCase()] : 50;
+      const rb = rank[b.toLowerCase()] !== undefined ? rank[b.toLowerCase()] : 50;
+      return (ra - rb) || (a < b ? -1 : 1);
+    });
+    return ordered.map(function (skill, i) {
+      const entry = playbook[norm(skill)] || playbook._generic || {};
+      return {
+        priority: String(i + 1), skill: skill, estimated_time: "2-4 weeks",
+        practice_project: entry.project || ("Build one small project using " + skill + " end to end."),
+        resource_type: entry.resource_type || "Official documentation."
+      };
+    });
+  }
+
+  function buildRoadmap(plan) {
+    if (!plan.length) {
+      return ["Your skill set already covers the requirements of the selected opportunities. Focus on building one strong portfolio project and applying widely."];
+    }
+    const perPhase = Math.max(1, Math.floor(plan.length / 4) || 1);
+    const chunks = [];
+    for (let i = 0; i < plan.length; i += perPhase) chunks.push(plan.slice(i, i + perPhase));
+    const roadmap = [];
+    let week = 1;
+    const step = Math.max(1, Math.floor(12 / Math.max(1, chunks.length)));
+    chunks.forEach(function (chunk) {
+      const names = chunk.map(function (c) { return c.skill; }).join(", ");
+      const end = Math.min(week + step - 1, 12);
+      roadmap.push("Weeks " + week + "-" + end + ": Build foundations in " + names + ". Finish at least one practice project.");
+      week = end + 1;
+    });
+    roadmap.push("Final 2 weeks: polish one flagship project, write a short report, and prepare your applications.");
+    return roadmap;
+  }
+
+  function strongMatchCount(items, threshold) {
+    threshold = threshold === undefined ? 70.0 : threshold;
+    return items.filter(function (it) { return (it.fit !== undefined ? it.fit : it.score_pct) >= threshold; }).length;
+  }
+
+  const API = {
+    DEFAULT_WEIGHTS, RADAR_THRESHOLDS, FUZZY_THRESHOLD, EXPERIENCE_ORDER, VERIFICATION_WEIGHT,
+    MASTER_SKILLS, INTEREST_OPTIONS, CATEGORY_ORDER, CATEGORY_BADGE,
+    norm, normSkill, canonicalSkill, skillCredit, canonList, parseCgpa,
+    today, asDate, isoOf, daysBetween,
+    evaluateEligibility, resolveDeadline, timingStatus,
+    scoreOpportunity, counterfactuals, topSkillGains,
+    buildRadar, informationCompleteness,
+    actionPriority, nextBestMove, pathway, whyNotApplyNow,
+    splitSentences, evidenceMatrix, validateQuote, prepKitTemplate,
+    skillGap, learningPlan, buildRoadmap, strongMatchCount,
+    levRatio, tokenSetRatio
+  };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = API;
+  root.OppEngine = API;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+/*
+ * app.js — OpportunityAI website UI.
+ * Vanilla JS, no build step, no dependencies. Uses OppEngine (engine.js) and
+ * DATA (embedded opportunities + knowledge). Runs entirely in the browser.
+ */
+(function () {
+  "use strict";
+
+  const E = window.OppEngine;
+  const OPPS = DATA.opportunities;
+  const KNOW = DATA.knowledge;
+  const NOTICE = DATA.notice;
+  const SYN = KNOW.skill_synonyms || {};
+  const LS_KEY = "opportunityai.v1";
+
+  const DEMO_PROFILE = {
+    name: "Aarav Sharma", college: "Indian Institute of Technology (BHU), Varanasi",
+    degree: "B.Tech", branch: "Chemical Engineering", year: 2, cgpa: 8.2,
+    skills: ["Python", "Pandas", "Excel", "Thermodynamics", "Git", "SQL", "Data Visualization"],
+    interests: ["Data Science", "Machine Learning", "Chemical Engineering", "Research"],
+    work_mode: "Any", location: "Any", experience: "Beginner", gender: "Prefer not to say"
+  };
+
+  const UI = {
+    English: {
+      tagline: "Personal Opportunity Intelligence Platform",
+      radar: "Radar", nextmove: "Next Move", copilot: "Copilot", tracker: "Tracker",
+      skills: "Skills & Gap", whynot: "Why Not?", assistant: "Assistant",
+      apply_now: "Apply Now", prepare_for: "Prepare For", explore: "Explore",
+      eligible: "Eligible", potentially: "Potentially Eligible", ineligible: "Ineligible",
+      fit: "Fit", why_matches: "Why this opportunity?", matching_skills: "Matching skills",
+      missing_skills: "Missing skills", gates: "Eligibility gates", breakdown: "Score breakdown",
+      counterfactual: "If you learn one skill", next_action: "Next action",
+      info_quality: "Information quality", why_not_apply: "Why isn't this in Apply Now?",
+      top_action: "Recommended action", why: "Why", pathway: "Pathway",
+      alternatives: "Other actions, ranked", effort: "Estimated effort", gap: "Fit gap addressed",
+      relevance: "Relevance", confidence: "Evidence confidence",
+      evidence: "Evidence Matrix", prep_kit: "7-Day Prep Kit",
+      learning_plan: "Prioritised learning plan", roadmap: "12-week roadmap",
+      disclaimer: "This is guidance based on your profile and the dataset — it is not a prediction of selection.",
+      no_profile: "Set your profile in the panel, or press “Try Demo Profile”.",
+      ask: "Ask about opportunities, skills or your profile…",
+      view_details: "View details", save_tracker: "Save to Tracker", remove: "Remove",
+      strong: "Strong matches", analysed: "Opportunities analysed", completeness: "Profile completeness",
+      tracked: "Tracked", verified_sample: "Sample data", not_verified: "Not verified",
+      nav_language: "Language", name: "Name", college: "College", degree: "Degree",
+      branch: "Branch", year: "Year", cgpa: "CGPA (0-10)", experience: "Experience level",
+      gender: "Gender (optional)", work_mode: "Preferred work mode", location: "Preferred location",
+      skills_pick: "Technical skills", interests_pick: "Areas of interest",
+      find_opportunities: "Find My Opportunities", preferences: "Preferences",
+      reset_weights: "Reset weights", filter_mode: "Work mode", min_fit: "Minimum fit",
+      resume_title: "Resume", consent: "I consent to sending redacted resume text to an AI service",
+      data_title: "Data", export_csv: "Export Radar as CSV", delete_data: "Delete my data",
+      ai_off: "AI features off. This website runs the deterministic engine only. Sarvam AI explanations, translation and PDF parsing are available in the Python app.",
+      hero_title: "Find the opportunities that fit you - and know what to do next.",
+      hero_body: "Internships, scholarships, hackathons, research programmes and competitions, matched to your skills, interests, academics and goals. Eligibility, timing and fit are kept as three separate facts, every unknown field is labelled, and one prioritised action is put in front of you.",
+      hero_cta1: "Try Demo Profile", hero_cta2: "Open the app",
+      tag1: "Explainable matching", tag2: "Next-best-move planner", tag3: "Resume evidence",
+      tag4: "Runs offline", tag5: "No sign-up",
+      profile: "Your profile", demo_profile: "Try Demo Profile", career_goal: "Career goal",
+      demo_mode: "Demo Mode", weights: "Matching weights", filters: "Filters",
+      category: "Category", required_skill: "Required skill",
+    },
+    Hindi: {
+      tagline: "व्यक्तिगत अवसर इंटेलिजेंस प्लेटफ़ॉर्म",
+      radar: "रडार", nextmove: "अगला कदम", copilot: "कोपायलट", tracker: "ट्रैकर",
+      skills: "कौशल व अंतराल", whynot: "क्यों नहीं?", assistant: "सहायक",
+      apply_now: "अभी आवेदन करें", prepare_for: "तैयारी करें", explore: "खोजें",
+      eligible: "पात्र", potentially: "संभावित पात्र", ineligible: "अपात्र",
+      fit: "फ़िट", why_matches: "यह अवसर क्यों?", matching_skills: "मेल खाते कौशल",
+      missing_skills: "अनुपस्थित कौशल", gates: "पात्रता शर्तें", breakdown: "स्कोर विवरण",
+      counterfactual: "यदि एक कौशल सीखें", next_action: "अगला कदम",
+      info_quality: "सूचना गुणवत्ता", why_not_apply: "यह 'अभी आवेदन करें' में क्यों नहीं है?",
+      top_action: "अनुशंसित कदम", why: "क्यों", pathway: "मार्ग",
+      alternatives: "अन्य कदम, क्रम में", effort: "अनुमानित प्रयास", gap: "संबोधित फ़िट अंतराल",
+      relevance: "प्रासंगिकता", confidence: "प्रमाण विश्वास",
+      evidence: "प्रमाण मैट्रिक्स", prep_kit: "7-दिवसीय तैयारी किट",
+      learning_plan: "प्राथमिकता सीखने की योजना", roadmap: "12-सप्ताह का रोडमैप",
+      disclaimer: "यह आपकी प्रोफ़ाइल और डेटासेट पर आधारित मार्गदर्शन है — चयन की भविष्यवाणी नहीं।",
+      no_profile: "पैनल में अपनी प्रोफ़ाइल भरें, या “डेमो प्रोफ़ाइल आज़माएँ” दबाएँ।",
+      ask: "अवसरों, कौशल या प्रोफ़ाइल के बारे में पूछें…",
+      view_details: "विवरण देखें", save_tracker: "ट्रैकर में सहेजें", remove: "हटाएँ",
+      strong: "मज़बूत मिलान", analysed: "विश्लेषित अवसर", completeness: "प्रोफ़ाइल पूर्णता",
+      tracked: "ट्रैक किए गए", verified_sample: "नमूना डेटा", not_verified: "सत्यापित नहीं",
+      nav_language: "भाषा", name: "नाम", college: "कॉलेज", degree: "डिग्री",
+      branch: "शाखा", year: "वर्ष", cgpa: "सीजीपीए (0-10)", experience: "अनुभव स्तर",
+      gender: "लिंग (वैकल्पिक)", work_mode: "पसंदीदा कार्य मोड", location: "पसंदीदा स्थान",
+      skills_pick: "तकनीकी कौशल", interests_pick: "रुचि के क्षेत्र",
+      find_opportunities: "मेरे अवसर खोजें", preferences: "प्राथमिकताएँ",
+      reset_weights: "भार रीसेट करें", filter_mode: "कार्य मोड", min_fit: "न्यूनतम फ़िट",
+      resume_title: "रिज़्यूमे", consent: "मैं संपादित रिज़्यूमे पाठ AI सेवा को भेजने की सहमति देता/देती हूँ",
+      data_title: "डेटा", export_csv: "रडार CSV निर्यात करें", delete_data: "मेरा डेटा हटाएँ",
+      ai_off: "AI सुविधाएँ बंद। यह वेबसाइट केवल नियतात्मक इंजन चलाती है। Sarvam AI व्याख्या, अनुवाद और PDF पार्सिंग Python ऐप में उपलब्ध हैं।",
+      hero_title: "वे अवसर खोजें जो आपके अनुरूप हैं - और जानें आगे क्या करें।",
+      hero_body: "इंटर्नशिप, छात्रवृत्ति, हैकाथॉन, शोध कार्यक्रम और प्रतियोगिताएँ — आपके कौशल, रुचियों, अंकों और लक्ष्यों से मिलान। पात्रता, समय और फ़िट तीन अलग तथ्य हैं; हर अज्ञात फ़ील्ड चिह्नित है, और आपके सामने एक प्राथमिक कदम रखा जाता है।",
+      hero_cta1: "डेमो प्रोफ़ाइल आज़माएँ", hero_cta2: "ऐप खोलें",
+      tag1: "व्याख्यायोग्य मिलान", tag2: "अगला-कदम योजनाकार", tag3: "रिज़्यूमे प्रमाण",
+      tag4: "ऑफ़लाइन चलता है", tag5: "साइन-अप नहीं",
+      profile: "आपकी प्रोफ़ाइल", demo_profile: "डेमो प्रोफ़ाइल आज़माएँ", career_goal: "करियर लक्ष्य",
+      demo_mode: "डेमो मोड", weights: "मिलान भार", filters: "फ़िल्टर",
+      category: "श्रेणी", required_skill: "आवश्यक कौशल",
+    }
+  };
+
+  const TIMING_BADGE = {
+    open: ["Open", "b-green"], closing_soon: ["Closing soon", "b-amber"], rolling: ["Rolling", "b-blue"],
+    not_yet_open: ["Opens later", "b-violet"], closed: ["Closed", "b-red"], unknown: ["Timing not verified", "b-grey"]
+  };
+
+  const STAGES = ["Discovered", "Shortlisted", "Preparing", "Applied", "Interview",
+    "Selected", "Rejected", "Withdrawn", "No response"];
+
+  /* ------------------------------------------------------------------ */
+  /* state                                                              */
+  /* ------------------------------------------------------------------ */
+  let state = {
+    profile: {}, weights: Object.assign({}, E.DEFAULT_WEIGHTS), demoMode: true,
+    lang: "English", tab: "radar", careerGoal: "Undecided",
+    resume: "", consent: false, tracker: {}, chat: [], detailId: null,
+    evidence: null, prepKit: null, evidenceId: null,
+    filters: { cat: "All", skill: "Any", mode: "All", min: 0 }
+  };
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        state = Object.assign(state, s);
+        state.weights = Object.assign({}, E.DEFAULT_WEIGHTS, s.weights || {});
+        state.filters = Object.assign({ cat: "All", skill: "Any", mode: "All", min: 0 }, s.filters || {});
+        state.tracker = s.tracker || {};
+        state.chat = s.chat || [];
+        state.resume = "";           // never persist resume text
+        state.evidence = null; state.prepKit = null;
+      }
+    } catch (e) { /* ignore corrupt storage */ }
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        profile: state.profile, weights: state.weights, demoMode: state.demoMode,
+        lang: state.lang, careerGoal: state.careerGoal, tracker: state.tracker,
+        chat: state.chat.slice(-12), filters: state.filters
+      }));
+    } catch (e) { /* ignore quota errors */ }
+  }
+
+  const T = function (k) { return (UI[state.lang] || UI.English)[k] || UI.English[k] || k; };
+
+  /* ------------------------------------------------------------------ */
+  /* helpers                                                            */
+  /* ------------------------------------------------------------------ */
+  function esc(s) {
+    return String(s === null || s === undefined ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function badge(text, cls) { return '<span class="badge ' + (cls || "b-grey") + '">' + esc(text) + "</span>"; }
+  function ring(pct, uid, size, stroke) {
+    size = size || 78; stroke = stroke || 8;
+    pct = Math.max(0, Math.min(100, Number(pct) || 0));
+    const r = (size - stroke) / 2, c = 2 * Math.PI * r, off = c * (1 - pct / 100);
+    const gid = "g_" + uid;
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + " " + size + '">' +
+      '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs>' +
+      '<circle cx="' + size / 2 + '" cy="' + size / 2 + '" r="' + r + '" fill="none" stroke="#eaeff9" stroke-width="' + stroke + '"/>' +
+      '<circle cx="' + size / 2 + '" cy="' + size / 2 + '" r="' + r + '" fill="none" stroke="url(#' + gid + ')" ' +
+      'stroke-width="' + stroke + '" stroke-linecap="round" stroke-dasharray="' + c.toFixed(1) + '" ' +
+      'stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 ' + size / 2 + " " + size / 2 + ')"/>' +
+      '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="19" ' +
+      'font-weight="800" fill="#0b1220">' + Math.round(pct) + "%</text></svg>";
+  }
+  const COMP_LABELS = [["skill", "Skill"], ["interest", "Interest"], ["academic", "Academic"],
+    ["workmode", "Work mode"], ["experience", "Experience"]];
+  function compBars(comp) {
+    return COMP_LABELS.map(function (p) {
+      const v = Math.max(0, Math.min(100, comp[p[0]] || 0));
+      return '<div class="cbrow"><div class="cblab">' + p[1] + "</div>" +
+        '<div class="cbtrack"><span style="width:' + v.toFixed(0) + '%"></span></div>' +
+        '<div class="cbval">' + v.toFixed(0) + "%</div></div>";
+    }).join("");
+  }
+  function eligBadge(status) {
+    const map = { Eligible: ["b-green", T("eligible")], "Potentially Eligible": ["b-amber", T("potentially")], Ineligible: ["b-red", T("ineligible")] };
+    const m = map[status] || ["b-grey", status];
+    return badge(m[1], m[0]);
+  }
+  function verifBadge(opp) {
+    if (opp.verification_status === "closed") return badge("Closed", "b-red");
+    if (opp.verification_status === "verified") return badge("Verified " + (opp.last_verified || ""), "b-green");
+    if (opp.verification_status === "fetched") return badge("Fetched (not human-checked)", "b-amber");
+    return badge(T("verified_sample"), "b-amber");
+  }
+  function completeness(p) {
+    if (!p || !p.name && !p.degree) return 0;
+    const checks = [!!p.name, !!p.college, !!p.degree, !!p.branch, !!p.year,
+      p.cgpa !== null && p.cgpa !== undefined, !!(p.skills || []).length,
+      !!(p.interests || []).length, !!p.work_mode, !!p.experience];
+    return Math.round(100 * checks.filter(Boolean).length / checks.length);
+  }
+  function hasProfile() { return !!(state.profile && state.profile.degree && state.profile.year); }
+
+  function card(item, uidSuffix, rank) {
+    const opp = item.opportunity, sc = item.score, fit = item.fit;
+    const tb = TIMING_BADGE[item.timing] || ["Timing not verified", "b-grey"];
+    const catCls = E.CATEGORY_BADGE[opp.category] || "b-grey";
+    const ic = E.informationCompleteness(opp);
+    const saved = !!state.tracker[opp.id];
+    const demoB = (item.deadline && !opp.deadline) ? badge("DEMO deadline", "b-violet") : "";
+    let verifyChip = "";
+    if (item.eligibility.status === "Potentially Eligible" && item.eligibility.verify.length) {
+      verifyChip = badge("Verify: " + item.eligibility.verify[0].slice(0, 44), "b-amber");
+    }
+    const matched = (sc.matched || []).slice(0, 5).map(function (m) {
+      return '<span class="chip chip-have">' + esc(m.skill) + "</span>";
+    }).join("");
+    const missing = (sc.missing || []).slice(0, 5).map(function (s) {
+      return '<span class="chip chip-miss">' + esc(s) + "</span>";
+    }).join("");
+    return '<div class="card"><div class="card-top">' +
+      '<div style="flex:0 0 auto">' + ring(fit, opp.id + (uidSuffix || "")) + "</div>" +
+      '<div style="flex:1 1 auto;min-width:0">' +
+      '<div class="opp-title">' + esc(opp.title) + "</div>" +
+      '<div class="opp-org">' + esc(opp.organization) + "</div>" +
+      "<div>" + (rank ? badge("#" + rank, "b-violet") : "") + badge(opp.category, catCls) +
+      badge(tb[0], tb[1]) + eligBadge(item.eligibility.status) + verifBadge(opp) +
+      badge(T("info_quality") + " " + ic.completeness_pct + "%", "b-grey") + demoB +
+      (saved ? badge(T("tracked"), "b-blue") : "") + "</div>" +
+      (verifyChip ? '<div style="margin-top:8px">' + verifyChip + "</div>" : "") +
+      "</div></div>" +
+      '<div style="margin-top:8px">' + compBars(sc.components) + "</div>" +
+      '<div style="margin-top:8px">' + matched + missing + "</div>" +
+      '<div class="muted" style="margin-top:6px">' + esc(item.next_action || "") + "</div>" +
+      "</div>";
+  }
+
+  function table(headers, rows) {
+    if (!rows.length) return '<div class="empty">No rows.</div>';
+    return "<table><thead><tr>" + headers.map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" + rows.map(function (r) {
+        return "<tr>" + r.map(function (c) { return "<td>" + esc(c) + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table>";
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* derived data                                                       */
+  /* ------------------------------------------------------------------ */
+  let cache = {};
+  function radar() {
+    if (!hasProfile()) return { apply_now: [], prepare_for: [], explore: [], excluded: [] };
+    const key = JSON.stringify([state.profile, state.weights, state.demoMode]);
+    if (cache.radarKey !== key) {
+      cache.radar = E.buildRadar(state.profile, OPPS, state.weights, E.today(), state.demoMode, KNOW);
+      cache.radarKey = key;
+    }
+    return cache.radar;
+  }
+  function allItems() {
+    const r = radar();
+    return r.apply_now.concat(r.prepare_for, r.explore);
+  }
+  function actions() {
+    if (!hasProfile()) return [];
+    const key = JSON.stringify([state.profile, state.weights, state.demoMode]);
+    if (cache.actKey !== key) {
+      cache.actions = E.actionPriority(state.profile, OPPS, state.weights, E.today(), KNOW, state.demoMode, 5);
+      cache.actKey = key;
+    }
+    return cache.actions;
+  }
+  function applyFilters(items) {
+    const f = state.filters;
+    return items.filter(function (it) {
+      const o = it.opportunity;
+      if (f.cat !== "All" && o.category !== f.cat) return false;
+      if (f.mode !== "All" && o.work_mode !== f.mode) return false;
+      if (f.skill !== "Any" &&
+        (o.required_skills || []).concat(o.preferred_skills || []).indexOf(f.skill) < 0) return false;
+      if (it.fit < f.min) return false;
+      return true;
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* tab renderers                                                      */
+  /* ------------------------------------------------------------------ */
+  function renderRadar() {
+    if (!hasProfile()) return '<div class="panel">' + T("no_profile") + "</div>";
+    const r = radar();
+    const panes = [["apply_now", T("apply_now")], ["prepare_for", T("prepare_for")], ["explore", T("explore")]];
+    let html = '<div class="cols3">';
+    panes.forEach(function (p) {
+      const items = applyFilters(r[p[0]]);
+      const cap = p[0] === "explore" ? E.RADAR_THRESHOLDS.explore_max : null;
+      const shown = cap ? items.slice(0, cap) : items;
+      html += '<div><div class="col-head"><span class="dot"></span>' + esc(p[1]) + " (" + items.length + ")</div>";
+      if (cap && items.length > cap) html += '<div class="muted" style="margin-bottom:8px">Showing ' + cap + " of " + items.length + ".</div>";
+      if (!shown.length) html += '<div class="empty">Nothing here with the current filters.</div>';
+      shown.forEach(function (it, i) {
+        html += card(it, p[0], p[0] === "apply_now" ? i + 1 : null);
+        html += '<div class="row" style="margin:-6px 0 12px">' +
+          '<button class="btn sm" data-action="detail" data-id="' + it.opportunity.id + '">' + T("view_details") + "</button>" +
+          '<button class="btn sm" data-action="track" data-id="' + it.opportunity.id + '">+ ' + T("save_tracker") + "</button></div>";
+      });
+      html += "</div>";
+    });
+    html += "</div>";
+
+    if (state.detailId) html += renderDetail(state.detailId);
+    return html;
+  }
+
+  function renderDetail(id) {
+    const it = allItems().filter(function (x) { return x.opportunity.id === id; })[0];
+    if (!it) return "";
+    const opp = it.opportunity, sc = it.score;
+    const cf = E.counterfactuals(state.profile, opp, state.weights, SYN);
+    const ic = E.informationCompleteness(opp);
+    const needsWhyNot = ["open", "closing_soon", "rolling"].indexOf(it.timing) < 0 ||
+      it.required_coverage < E.RADAR_THRESHOLDS.apply_min_coverage ||
+      it.fit < E.RADAR_THRESHOLDS.apply_min_fit ||
+      it.eligibility.status === "Potentially Eligible";
+
+    let html = '<div class="panel" style="margin-top:16px"><h3><span class="dot"></span>' + esc(opp.title) + "</h3>" +
+      '<div class="muted" style="margin-bottom:10px">' + esc(opp.organization) + " · " + esc(opp.category) +
+      " · " + esc(opp.work_mode) + " · " + esc(opp.location) + "</div>" +
+      '<div class="cols3"><div>' +
+      '<div class="col-head">' + T("why_matches") + "</div>" + compBars(sc.components) +
+      '<div class="small" style="margin-top:8px"><b>' + T("fit") + ":</b> " + it.fit.toFixed(1) + "%</div>" +
+      ((sc.matched || []).length ? '<div style="margin-top:8px"><div class="muted">' + T("matching_skills") + "</div>" +
+        sc.matched.map(function (m) {
+          const tag = m.via === "synonym" ? " (synonym)" : (m.via === "similar" ? " (similar)" : "");
+          return '<span class="chip chip-have">' + esc(m.skill + tag) + "</span>";
+        }).join("") + "</div>" : "") +
+      ((sc.missing || []).length ? '<div style="margin-top:8px"><div class="muted">' + T("missing_skills") + "</div>" +
+        sc.missing.map(function (s) { return '<span class="chip chip-miss">' + esc(s) + "</span>"; }).join("") + "</div>" : "") +
+      (cf.length ? '<div style="margin-top:10px"><div class="col-head">' + T("counterfactual") + "</div>" +
+        cf.map(function (c) {
+          return "<div class=\"small\">Learn <b>" + esc(c.skill) + "</b>: " + c.before_pct + "% → <b>" +
+            c.after_pct + "%</b> (+" + c.delta + " pts)</div>";
+        }).join("") + "</div>" : "") +
+      "</div><div>" +
+      '<div class="col-head">' + T("gates") + "</div>" +
+      table(["Gate", "Result", "Detail"], it.eligibility.gates.map(function (g) { return [g.gate, g.status, g.detail]; })) +
+      '<div class="small" style="margin-top:8px"><b>' + T("next_action") + ":</b> " + esc(it.next_action || "") + "</div>" +
+      ((sc.unconfirmed || []).length ? '<div style="margin-top:8px"><div class="muted">' + T("not_verified") + "</div>" +
+        sc.unconfirmed.map(function (u) { return '<div class="small">• ' + esc(u) + "</div>"; }).join("") + "</div>" : "") +
+      "</div><div>" +
+      '<div class="col-head">' + T("info_quality") + "</div>" +
+      Object.keys(ic.fields).map(function (k) {
+        return badge(k + ": " + (ic.fields[k] ? "stated" : "not stated"), ic.fields[k] ? "b-green" : "b-grey");
+      }).join("") +
+      '<div class="muted" style="margin-top:8px">' + esc(ic.label) + ": " + ic.completeness_pct + "% (" +
+      ic.present_count + "/" + ic.total + " fields stated) · " +
+      (ic.human_verified ? "human-verified" : "not human-verified") + ". " + esc(ic.note) + "</div>" +
+      "</div></div>";
+
+    if (needsWhyNot) {
+      html += '<div style="margin-top:14px"><div class="col-head"><span class="dot"></span>' + T("why_not_apply") + "</div>" +
+        table(["Check", "Status", "Detail", "Next"],
+          E.whyNotApplyNow(it).map(function (r) { return [r.check, r.status, r.detail, r.action]; })) + "</div>";
+    }
+    html += '<div class="row" style="margin-top:14px">' +
+      '<button class="btn sm" data-action="close-detail">Close</button></div></div>';
+    return html;
+  }
+
+  function renderNextMove() {
+    if (!hasProfile()) return '<div class="panel">' + T("no_profile") + "</div>";
+    const acts = actions();
+    if (!acts.length) {
+      return '<div class="panel">Nothing to improve — you already cover the required skills for your top targets.</div>';
+    }
+    const top = acts[0];
+    let html = '<div class="card" style="border-left:5px solid #2563eb">' +
+      '<div class="muted" style="text-transform:uppercase;letter-spacing:.08em;font-weight:700">' + T("top_action") + "</div>" +
+      '<div style="font-size:1.4rem;font-weight:800;margin:6px 0 4px">Learn ' + esc(top.skill) + "</div>" +
+      '<div class="small">' + esc(top.why) + "</div></div>";
+
+    html += '<div class="metrics">' +
+      metric(T("effort"), top.hours + "h", "estimate") +
+      metric(T("gap"), "+" + top.gap.toFixed(1), "points on average") +
+      metric(T("relevance"), String(top.opportunities_lifted), "targets affected") +
+      metric(T("confidence"), top.confidence.toFixed(2), "source weight") + "</div>";
+
+    html += '<div class="cols3"><div class="panel"><h3><span class=\"dot\"></span>' + T("pathway") + "</h3>" +
+      E.pathway(top).map(function (s, i) {
+        return '<div class="path-step"><div class="n">' + (i + 1) + '</div><div class="small"><b>' +
+          esc(s.stage) + "</b> — " + esc(s.detail) + "</div></div>";
+      }).join("") + "</div>" +
+      '<div class="panel" style="grid-column:span 2"><h3><span class="dot"></span>' + T("alternatives") + "</h3>" +
+      table(["Action", "Priority", "Hours", "Avg gain", "Targets"], acts.map(function (a) {
+        return ["Learn " + a.skill, a.priority.toFixed(3), a.hours, "+" + a.gap.toFixed(1), a.opportunities_lifted];
+      })) + "</div></div>";
+
+    if (top.needs_verification) {
+      html += '<div class="note" style="margin-top:12px">One of the affected opportunities is only ' +
+        "<i>Potentially Eligible</i> — confirm its eligibility before investing time.</div>";
+    }
+    html += '<div class="muted" style="margin-top:10px">' + esc(T("disclaimer")) + "</div>";
+    return html;
+  }
+
+  function metric(label, value, sub) {
+    return '<div class="metric"><div class="label">' + esc(label) + '</div><div class="value">' + esc(value) +
+      '</div><div class="sub">' + esc(sub) + "</div></div>";
+  }
+
+  function renderCopilot() {
+    if (!hasProfile()) return '<div class="panel">' + T("no_profile") + "</div>";
+    const items = allItems();
+    const options = items.map(function (it) {
+      return '<option value="' + it.opportunity.id + '"' +
+        (state.evidenceId === it.opportunity.id ? " selected" : "") + ">" +
+        esc(it.opportunity.title) + "</option>";
+    }).join("");
+    const opp = items.filter(function (it) { return it.opportunity.id === state.evidenceId; })[0] ||
+      items[0] || { opportunity: OPPS[0] };
+
+    let html = '<div class="panel"><h3><span class="dot"></span>AI Application Copilot</h3>' +
+      '<div class="muted">Built deterministically from your resume text. Every quote is checked against the ' +
+      "resume in code — a quote that is not there is discarded.</div>" +
+      '<label for="cop-opp">Opportunity</label><select id="cop-opp">' + options + "</select>" +
+      '<div class="row" style="margin-top:12px">' +
+      '<button class="btn primary" data-action="build-evidence">Build Evidence Matrix</button>' +
+      '<button class="btn" data-action="build-prep">Generate 7-Day Prep Kit</button></div></div>';
+
+    if (!state.resume) {
+      html += '<div class="note">No resume text yet — paste it in the panel on the left. ' +
+        "Everything works offline; PDF parsing needs the Python app or an internet connection.</div>";
+    }
+
+    if (state.evidence) {
+      html += '<div class="panel"><h3><span class="dot"></span>' + T("evidence") + "</h3>";
+      html += state.evidence.map(function (r) {
+        const cls = r.label === "Demonstrated" ? "b-green" : (r.label === "Listed only" ? "b-amber" : "b-grey");
+        return "<div style=\"margin-bottom:10px\"><b>" + esc(r.requirement) + "</b> " + badge(r.label, cls) +
+          " " + badge(r.section, "b-grey") +
+          (r.quote ? '<div class="q">' + esc(r.quote) + "</div>" : '<div class="muted">No evidence found.</div>') +
+          "</div>";
+      }).join("") + "</div>";
+    }
+
+    if (state.prepKit) {
+      const kit = state.prepKit;
+      html += '<div class="panel"><h3><span class="dot"></span>' + T("prep_kit") + "</h3>" +
+        "<b>Resume checklist</b>" + kit.resume_checklist.map(function (c) {
+          return '<div class="small">• ' + esc(c).replace(/\*\*/g, "") + "</div>";
+        }).join("") +
+        '<div style="margin-top:10px"><b>Interview topics</b>' + kit.interview_topics.map(function (c) {
+          return '<div class="small">• ' + esc(c) + "</div>";
+        }).join("") + "</div>" +
+        '<div style="margin-top:10px"><b>7-day plan</b>' +
+        table(["Day", "Focus", "Hours", "Tasks", "Output"], kit.plan.map(function (d) {
+          return [d.day, d.focus, d.hours, d.tasks.join(" · "), d.output];
+        })) + "</div>" +
+        '<div class="muted" style="margin-top:8px">' + esc(kit.note) + "</div>" +
+        '<div class="row" style="margin-top:10px"><button class="btn sm" data-action="track" data-id="' +
+        esc(opp.opportunity.id) + '">+ ' + T("save_tracker") + "</button></div></div>";
+    }
+    return html;
+  }
+
+  function renderSkills() {
+    if (!hasProfile()) return '<div class="panel">' + T("no_profile") + "</div>";
+    const pool = allItems();
+    if (!pool.length) return '<div class="panel">No eligible opportunities yet.</div>';
+    const chosen = pool.slice(0, 3);
+    const gap = E.skillGap(state.profile, chosen, KNOW);
+    return '<div class="cols3"><div class="panel"><h3><span class="dot"></span>' + T("matching_skills") + "</h3>" +
+      (gap.matching_skills.length ? gap.matching_skills.map(function (s) {
+        return '<span class="chip chip-have">' + esc(s) + "</span>";
+      }).join("") : '<div class="empty">None yet.</div>') + "</div>" +
+      '<div class="panel" style="grid-column:span 2"><h3><span class="dot"></span>' + T("missing_skills") + "</h3>" +
+      (gap.missing_skills.length ? gap.missing_skills.map(function (s) {
+        return '<span class="chip chip-miss">' + esc(s) + "</span>";
+      }).join("") : '<div class="empty">No gaps against your top matches.</div>') + "</div></div>" +
+      '<div class="panel"><h3><span class="dot"></span>' + T("learning_plan") + "</h3>" +
+      table(["Priority", "Skill", "Practice project", "Resource type"], gap.learning_plan.map(function (p) {
+        return [p.priority, p.skill, p.practice_project, p.resource_type];
+      })) + "</div>" +
+      '<div class="panel"><h3><span class="dot"></span>' + T("roadmap") + "</h3>" +
+      E.buildRoadmap(gap.learning_plan).map(function (l) { return '<div class="small">• ' + esc(l) + "</div>"; }).join("") +
+      '<div class="muted" style="margin-top:8px">Practical suggestions only — they do not guarantee selection.</div></div>';
+  }
+
+  function renderWhyNot() {
+    if (!hasProfile()) return '<div class="panel">' + T("no_profile") + "</div>";
+    const ex = radar().excluded;
+    if (!ex.length) return '<div class="panel">Nothing is excluded for this profile.</div>';
+    return '<div class="panel"><h3><span class="dot"></span>' + T("whynot") + "</h3>" +
+      '<div class="muted" style="margin-bottom:10px">An unverified field is never a failure — only a stated ' +
+      "requirement that is not met, or a closed deadline.</div>" +
+      ex.map(function (it) {
+        const o = it.opportunity;
+        const tb = TIMING_BADGE[it.timing] || ["unknown", "b-grey"];
+        return '<div class="card"><div class="opp-title">' + esc(o.title) + "</div>" +
+          '<div class="opp-org">' + esc(o.organization) + "</div><div>" +
+          badge(o.category, E.CATEGORY_BADGE[o.category] || "b-grey") + eligBadge(it.eligibility.status) +
+          badge(tb[0], tb[1]) + verifBadge(o) + "</div>" +
+          '<div class="small" style="margin-top:8px"><b>Reason:</b> ' + esc(it.reason) + "</div>" +
+          '<div class="muted" style="margin-top:4px"><b>What would help:</b> ' + esc(it.fix) + "</div>" +
+          '<div style="margin-top:8px">' + table(["Gate", "Result", "Detail"],
+            it.eligibility.gates.map(function (g) { return [g.gate, g.status, g.detail]; })) + "</div></div>";
+      }).join("") + "</div>";
+  }
+
+  function renderTracker() {
+    const ids = Object.keys(state.tracker);
+    if (!ids.length) {
+      return '<div class="panel">Nothing tracked yet. Use <b>' + T("save_tracker") + "</b> on a Radar card.</div>";
+    }
+    let html = '<div class="panel"><h3><span class="dot"></span>' + T("tracker") + "</h3>" +
+      '<div class="muted">Stored in your browser (localStorage). It persists across reloads on this device.</div>';
+    ids.forEach(function (id) {
+      const opp = OPPS.filter(function (o) { return o.id === id; })[0];
+      const entry = state.tracker[id];
+      html += '<div class="row" style="margin-top:12px;flex-wrap:wrap">' +
+        '<div style="flex:1 1 240px"><b>' + esc(opp ? opp.title : id) + "</b>" +
+        '<div class="muted">' + esc(opp ? opp.organization : "") + " · " + esc(entry.stage) + "</div></div>" +
+        '<select data-action="stage" data-id="' + esc(id) + '" style="max-width:190px">' +
+        STAGES.map(function (s) {
+          return '<option value="' + s + '"' + (entry.stage === s ? " selected" : "") + ">" + s + "</option>";
+        }).join("") + "</select>" +
+        '<button class="btn sm" data-action="untrack" data-id="' + esc(id) + '">' + T("remove") + "</button></div>";
+    });
+    html += "</div>";
+    const counts = {};
+    Object.keys(state.tracker).forEach(function (id) {
+      const s = state.tracker[id].stage;
+      counts[s] = (counts[s] || 0) + 1;
+    });
+    html += '<div class="panel"><h3><span class="dot\"></span>Funnel</h3>' +
+      STAGES.filter(function (s) { return counts[s]; }).map(function (s) {
+        return '<div class="small">• <b>' + esc(s) + "</b>: " + counts[s] + "</div>";
+      }).join("") + "</div>";
+    return html;
+  }
+
+  function renderAssistant() {
+    let html = '<div class="panel"><h3><span class="dot"></span>' + T("assistant") + "</h3>" +
+      '<div class="muted">Answers come from your profile and the local dataset. It has not searched the internet.</div>' +
+      '<div class="chat" id="chat">' +
+      (state.chat.length ? state.chat : [{ role: "bot", text: "Ask me: “Which opportunities are best for my profile?”, “What should I learn?”, “Show beginner-friendly options”, or “Opportunities for a second-year student”." }])
+        .map(function (m) {
+          return '<div class="msg ' + (m.role === "user" ? "user" : "bot") + '">' + esc(m.text) + "</div>";
+        }).join("") + "</div>" +
+      '<div class="row" style="margin-top:10px"><input type="text" id="chat-in" placeholder="' + esc(T("ask")) +
+      '" style="flex:1"><button class="btn primary" data-action="chat-send">Send</button>' +
+      '<button class="btn" data-action="chat-clear">Clear</button></div></div>';
+    return html;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* local assistant (ported from sarvam_client.local_answer)            */
+  /* ------------------------------------------------------------------ */
+  function localAnswer(q) {
+    const s = (q || "").toLowerCase().trim().replace(/-/g, " ");
+    const items = allItems().slice().sort(function (a, b) { return b.fit - a.fit; });
+    if (!s) return "Ask about your best matches, what to learn, or which opportunities suit your year.";
+    if (/best|top|recommend|suit my profile|match/.test(s)) {
+      if (!items.length) return "I don't have a profile to match yet. Press “Try Demo Profile” on the left.";
+      return "Based on your profile, your strongest matches are:\n" + items.slice(0, 3).map(function (i) {
+        return "• " + i.opportunity.title + " — " + i.opportunity.organization + " (" + i.fit.toFixed(0) + "% fit)";
+      }).join("\n") + "\nOpen the Radar for the full reasoning on each.";
+    }
+    if (/learn|skill|data scientist|become a|study/.test(s)) {
+      const gaps = [];
+      items.slice(0, 5).forEach(function (i) { (i.score.missing || []).forEach(function (m) { gaps.push(m); }); });
+      const seen = {}, ordered = [];
+      gaps.forEach(function (g) { if (!seen[g.toLowerCase()]) { seen[g.toLowerCase()] = 1; ordered.push(g); } });
+      if (ordered.length) return "For your top matches, prioritise: " + ordered.slice(0, 6).join(", ") +
+        ". The Skills & Gap tab turns this into a plan.";
+      return "Fill in your profile (or use the demo profile) so I can be specific about skills.";
+    }
+    const ym = { first: 1, "1st": 1, second: 2, "2nd": 2, third: 3, "3rd": 3, final: 4, fourth: 4, "4th": 4 };
+    if (/year/.test(s)) {
+      let want = null;
+      Object.keys(ym).forEach(function (k) { if (s.indexOf(k) >= 0) want = ym[k]; });
+      if (want) {
+        const picks = OPPS.filter(function (o) { return (o.eligible_years || []).indexOf(want) >= 0; }).slice(0, 4);
+        if (picks.length) return "Opportunities that accept year " + want + ":\n" + picks.map(function (o) {
+          return "• " + o.title + " — " + o.organization;
+        }).join("\n") + "\nSample records — confirm the current intake on the official site.";
+      }
+      return "I couldn't match that year. Try 'second year' or 'final year'.";
+    }
+    if (/no experience|without experience|beginner|fresher|no prior/.test(s)) {
+      const picks = OPPS.filter(function (o) { return o.experience_level === "Beginner"; }).slice(0, 5);
+      return "Beginner-friendly options:\n" + picks.map(function (o) {
+        return "• " + o.title + " — " + o.organization + " (" + o.category + ")";
+      }).join("\n") + "\nStart with one to build a portfolio before targeting advanced roles.";
+    }
+    if (/research|improve my chances|chances|paper/.test(s)) {
+      return "To strengthen a research application: build one small, documented project; learn to read and " +
+        "summarise a paper; and write to a faculty mentor with a specific question. I can't guarantee " +
+        "outcomes, but these improve your profile.";
+    }
+    if (/deadline|last date|apply by|when/.test(s)) {
+      return "The sample dataset does not carry verified deadlines, so I won't invent any. Check the current " +
+        "dates on the organisation's official website.";
+    }
+    if (/chemical|process|aspen/.test(s)) {
+      const picks = OPPS.filter(function (o) { return o.category === "Chemical Engineering Internship"; });
+      if (picks.length) return "Chemical-engineering options:\n" + picks.map(function (o) {
+        return "• " + o.title + " — " + o.organization + " (" + o.work_mode + ")";
+      }).join("\n");
+    }
+    if (/scholarship/.test(s)) {
+      const picks = OPPS.filter(function (o) { return o.category === "Scholarship"; });
+      if (picks.length) return "Scholarship records:\n" + picks.map(function (o) {
+        return "• " + o.title + " — " + o.organization;
+      }).join("\n") + "\nEligibility and income criteria vary; verify on the official source.";
+    }
+    return "I answer from a fixed sample dataset and your profile — I haven't searched the internet. Try: " +
+      "“Which opportunities are best for my profile?”, “What should I learn?”, “Show beginner-friendly " +
+      "options”, or “Opportunities for a second-year student”.";
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* main render                                                        */
+  /* ------------------------------------------------------------------ */
+  function applyI18n() {
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      const v = (UI[state.lang] || UI.English)[el.getAttribute("data-i18n")];
+      if (v) el.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      const v = (UI[state.lang] || UI.English)[el.getAttribute("data-i18n-ph")];
+      if (v) el.setAttribute("placeholder", v);
+    });
+  }
+
+  function render() {
+    applyI18n();
+    document.querySelectorAll(".tab").forEach(function (b) {
+      b.classList.toggle("active", b.dataset.tab === state.tab);
+    });
+    document.getElementById("lang-label").textContent = state.lang;
+    const main = document.getElementById("main");
+    if (state.tab === "radar") main.innerHTML = renderRadar();
+    else if (state.tab === "nextmove") main.innerHTML = renderNextMove();
+    else if (state.tab === "copilot") main.innerHTML = renderCopilot();
+    else if (state.tab === "skills") main.innerHTML = renderSkills();
+    else if (state.tab === "whynot") main.innerHTML = renderWhyNot();
+    else if (state.tab === "tracker") main.innerHTML = renderTracker();
+    else main.innerHTML = renderAssistant();
+    renderMetrics();
+    save();
+  }
+
+  function renderMetrics() {
+    const items = allItems();
+    const strong = E.strongMatchCount(items);
+    document.getElementById("metrics").innerHTML =
+      metric(T("completeness"), completeness(state.profile) + "%", state.profile.name || "no profile yet") +
+      metric(T("analysed"), String(OPPS.length), "sample dataset") +
+      metric(T("strong"), String(strong), "70% fit or higher") +
+      metric(T("tracked"), String(Object.keys(state.tracker).length), "in tracker");
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* profile form                                                       */
+  /* ------------------------------------------------------------------ */
+  function skillsPicker() {
+    document.getElementById("pf-skills").innerHTML = E.MASTER_SKILLS.map(function (s) {
+      return '<label><input type="checkbox" data-skill="' + esc(s) + '">' + esc(s) + "</label>";
+    }).join("");
+    document.getElementById("pf-interests").innerHTML = E.INTEREST_OPTIONS.map(function (s) {
+      return '<label><input type="checkbox" data-interest="' + esc(s) + '">' + esc(s) + "</label>";
+    }).join("");
+  }
+
+  function syncForm() {
+    const p = state.profile || {};
+    const set = function (id, v) { const el = document.getElementById(id); if (el) el.value = v === null || v === undefined ? "" : v; };
+    set("pf-name", p.name || ""); set("pf-college", p.college || ""); set("pf-branch", p.branch || "");
+    set("pf-year", p.year || 1); set("pf-cgpa", p.cgpa === null || p.cgpa === undefined ? "" : p.cgpa);
+    set("pf-degree", p.degree || "B.Tech"); set("pf-exp", p.experience || "Beginner");
+    set("pf-gender", p.gender || "Prefer not to say"); set("pf-mode", p.work_mode || "Any");
+    set("pf-location", p.location || "Any"); set("pf-goal", state.careerGoal);
+    document.querySelectorAll("[data-skill]").forEach(function (cb) {
+      cb.checked = (p.skills || []).indexOf(cb.dataset.skill) >= 0;
+    });
+    document.querySelectorAll("[data-interest]").forEach(function (cb) {
+      cb.checked = (p.interests || []).indexOf(cb.dataset.interest) >= 0;
+    });
+    document.getElementById("f-cat").value = state.filters.cat;
+    document.getElementById("f-mode").value = state.filters.mode;
+    document.getElementById("f-min").value = state.filters.min;
+    document.getElementById("f-min-val").textContent = state.filters.min + "%";
+    document.getElementById("demo-toggle").checked = state.demoMode;
+  }
+
+  function readForm() {
+    const skills = Array.prototype.slice.call(document.querySelectorAll("[data-skill]:checked")).map(function (c) { return c.dataset.skill; });
+    const interests = Array.prototype.slice.call(document.querySelectorAll("[data-interest]:checked")).map(function (c) { return c.dataset.interest; });
+    let cgpa = null;
+    try { cgpa = E.parseCgpa(document.getElementById("pf-cgpa").value); }
+    catch (err) { alert("Invalid CGPA: " + err.message + " Leave it blank if you prefer not to share it."); return false; }
+    state.profile = {
+      name: document.getElementById("pf-name").value.trim(),
+      college: document.getElementById("pf-college").value.trim(),
+      degree: document.getElementById("pf-degree").value,
+      branch: document.getElementById("pf-branch").value.trim(),
+      year: Number(document.getElementById("pf-year").value),
+      cgpa: cgpa, skills: skills, interests: interests,
+      work_mode: document.getElementById("pf-mode").value,
+      location: document.getElementById("pf-location").value.trim() || "Any",
+      experience: document.getElementById("pf-exp").value,
+      gender: document.getElementById("pf-gender").value
+    };
+    return true;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* csv + downloads                                                    */
+  /* ------------------------------------------------------------------ */
+  function download(name, text, mime) {
+    const blob = new Blob([text], { type: mime || "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+  function csvOfRadar() {
+    const r = radar();
+    const rows = [["pane", "id", "title", "organization", "category", "fit_pct", "required_coverage",
+      "eligibility", "timing", "deadline", "verification_status", "missing_skills"]];
+    ["apply_now", "prepare_for", "explore", "excluded"].forEach(function (pane) {
+      r[pane].forEach(function (it) {
+        const o = it.opportunity, sc = it.score;
+        rows.push([pane, o.id, o.title, o.organization, o.category, it.fit.toFixed(1),
+          sc.required_coverage.toFixed(2), it.eligibility.status, it.timing, it.deadline || "",
+          o.verification_status, (sc.missing || []).join("; ")]);
+      });
+    });
+    return rows.map(function (r) {
+      return r.map(function (c) {
+        const s = String(c === null || c === undefined ? "" : c);
+        return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+      }).join(",");
+    }).join("\n");
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* events                                                             */
+  /* ------------------------------------------------------------------ */
+  function wire() {
+    document.querySelectorAll(".tab").forEach(function (b) {
+      b.addEventListener("click", function () { state.tab = b.dataset.tab; render(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    });
+
+    document.getElementById("btn-demo").addEventListener("click", function () {
+      state.profile = JSON.parse(JSON.stringify(DEMO_PROFILE));
+      state.detailId = null; state.evidence = null; state.prepKit = null;
+      syncForm(); render();
+      window.scrollTo({ top: document.getElementById("main").offsetTop - 80, behavior: "smooth" });
+    });
+    document.getElementById("btn-demo-hero").addEventListener("click", function () {
+      document.getElementById("btn-demo").click();
+    });
+    document.getElementById("btn-goto-app").addEventListener("click", function () {
+      window.scrollTo({ top: document.getElementById("layout").offsetTop - 70, behavior: "smooth" });
+    });
+    document.getElementById("btn-apply-profile").addEventListener("click", function () {
+      if (readForm()) { state.detailId = null; render(); }
+    });
+
+    document.getElementById("pf-year").addEventListener("change", function () { });
+    document.getElementById("demo-toggle").addEventListener("change", function (e) {
+      state.demoMode = e.target.checked; render();
+    });
+    document.getElementById("lang-toggle").addEventListener("click", function () {
+      state.lang = state.lang === "English" ? "Hindi" : "English"; syncForm(); render();
+    });
+    document.getElementById("pf-goal").addEventListener("change", function (e) {
+      state.careerGoal = e.target.value; save();
+    });
+
+    ["f-cat", "f-mode"].forEach(function (id) {
+      document.getElementById(id).addEventListener("change", function (e) {
+        state.filters[id === "f-cat" ? "cat" : "mode"] = e.target.value; render();
+      });
+    });
+    document.getElementById("f-skill").addEventListener("change", function (e) {
+      state.filters.skill = e.target.value; render();
+    });
+    document.getElementById("f-min").addEventListener("input", function (e) {
+      state.filters.min = Number(e.target.value);
+      document.getElementById("f-min-val").textContent = state.filters.min + "%";
+      render();
+    });
+
+    [["w-skill", "skill"], ["w-interest", "interest"], ["w-academic", "academic"],
+     ["w-workmode", "workmode"], ["w-experience", "experience"]].forEach(function (pair) {
+      const el = document.getElementById(pair[0]);
+      el.value = Math.round(state.weights[pair[1]] * 100);
+      document.getElementById(pair[0] + "-val").textContent = el.value + "%";
+      el.addEventListener("input", function (e) {
+        state.weights[pair[1]] = Number(e.target.value) / 100;
+        document.getElementById(pair[0] + "-val").textContent = e.target.value + "%";
+        render();
+      });
+    });
+    document.getElementById("btn-reset-weights").addEventListener("click", function () {
+      state.weights = Object.assign({}, E.DEFAULT_WEIGHTS);
+      syncForm();
+      [["w-skill", "skill"], ["w-interest", "interest"], ["w-academic", "academic"],
+       ["w-workmode", "workmode"], ["w-experience", "experience"]].forEach(function (pair) {
+        const el = document.getElementById(pair[0]);
+        el.value = Math.round(state.weights[pair[1]] * 100);
+        document.getElementById(pair[0] + "-val").textContent = el.value + "%";
+      });
+      render();
+    });
+
+    document.getElementById("resume-text").addEventListener("input", function (e) {
+      state.resume = e.target.value; state.evidence = null; state.prepKit = null;
+    });
+    document.getElementById("resume-file").addEventListener("change", function (e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      if (f.size > 5 * 1024 * 1024) { alert("File is larger than 5 MB."); return; }
+      if (/\.pdf$/i.test(f.name)) {
+        alert("PDF parsing in the browser needs an internet connection (pdf.js).\n\n" +
+          "Paste the resume text into the box instead — that works fully offline — " +
+          "or use the Python app for PDF upload.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function () {
+        state.resume = String(reader.result || "").slice(0, 60000);
+        document.getElementById("resume-text").value = state.resume;
+        state.evidence = null; state.prepKit = null;
+        render();
+      };
+      reader.readAsText(f);
+    });
+    document.getElementById("consent").addEventListener("change", function (e) {
+      state.consent = e.target.checked;
+    });
+
+    document.getElementById("btn-csv").addEventListener("click", function () {
+      download("opportunityai_radar.csv", csvOfRadar(), "text/csv");
+    });
+    document.getElementById("btn-wipe").addEventListener("click", function () {
+      if (!confirm("Delete your profile, tracker and chat stored in this browser?")) return;
+      localStorage.removeItem(LS_KEY);
+      state = { profile: {}, weights: Object.assign({}, E.DEFAULT_WEIGHTS), demoMode: true,
+        lang: "English", tab: state.tab, careerGoal: "Undecided", resume: "", consent: false,
+        tracker: {}, chat: [], detailId: null, evidence: null, prepKit: null, evidenceId: null,
+        filters: { cat: "All", skill: "Any", mode: "All", min: 0 } };
+      cache = {};
+      document.getElementById("resume-text").value = "";
+      syncForm(); render();
+    });
+
+    document.getElementById("main").addEventListener("click", function (e) {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+      const action = btn.dataset.action, id = btn.dataset.id;
+      if (action === "detail") { state.detailId = id; render(); }
+      else if (action === "close-detail") { state.detailId = null; render(); }
+      else if (action === "track") {
+        state.tracker[id] = { stage: "Shortlisted" }; render();
+      } else if (action === "untrack") {
+        delete state.tracker[id]; render();
+      } else if (action === "build-evidence") {
+        const sel = document.getElementById("cop-opp");
+        const oppId = sel ? sel.value : (allItems()[0] || { opportunity: OPPS[0] }).opportunity.id;
+        const opp = OPPS.filter(function (o) { return o.id === oppId; })[0];
+        state.evidenceId = oppId;
+        state.evidence = E.evidenceMatrix(state.resume, opp, SYN);
+        state.prepKit = null;
+        render();
+      } else if (action === "build-prep") {
+        const sel = document.getElementById("cop-opp");
+        const oppId = sel ? sel.value : (allItems()[0] || { opportunity: OPPS[0] }).opportunity.id;
+        const opp = OPPS.filter(function (o) { return o.id === oppId; })[0];
+        state.evidenceId = oppId;
+        state.prepKit = E.prepKitTemplate(state.profile, state.resume, opp, KNOW, SYN);
+        if (!state.evidence) state.evidence = state.prepKit.evidence;
+        render();
+      } else if (action === "chat-send") {
+        sendChat();
+      } else if (action === "chat-clear") {
+        state.chat = []; render();
+      }
+    });
+
+    document.getElementById("main").addEventListener("change", function (e) {
+      const el = e.target.closest("[data-action='stage']");
+      if (el) {
+        const id = el.dataset.id;
+        if (state.tracker[id]) { state.tracker[id].stage = el.value; render(); }
+      }
+      const sel = e.target.closest("#cop-opp");
+      if (sel) { state.evidenceId = sel.value; state.evidence = null; state.prepKit = null; render(); }
+    });
+
+    document.getElementById("main").addEventListener("keydown", function (e) {
+      if (e.target.id === "chat-in" && e.key === "Enter") sendChat();
+    });
+
+    document.querySelectorAll(".tab").forEach(function (b) { });
+  }
+
+  function sendChat() {
+    const input = document.getElementById("chat-in");
+    if (!input) return;
+    const q = input.value.trim();
+    if (!q) return;
+    state.chat.push({ role: "user", text: q });
+    state.chat.push({ role: "bot", text: localAnswer(q) });
+    input.value = "";
+    render();
+    const c = document.getElementById("chat");
+    if (c) c.scrollTop = c.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* init                                                               */
+  /* ------------------------------------------------------------------ */
+  function init() {
+    load();
+    skillsPicker();
+    document.getElementById("f-skill").innerHTML = ["Any"].concat(
+      Array.from(new Set(OPPS.flatMap(function (o) { return (o.required_skills || []).concat(o.preferred_skills || []); }))).sort()
+    ).map(function (s) { return '<option value="' + esc(s) + '">' + esc(s) + "</option>"; }).join("");
+    document.getElementById("notice").textContent = NOTICE;
+    syncForm();
+    wire();
+    render();
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+</body>
+</html>
