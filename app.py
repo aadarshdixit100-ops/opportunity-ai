@@ -36,55 +36,181 @@ st.set_page_config(page_title="OpportunityAI", page_icon="🎯", layout="wide")
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-:root{--navy:#0b1220;--soft:#334155;--muted:#64748b;--blue:#2563eb;--violet:#7c3aed;
---bg:#f5f7fc;--card:#fff;--line:#e7ebf3;--green:#059669;--amber:#b45309;--red:#b91c1c;}
-.stApp{background:radial-gradient(1100px 460px at 10% -8%,#e8efff 0,rgba(232,239,255,0) 60%),
-radial-gradient(900px 420px at 92% 0,#f2eaff 0,rgba(242,234,255,0) 55%),var(--bg);}
-html,body,[class*="css"]{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--navy);}
+
+/* ---------- Palette ---------------------------------------------------- */
+:root{
+  --navy:#0b1220;      /* primary text */
+  --navy-2:#3b4a61;    /* secondary text */
+  --muted:#5b6b82;     /* muted text (AA contrast on white) */
+  --blue:#2563eb; --violet:#7c3aed;
+  --bg:#f5f7fc; --card:#ffffff; --line:#e3e8f2;
+  --green:#047857; --amber:#b45309; --red:#b91c1c;
+  --green-bg:#e6f7ef; --amber-bg:#fdf1dd; --red-bg:#fdeaea;
+  --blue-bg:#e8f0ff; --violet-bg:#f1e9ff; --grey-bg:#eef1f6;
+}
+
+/* ---------- Base -------------------------------------------------------
+   Colour is set explicitly on the containers Streamlit paints, so it never
+   depends on the framework's theme colour leaking through. The previous
+   version relied on a `[class*="css"]` selector, which matches nothing in
+   Streamlit 1.66 (classes are st-emotion-cache-*), leaving light theme text
+   on the light backgrounds this stylesheet paints.                        */
+html, body{
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  color:var(--navy);
+}
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"]{color:var(--navy);}
+.stApp{
+  background:
+    radial-gradient(1100px 460px at 10% -8%, #e8efff 0, rgba(232,239,255,0) 60%),
+    radial-gradient(900px 420px at 92% 0, #f2eaff 0, rgba(242,234,255,0) 55%),
+    var(--bg);
+}
 .block-container{padding-top:1rem;padding-bottom:3rem;max-width:1240px;}
-h1,h2,h3,h4{color:var(--navy);letter-spacing:-.015em;}
-.hero{background:linear-gradient(118deg,#101a35 0,#1d3a8a 40%,#2563eb 68%,#7c3aed 100%);
-border-radius:22px;padding:26px 30px;color:#fff;margin-bottom:18px;
-box-shadow:0 24px 54px -28px rgba(37,99,235,.7);}
+
+h1,h2,h3,h4,h5,h6{color:var(--navy);letter-spacing:-.015em;}
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li{color:var(--navy);}
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] *,
+.stCaption, small{color:var(--muted) !important;}
+
+/* ---------- Sidebar ---------------------------------------------------- */
+section[data-testid="stSidebar"]{background:var(--card);border-right:1px solid var(--line);}
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] h4,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] li,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] *,
+section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *{color:var(--navy);}
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] *{color:var(--muted) !important;}
+div[data-testid="stSidebarNav"]{display:none;}
+
+/* ---------- Tabs ------------------------------------------------------- */
+.stTabs [data-baseweb="tab-list"]{gap:4px;background:transparent;border-bottom:1px solid var(--line);}
+.stTabs [data-baseweb="tab"]{color:var(--navy-2);font-weight:600;background:transparent;
+  border-radius:10px 10px 0 0;}
+.stTabs [data-baseweb="tab"] p, .stTabs [data-baseweb="tab"] span{color:inherit;}
+.stTabs [data-baseweb="tab"]:hover{color:var(--blue);background:rgba(37,99,235,.06);}
+.stTabs [aria-selected="true"]{color:var(--blue) !important;}
+/* Defensive: Streamlit has shipped tabs under more than one markup shape. */
+[role="tab"], .stTabs button, [data-baseweb="tab-list"] button{color:var(--navy-2);}
+[role="tab"] p, [role="tab"] span, .stTabs button p{color:inherit;}
+[role="tab"][aria-selected="true"], .stTabs button[aria-selected="true"]{color:var(--blue);}
+.stTabs [data-baseweb="tab-highlight"]{background-color:var(--blue);}
+.stTabs [data-baseweb="tab-border"]{background-color:var(--line);}
+
+/* ---------- Form controls ---------------------------------------------- */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-baseweb="select"] > div,
+[data-baseweb="input"] input{
+  background:var(--card) !important;color:var(--navy) !important;border-color:var(--line) !important;
+}
+[data-baseweb="select"] svg{fill:var(--navy-2);}
+[data-baseweb="popover"] li, [role="option"]{color:var(--navy) !important;}
+[data-baseweb="tag"]{background:var(--blue-bg) !important;}
+[data-baseweb="tag"] span{color:#1d4ed8 !important;}
+input[type="range"]{accent-color:var(--blue);}
+[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"]{background-color:var(--blue);}
+
+/* ---------- Buttons ---------------------------------------------------- */
+.stButton > button, .stDownloadButton > button, .stFormSubmitButton > button{
+  border-radius:10px;font-weight:600;border:1px solid var(--line);
+  background:var(--card);color:var(--navy);
+}
+.stButton > button p, .stDownloadButton > button p{color:inherit;}
+.stButton > button:hover, .stDownloadButton > button:hover{border-color:#c7d8fb;color:var(--blue);}
+/* Primary markers differ across Streamlit versions: kind="primary" and/or
+   data-testid="stBaseButton-primary". Cover both so the button never renders
+   as dark text on the gradient. */
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"],
+.stButton > button[data-testid="stBaseButton-primary"],
+.stFormSubmitButton > button[data-testid="stBaseButton-primary"],
+button[data-testid="stBaseButton-primary"]{
+  background:linear-gradient(135deg,var(--blue),var(--violet));border:none;color:#fff;
+  box-shadow:0 10px 22px -14px rgba(37,99,235,.85);
+}
+.stButton > button[kind="primary"] p, .stButton > button[kind="primary"] span,
+.stFormSubmitButton > button[kind="primary"] p,
+button[data-testid="stBaseButton-primary"] p,
+button[data-testid="stBaseButton-primary"] span{color:#fff !important;}
+.stButton > button[kind="primary"]:hover,
+button[data-testid="stBaseButton-primary"]:hover{filter:brightness(1.07);color:#fff;}
+.stButton > button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.stButton > button:disabled, .stButton > button:disabled p{color:#94a3b8 !important;opacity:1;}
+
+/* ---------- Alerts / expander / data ---------------------------------- */
+[data-testid="stAlert"]{border-radius:12px;}
+[data-testid="stAlert"] p, [data-testid="stAlert"] div{color:var(--navy);}
+[data-testid="stExpander"]{border:1px solid var(--line);border-radius:14px;background:var(--card);}
+[data-testid="stExpander"] summary, [data-testid="stExpander"] summary *{color:var(--navy);}
+[data-testid="stDataFrame"]{border-radius:12px;}
+[data-testid="stToggle"] label, [data-testid="stCheckbox"] label,
+[data-testid="stRadio"] label, [data-testid="stMultiSelect"] label{color:var(--navy);}
+
+/* ---------- Custom components ------------------------------------------ */
+.hero{
+  background:linear-gradient(118deg,#101a35 0,#1d3a8a 40%,#2563eb 68%,#7c3aed 100%);
+  border-radius:22px;padding:26px 30px;color:#fff;margin-bottom:18px;
+  box-shadow:0 24px 54px -28px rgba(37,99,235,.7);
+}
 .hero h1{color:#fff;margin:0 0 6px;font-size:1.9rem;font-weight:800;}
-.hero p{margin:0;opacity:.95;font-size:.98rem;max-width:760px;}
+.hero p{margin:0;opacity:.95;font-size:.98rem;max-width:760px;color:#fff;}
+.hero .kicker{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.85);margin-bottom:10px;}
+.hero .tags{margin-top:12px;}
+.hero .tags span{display:inline-block;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.26);color:#fff;padding:3px 11px;border-radius:999px;
+  font-size:.75rem;margin:3px 6px 0 0;}
+.statusstrip{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.statusstrip .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);
+  color:#fff;padding:4px 12px;border-radius:999px;font-size:.78rem;font-weight:600;}
+
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
-box-shadow:0 10px 24px -20px rgba(11,18,32,.55);margin-bottom:12px;transition:transform .16s,box-shadow .16s;}
+  box-shadow:0 10px 24px -20px rgba(11,18,32,.55);margin-bottom:12px;transition:transform .16s,box-shadow .16s;}
 .card:hover{transform:translateY(-2px);box-shadow:0 18px 34px -22px rgba(37,99,235,.5);}
 .metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
-box-shadow:0 10px 22px -20px rgba(11,18,32,.5);height:100%;}
+  box-shadow:0 10px 22px -20px rgba(11,18,32,.5);height:100%;}
 .metric .label{font-size:.71rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;}
-.metric .value{font-size:1.7rem;font-weight:800;margin-top:4px;}
+.metric .value{font-size:1.7rem;font-weight:800;margin-top:4px;color:var(--navy);}
 .metric .sub{font-size:.79rem;color:var(--muted);margin-top:2px;}
+
 .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.71rem;font-weight:600;margin:2px 5px 2px 0;}
-.b-blue{background:#e8f0ff;color:#1d4ed8;}.b-violet{background:#f1e9ff;color:#6d28d9;}
-.b-green{background:#e6f7ef;color:#047857;}.b-amber{background:#fdf1dd;color:#b45309;}
-.b-grey{background:#eef1f6;color:#475569;}.b-red{background:#fdeaea;color:#b91c1c;}
-.chip{display:inline-block;background:#eef2fb;color:#334155;border-radius:8px;padding:3px 9px;
-font-size:.78rem;margin:2px 5px 2px 0;border:1px solid #e4eaf6;}
-.chip-miss{background:#fdeaea;color:#b91c1c;border-color:#f8d5d5;}
-.chip-have{background:#e6f7ef;color:#047857;border-color:#cdeee0;}
-.opp-title{font-size:1.06rem;font-weight:700;margin:0;line-height:1.3;}
+.b-blue{background:var(--blue-bg);color:#1d4ed8;}
+.b-violet{background:var(--violet-bg);color:#6d28d9;}
+.b-green{background:var(--green-bg);color:var(--green);}
+.b-amber{background:var(--amber-bg);color:var(--amber);}
+.b-grey{background:var(--grey-bg);color:#475569;}
+.b-red{background:var(--red-bg);color:var(--red);}
+
+.chip{display:inline-block;background:var(--grey-bg);color:var(--navy-2);border-radius:8px;padding:3px 9px;
+  font-size:.78rem;margin:2px 5px 2px 0;border:1px solid #e4eaf6;}
+.chip-miss{background:var(--red-bg);color:var(--red);border-color:#f8d5d5;}
+.chip-have{background:var(--green-bg);color:var(--green);border-color:#cdeee0;}
+
+.opp-title{font-size:1.06rem;font-weight:700;margin:0;line-height:1.3;color:var(--navy);}
 .opp-org{color:var(--muted);font-size:.86rem;margin:2px 0 7px;font-weight:500;}
-.cbrow{display:flex;align-items:center;gap:9px;margin:4px 0;font-size:.79rem;}
-.cblab{width:104px;color:var(--soft);}
-.cbtrack{flex:1;height:7px;border-radius:999px;background:#eef2f9;overflow:hidden;}
-.cbtrack>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#2563eb,#7c3aed);}
-.cbval{width:38px;text-align:right;font-weight:600;}
-.section-title{font-size:1.02rem;font-weight:700;margin:2px 0 9px;}
+.cbrow{display:flex;align-items:center;gap:9px;margin:4px 0;font-size:.79rem;color:var(--navy-2);}
+.cblab{width:104px;color:var(--navy-2);}
+.cbtrack{flex:1;height:7px;border-radius:999px;background:#e9eef7;overflow:hidden;}
+.cbtrack>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));}
+.cbval{width:38px;text-align:right;font-weight:600;color:var(--navy);}
+.section-title{font-size:1.02rem;font-weight:700;margin:2px 0 9px;color:var(--navy);}
 .section-title .dot{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:8px;
-background:linear-gradient(135deg,#2563eb,#7c3aed);}
+  background:linear-gradient(135deg,var(--blue),var(--violet));}
 .muted{color:var(--muted);font-size:.83rem;}
-.small{font-size:.84rem;color:var(--soft);}
-.q{border-left:3px solid #cbd5e1;padding:4px 10px;margin:4px 0;color:var(--soft);font-size:.83rem;font-style:italic;}
-section[data-testid="stSidebar"]{background:#fff;border-right:1px solid var(--line);}
-.brand{font-weight:800;font-size:1.1rem;}
-.brand span{background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;
-background-clip:text;-webkit-text-fill-color:transparent;}
-div[data-testid="stSidebarNav"]{display:none;}
-.stButton>button{border-radius:10px;font-weight:600;}
-.stButton>button[kind="primary"]{background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;
-box-shadow:0 10px 22px -14px rgba(37,99,235,.85);}
+.small{font-size:.84rem;color:var(--navy-2);}
+.q{border-left:3px solid #cbd5e1;padding:4px 10px;margin:4px 0;color:var(--navy-2);font-size:.83rem;font-style:italic;}
+.brand{font-weight:800;font-size:1.1rem;color:var(--navy);}
+.brand span{background:linear-gradient(135deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 </style>"""
 st.markdown(CSS, unsafe_allow_html=True)
 
@@ -432,27 +558,43 @@ p = st.session_state.profile
 radar = compute_radar()
 all_items = radar["apply_now"] + radar["prepare_for"] + radar["explore"]
 
+# Status strip values — all derived, nothing invented.
+_verified_open = sum(1 for o in OPPS
+                     if o.get("verification_status") == "verified"
+                     and R.timing_status(o, TODAY, st.session_state.demo_mode) in ("open", "closing_soon", "rolling"))
+_sample_count = sum(1 for o in OPPS if o.get("verification_status") == "sample")
+_demo_state = 'On' if st.session_state.demo_mode else 'Off'
+
 st.markdown(f"""
 <div class="hero">
-  <h1>OpportunityAI</h1>
-  <p>{esc(t('app_tagline'))} — discovery → eligibility → preparation → application → tracking.
-  Runs offline; every unknown field is labelled, never invented.</p>
+  <div class="kicker">OpportunityAI · Opportunity Intelligence</div>
+  <h1>Discover opportunities. Build skills. Take your next step.</h1>
+  <p>Internships, scholarships, hackathons, research programmes and competitions — matched to your
+  skills, interests, academics and goals. Eligibility, timing and fit are kept as three separate
+  facts, and every unknown field is labelled rather than invented.</p>
+  <div class="statusstrip">
+    <span class="pill">{esc(t('completeness'))}: {completeness(p)}%</span>
+    <span class="pill">{esc(t('career_goal'))}: {esc(st.session_state.career_goal)}</span>
+    <span class="pill">{esc(t('language'))}: {esc(st.session_state.lang)}</span>
+    <span class="pill">{esc(t('demo_mode'))}: {esc(_demo_state)}</span>
+  </div>
 </div>""", unsafe_allow_html=True)
 
+strong = R.strong_match_count(all_items)
 h1, h2, h3, h4, h5 = st.columns([1, 1, 1, 1, 1.4])
 with h1:
-    st.markdown(f'<div class="metric"><div class="label">{esc(t("completeness"))}</div>'
-                f'<div class="value">{completeness(p)}%</div>'
-                f'<div class="sub">{esc(p.get("name") or "no profile yet")}</div></div>',
+    st.markdown(f'<div class="metric"><div class="label">{esc(t("analysed"))}</div>'
+                f'<div class="value">{len(OPPS)}</div>'
+                f'<div class="sub">{_sample_count} sample · {len(OPPS) - _sample_count} closed/other</div></div>',
                 unsafe_allow_html=True)
 with h2:
-    st.markdown(f'<div class="metric"><div class="label">{esc(t("analysed"))}</div>'
-                f'<div class="value">{len(OPPS)}</div><div class="sub">sample dataset</div></div>',
-                unsafe_allow_html=True)
-with h3:
-    strong = R.strong_match_count(all_items)
     st.markdown(f'<div class="metric"><div class="label">{esc(t("strong_matches"))}</div>'
                 f'<div class="value">{strong}</div><div class="sub">70% fit or higher</div></div>',
+                unsafe_allow_html=True)
+with h3:
+    st.markdown(f'<div class="metric"><div class="label">Verified &amp; open</div>'
+                f'<div class="value">{_verified_open}</div>'
+                f'<div class="sub">human-checked records with a live window</div></div>',
                 unsafe_allow_html=True)
 with h4:
     st.markdown(f'<div class="metric"><div class="label">{esc(t("saved"))}</div>'
