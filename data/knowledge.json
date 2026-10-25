@@ -1,0 +1,352 @@
+{
+  "_meta": {
+    "purpose": "Human-written knowledge used by the deterministic engine. No URLs, no invented facts."
+  },
+  "skill_synonyms": {
+    "ml": "Machine Learning",
+    "machine learning": "Machine Learning",
+    "sklearn": "scikit-learn",
+    "scikit learn": "scikit-learn",
+    "sci-kit learn": "scikit-learn",
+    "torch": "PyTorch",
+    "pytorch": "PyTorch",
+    "tensor flow": "TensorFlow",
+    "dl": "Deep Learning",
+    "deep learning": "Deep Learning",
+    "nlp": "NLP",
+    "natural language processing": "NLP",
+    "cv": "Computer Vision",
+    "computer vision": "Computer Vision",
+    "js": "JavaScript",
+    "javascript": "JavaScript",
+    "node": "Node.js",
+    "nodejs": "Node.js",
+    "node js": "Node.js",
+    "py": "Python",
+    "python3": "Python",
+    "python 3": "Python",
+    "sql": "SQL",
+    "mysql": "SQL",
+    "postgres": "SQL",
+    "postgresql": "SQL",
+    "aws": "Cloud (AWS)",
+    "amazon web services": "Cloud (AWS)",
+    "gcp": "Cloud (AWS)",
+    "github": "Git",
+    "git/github": "Git",
+    "excel": "Excel",
+    "ms excel": "Excel",
+    "spreadsheets": "Excel",
+    "matlab": "MATLAB",
+    "aspen": "Aspen Plus",
+    "aspen plus": "Aspen Plus",
+    "hysys": "Process Simulation",
+    "process simulation": "Process Simulation",
+    "thermo": "Thermodynamics",
+    "thermodynamics": "Thermodynamics",
+    "data viz": "Data Visualization",
+    "data visualisation": "Data Visualization",
+    "data visualization": "Data Visualization",
+    "dsa": "Data Structures",
+    "data structures and algorithms": "Data Structures",
+    "embedded": "Embedded C",
+    "technical writing": "Technical Writing",
+    "communication skills": "Communication"
+  },
+  "skill_playbook": {
+    "python": {
+      "project": "Build a CLI tool that cleans a messy CSV and prints a summary report.",
+      "task": "Complete 20 small scripting exercises and push them to one repo.",
+      "resource_type": "Official Python tutorial + one beginner video series.",
+      "hours": 20
+    },
+    "git": {
+      "project": "Create a repo, branch, open a pull request and resolve a merge conflict.",
+      "task": "Practise add/commit/branch/merge on a throwaway repo for 30 minutes.",
+      "resource_type": "The Pro Git book (free, official).",
+      "hours": 6
+    },
+    "sql": {
+      "project": "Load a public dataset into SQLite and answer 10 business questions with joins.",
+      "task": "Write 15 queries covering GROUP BY, JOIN and subqueries.",
+      "resource_type": "SQLBolt interactive lessons.",
+      "hours": 18
+    },
+    "data structures": {
+      "project": "Implement a stack, queue and hash map from scratch with tests.",
+      "task": "Solve 30 easy problems across arrays, strings and maps.",
+      "resource_type": "Any standard DSA practice platform.",
+      "hours": 40
+    },
+    "pandas": {
+      "project": "Analyse a public tabular dataset end-to-end and write up 5 findings.",
+      "task": "Practise groupby, merge, pivot and time-series resampling.",
+      "resource_type": "Official pandas user guide.",
+      "hours": 14
+    },
+    "numpy": {
+      "project": "Re-implement matrix operations with NumPy only.",
+      "task": "Work through 10 array-broadcasting exercises.",
+      "resource_type": "Official NumPy quickstart.",
+      "hours": 8
+    },
+    "machine learning": {
+      "project": "Train and compare 3 models on one dataset; report accuracy and errors honestly.",
+      "task": "Complete one end-to-end supervised-learning notebook.",
+      "resource_type": "scikit-learn user guide + a beginner ML course.",
+      "hours": 50
+    },
+    "scikit-learn": {
+      "project": "Build a pipeline with preprocessing, cross-validation and metrics.",
+      "task": "Reproduce 5 examples from the scikit-learn docs.",
+      "resource_type": "Official scikit-learn tutorials.",
+      "hours": 16
+    },
+    "deep learning": {
+      "project": "Train a small CNN on an image dataset and document what improved accuracy.",
+      "task": "Work through one neural-network fundamentals course module.",
+      "resource_type": "A well-known free deep-learning course.",
+      "hours": 60
+    },
+    "pytorch": {
+      "project": "Re-implement a short tutorial model from scratch and add a custom layer.",
+      "task": "Complete the official 60-minute blitz.",
+      "resource_type": "Official PyTorch tutorials.",
+      "hours": 30
+    },
+    "tensorflow": {
+      "project": "Train a small model and export it for inference.",
+      "task": "Complete one official Keras guide end to end.",
+      "resource_type": "Official TensorFlow/Keras guides.",
+      "hours": 25
+    },
+    "nlp": {
+      "project": "Classify text (e.g. sentiment) and inspect the misclassified examples.",
+      "task": "Build a simple bag-of-words baseline before any neural model.",
+      "resource_type": "A standard NLP intro course.",
+      "hours": 35
+    },
+    "computer vision": {
+      "project": "Build an image classifier and a small real-time demo.",
+      "task": "Practise image transforms and augmentation.",
+      "resource_type": "An introductory CV course.",
+      "hours": 40
+    },
+    "data visualization": {
+      "project": "Turn one dataset into a 3-chart dashboard that answers a question.",
+      "task": "Recreate 5 chart types from a public gallery.",
+      "resource_type": "Matplotlib/Plotly documentation.",
+      "hours": 12
+    },
+    "javascript": {
+      "project": "Build an interactive to-do app with local storage.",
+      "task": "Practise DOM events, fetch and promises.",
+      "resource_type": "MDN web docs.",
+      "hours": 30
+    },
+    "html/css": {
+      "project": "Recreate a landing page pixel-close from a screenshot.",
+      "task": "Build 3 responsive layouts with flexbox and grid.",
+      "resource_type": "MDN web docs.",
+      "hours": 14
+    },
+    "react": {
+      "project": "Build a small app that fetches an API and manages state.",
+      "task": "Complete the official React tutorial.",
+      "resource_type": "Official React documentation.",
+      "hours": 32
+    },
+    "fastapi": {
+      "project": "Expose a small model as a REST endpoint with request validation.",
+      "task": "Build 3 endpoints with typed models and error handling.",
+      "resource_type": "Official FastAPI tutorial.",
+      "hours": 16
+    },
+    "docker": {
+      "project": "Containerise one of your apps and run it with a single command.",
+      "task": "Write a Dockerfile for an existing project and slim the image.",
+      "resource_type": "Official Docker get-started guide.",
+      "hours": 8
+    },
+    "linux": {
+      "project": "Complete a command-line challenge set and script an automated backup.",
+      "task": "Practise pipes, permissions and process management daily for a week.",
+      "resource_type": "A standard Linux command-line guide.",
+      "hours": 12
+    },
+    "cloud (aws)": {
+      "project": "Deploy a small web app to a free-tier cloud instance.",
+      "task": "Set up one VM, open a port and serve an app.",
+      "resource_type": "Cloud provider free-tier tutorials.",
+      "hours": 24
+    },
+    "process engineering": {
+      "project": "Draw and explain a P&ID for a simple unit operation.",
+      "task": "Work through mass and energy balance problems for 3 units.",
+      "resource_type": "Standard chemical engineering textbook.",
+      "hours": 30
+    },
+    "process simulation": {
+      "project": "Simulate a 3-unit flowsheet and run a sensitivity analysis.",
+      "task": "Rebuild a textbook example flowsheet from scratch.",
+      "resource_type": "Simulator vendor tutorials (free tier).",
+      "hours": 36
+    },
+    "aspen plus": {
+      "project": "Model a distillation column and validate against hand calculations.",
+      "task": "Complete 3 guided flowsheet tutorials.",
+      "resource_type": "Simulator vendor tutorial library.",
+      "hours": 32
+    },
+    "matlab": {
+      "project": "Solve a heat-transfer problem numerically and plot the result.",
+      "task": "Write 5 small scripts covering loops, functions and plotting.",
+      "resource_type": "Official MATLAB Onramp.",
+      "hours": 18
+    },
+    "thermodynamics": {
+      "project": "Work through 20 solved problems on phase equilibria.",
+      "task": "Derive and apply the key relations for one system.",
+      "resource_type": "Standard thermodynamics textbook.",
+      "hours": 25
+    },
+    "heat transfer": {
+      "project": "Model steady-state conduction in a wall with code.",
+      "task": "Solve 10 problems on conduction and convection.",
+      "resource_type": "Standard heat-transfer textbook.",
+      "hours": 20
+    },
+    "excel": {
+      "project": "Build a small dashboard with pivot tables and charts.",
+      "task": "Practise lookups, pivot tables and conditional formatting.",
+      "resource_type": "Spreadsheet vendor tutorials.",
+      "hours": 8
+    },
+    "communication": {
+      "project": "Present one technical topic to a peer group in 5 minutes.",
+      "task": "Record yourself explaining a project and review it.",
+      "resource_type": "Public-speaking fundamentals guide.",
+      "hours": 10
+    },
+    "technical writing": {
+      "project": "Write a 2-page technical report on a project you built.",
+      "task": "Rewrite one messy document with clear structure.",
+      "resource_type": "Technical-writing style guide.",
+      "hours": 12
+    },
+    "c++": {
+      "project": "Implement a small data-structure library with tests.",
+      "task": "Practise pointers, templates and STL containers.",
+      "resource_type": "A standard C++ reference.",
+      "hours": 35
+    },
+    "java": {
+      "project": "Build a small console application with classes and file I/O.",
+      "task": "Practise collections and exception handling.",
+      "resource_type": "Official Java tutorials.",
+      "hours": 35
+    },
+    "embedded c": {
+      "project": "Blink and control an LED pattern on a microcontroller.",
+      "task": "Write and flash 5 small firmware programs.",
+      "resource_type": "Microcontroller vendor getting-started guide.",
+      "hours": 28
+    },
+    "verilog": {
+      "project": "Design and simulate a 4-bit counter.",
+      "task": "Simulate 5 basic combinational and sequential circuits.",
+      "resource_type": "A standard digital-design reference.",
+      "hours": 30
+    },
+    "r": {
+      "project": "Reproduce a statistical analysis with plots in R.",
+      "task": "Practise data frames and ggplot basics.",
+      "resource_type": "R for Data Science (free online book).",
+      "hours": 20
+    },
+    "_generic": {
+      "project": "Build one small, complete project that uses this skill end to end.",
+      "task": "Spend 3 focused sessions covering the basics, then apply them.",
+      "resource_type": "The official documentation, plus one beginner tutorial.",
+      "hours": 16
+    }
+  },
+  "domain_bridges": {
+    "chemical engineering": [
+      {
+        "area": "Industrial AI",
+        "rationale": "Process plants generate sensor data; ML helps with monitoring and optimisation."
+      },
+      {
+        "area": "Sustainability",
+        "rationale": "Process design is central to emissions and waste reduction."
+      },
+      {
+        "area": "Energy",
+        "rationale": "Reaction and separation engineering underpin energy systems."
+      },
+      {
+        "area": "Data Science",
+        "rationale": "Mass/energy balances are quantitative modelling — a natural bridge to analytics."
+      }
+    ],
+    "mechanical engineering": [
+      {
+        "area": "Robotics",
+        "rationale": "Dynamics, control and mechanics map directly onto robotics."
+      },
+      {
+        "area": "Energy",
+        "rationale": "Thermofluids underpin energy systems."
+      },
+      {
+        "area": "Industrial AI",
+        "rationale": "Predictive maintenance uses sensor data from machines."
+      }
+    ],
+    "civil engineering": [
+      {
+        "area": "Sustainability",
+        "rationale": "Materials and construction drive environmental impact."
+      },
+      {
+        "area": "Data Science",
+        "rationale": "Structural and traffic data support analytics roles."
+      }
+    ],
+    "electrical engineering": [
+      {
+        "area": "Robotics",
+        "rationale": "Control systems and embedded electronics are core to robotics."
+      },
+      {
+        "area": "Industrial AI",
+        "rationale": "Signal processing overlaps heavily with ML."
+      }
+    ],
+    "computer science": [
+      {
+        "area": "Data Science",
+        "rationale": "Programming and algorithms transfer directly."
+      },
+      {
+        "area": "Open Source",
+        "rationale": "Software skills are the main currency of open-source programmes."
+      },
+      {
+        "area": "Cybersecurity",
+        "rationale": "Systems and networking knowledge is the foundation."
+      }
+    ],
+    "biotechnology": [
+      {
+        "area": "Data Science",
+        "rationale": "Bioinformatics is data analysis on biological datasets."
+      },
+      {
+        "area": "Research",
+        "rationale": "Lab work leads naturally into research programmes."
+      }
+    ]
+  }
+}

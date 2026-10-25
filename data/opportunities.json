@@ -1,0 +1,1132 @@
+{
+  "_meta": {
+    "dataset_name": "OpportunityAI seed dataset",
+    "version": "2.0",
+    "record_count": 21,
+    "important_notice": "ALL records are ILLUSTRATIVE SAMPLE DATA with FICTIONAL organisations marked '(sample)'. No deadline, URL, stipend or eligibility claim is asserted as true. Unknown fields are null and shown as 'Not verified'. Never treat an unverified or absent value as a confirmed requirement.",
+    "verification_status_values": [
+      "verified",
+      "fetched",
+      "sample",
+      "closed"
+    ]
+  },
+  "opportunities": [
+    {
+      "id": "OPP001",
+      "title": "Data Analytics Intern (Business Intelligence)",
+      "organization": "Meridian Retail (sample)",
+      "category": "Data Science / ML Internship",
+      "description": "Build dashboards and answer business questions with SQL and BI tools. A good first data role for beginners.",
+      "required_skills": [
+        "SQL",
+        "Excel",
+        "Data Visualization",
+        "Machine Learning"
+      ],
+      "preferred_skills": [
+        "Python",
+        "Pandas",
+        "Communication"
+      ],
+      "interests": [
+        "Data Science",
+        "Software Engineering"
+      ],
+      "tags": [
+        "data",
+        "internship"
+      ],
+      "min_cgpa": 6.0,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc",
+        "B.Com",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "On-site",
+      "location": "Mumbai, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 12,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Enrolled in any quantitative programme",
+        "Comfortable with spreadsheets"
+      ]
+    },
+    {
+      "id": "OPP002",
+      "title": "Open Source ML Programme (Contributor)",
+      "organization": "ML Commons Circle (sample)",
+      "category": "Open Source Program",
+      "description": "Contribute to open machine-learning libraries with a mentor, from documentation to model tooling.",
+      "required_skills": [
+        "Python",
+        "Data Visualization"
+      ],
+      "preferred_skills": [
+        "scikit-learn",
+        "Git",
+        "Technical Writing"
+      ],
+      "interests": [
+        "Open Source",
+        "Machine Learning",
+        "Data Science"
+      ],
+      "tags": [
+        "open-source",
+        "ml"
+      ],
+      "min_cgpa": null,
+      "eligible_years": null,
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc",
+        "M.Sc",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Stipend for accepted contributors (varies)",
+      "deadline": null,
+      "deadline_kind": "rolling",
+      "opens_on": null,
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to students and beginners",
+        "Able to communicate progress in writing"
+      ]
+    },
+    {
+      "id": "OPP003",
+      "title": "Merit Scholarship for Engineering Undergraduates",
+      "organization": "Vidya Foundation (sample)",
+      "category": "Scholarship",
+      "description": "A merit-based grant for high-performing engineering undergraduates. Requires an application essay and transcripts.",
+      "required_skills": [
+        "Python",
+        "Pandas",
+        "Excel",
+        "Data Visualization",
+        "SQL"
+      ],
+      "preferred_skills": [
+        "Technical Writing"
+      ],
+      "interests": [
+        "Research"
+      ],
+      "tags": [
+        "scholarship",
+        "merit"
+      ],
+      "min_cgpa": 8.5,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E."
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "India (all states)",
+      "stipend_or_award": "Scholarship grant (annual)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 20,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Enrolled undergraduate in engineering",
+        "Demonstrated academic merit",
+        "Household income criteria may apply"
+      ]
+    },
+    {
+      "id": "OPP004",
+      "title": "Deep Learning Research Intern",
+      "organization": "Vision & Language Lab (sample)",
+      "category": "Research Internship",
+      "description": "Work on computer-vision or language-modelling experiments under a PhD mentor. Expect to read papers and implement baselines.",
+      "required_skills": [
+        "Python",
+        "Deep Learning",
+        "PyTorch"
+      ],
+      "preferred_skills": [
+        "Computer Vision",
+        "NLP",
+        "Technical Writing"
+      ],
+      "interests": [
+        "Machine Learning",
+        "Research",
+        "Artificial Intelligence"
+      ],
+      "tags": [
+        "research",
+        "dl"
+      ],
+      "min_cgpa": 7.5,
+      "eligible_years": [
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech",
+        "M.Sc"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Stipend available (varies)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": "2026-12-01",
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Advanced",
+      "eligibility": [
+        "Prior project or coursework in deep learning",
+        "Able to read research papers"
+      ]
+    },
+    {
+      "id": "OPP005",
+      "title": "Industrial Process Optimisation with ML",
+      "organization": "Shakti Renewables (sample)",
+      "category": "Chemical Engineering Internship",
+      "description": "Apply machine learning to sensor data from a process plant to predict yield and flag anomalies.",
+      "required_skills": [
+        "Process Simulation",
+        "Machine Learning"
+      ],
+      "preferred_skills": [
+        "Python",
+        "Data Visualization",
+        "Aspen Plus"
+      ],
+      "interests": [
+        "Chemical Engineering",
+        "Machine Learning",
+        "Sustainability"
+      ],
+      "tags": [
+        "process",
+        "ml"
+      ],
+      "min_cgpa": 7.0,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Hybrid",
+      "location": "Pune, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "unknown",
+      "opens_on": null,
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Chemical Engineering students with simulation coursework",
+        "Final-year students preferred"
+      ]
+    },
+    {
+      "id": "OPP006",
+      "title": "National Student Hackathon (48-hour Build)",
+      "organization": "BuildForBharat (sample)",
+      "category": "Hackathon",
+      "description": "A weekend hackathon where teams build a working prototype around a theme and present it to judges.",
+      "required_skills": [
+        "Python",
+        "JavaScript",
+        "Git"
+      ],
+      "preferred_skills": [
+        "React",
+        "FastAPI",
+        "Docker"
+      ],
+      "interests": [
+        "Software Engineering",
+        "Web Development",
+        "Entrepreneurship"
+      ],
+      "tags": [
+        "hackathon"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "On-site",
+      "location": "Multiple host cities",
+      "stipend_or_award": "Cash prizes for winners (varies)",
+      "deadline": "2025-12-31",
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "closed",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to all enrolled college students",
+        "Teams of up to 4"
+      ]
+    },
+    {
+      "id": "OPP007",
+      "title": "Women in STEM Scholarship",
+      "organization": "Pragati Education Trust (sample)",
+      "category": "Scholarship",
+      "description": "A needs-and-merit grant supporting women in STEM fields, with mentoring and a small professional network.",
+      "required_skills": [
+        "Technical Writing"
+      ],
+      "preferred_skills": [
+        "Communication"
+      ],
+      "interests": [
+        "Research"
+      ],
+      "tags": [
+        "scholarship",
+        "women"
+      ],
+      "min_cgpa": 7.0,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc",
+        "M.Sc",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "India",
+      "stipend_or_award": "Scholarship grant (annual)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 30,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": true,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Women students enrolled in a STEM programme",
+        "Demonstrated need and merit"
+      ]
+    },
+    {
+      "id": "OPP008",
+      "title": "Software Engineering Intern (Summer)",
+      "organization": "Nimbus Systems (sample)",
+      "category": "Software Engineering Internship",
+      "description": "Work with a backend platform team on API services, internal tooling and bug fixes.",
+      "required_skills": [
+        "Python",
+        "Git"
+      ],
+      "preferred_skills": [
+        "FastAPI",
+        "SQL",
+        "Linux"
+      ],
+      "interests": [
+        "Software Engineering",
+        "Web Development"
+      ],
+      "tags": [
+        "swe",
+        "internship"
+      ],
+      "min_cgpa": 7.0,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "MCA"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Hybrid",
+      "location": "Bengaluru, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 5,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Currently enrolled in a B.Tech/B.E. programme",
+        "Comfortable with at least one programming language"
+      ]
+    },
+    {
+      "id": "OPP009",
+      "title": "Data Science & Machine Learning Intern",
+      "organization": "Arcline Analytics (sample)",
+      "category": "Data Science / ML Internship",
+      "description": "Build and evaluate predictive models on tabular business data.",
+      "required_skills": [
+        "Python",
+        "Pandas",
+        "Machine Learning"
+      ],
+      "preferred_skills": [
+        "scikit-learn",
+        "SQL",
+        "Data Visualization"
+      ],
+      "interests": [
+        "Data Science",
+        "Machine Learning"
+      ],
+      "tags": [
+        "ds",
+        "internship"
+      ],
+      "min_cgpa": 6.5,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc",
+        "M.Sc"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 25,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Enrolled in an engineering, science or statistics programme",
+        "Basic statistics knowledge"
+      ]
+    },
+    {
+      "id": "OPP010",
+      "title": "Chemical Process Engineering Intern",
+      "organization": "Vidyut Petrochem (sample)",
+      "category": "Chemical Engineering Internship",
+      "description": "Support process design and mass/energy balance studies for a petrochemical unit.",
+      "required_skills": [
+        "Process Engineering",
+        "Thermodynamics",
+        "Excel"
+      ],
+      "preferred_skills": [
+        "Aspen Plus",
+        "Process Simulation",
+        "MATLAB"
+      ],
+      "interests": [
+        "Chemical Engineering",
+        "Energy"
+      ],
+      "tags": [
+        "process",
+        "internship"
+      ],
+      "min_cgpa": 6.0,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech"
+      ],
+      "eligible_branches": null,
+      "work_mode": "On-site",
+      "location": "Vadodara, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 18,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Enrolled in a Chemical Engineering programme",
+        "Completed core process courses"
+      ]
+    },
+    {
+      "id": "OPP011",
+      "title": "Undergraduate Research Internship (AI Lab)",
+      "organization": "Institute AI Research Group (sample)",
+      "category": "Research Internship",
+      "description": "Join an ongoing research project in machine learning: reproduce papers, run experiments, help draft a short write-up.",
+      "required_skills": [
+        "Python",
+        "Machine Learning"
+      ],
+      "preferred_skills": [
+        "PyTorch",
+        "Technical Writing",
+        "NLP"
+      ],
+      "interests": [
+        "Research",
+        "Artificial Intelligence"
+      ],
+      "tags": [
+        "research",
+        "ai"
+      ],
+      "min_cgpa": 8.0,
+      "eligible_years": [
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech",
+        "M.Sc"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Unpaid or small stipend (varies by lab)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": "2026-11-15",
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Advanced",
+      "eligibility": [
+        "Strong academic record",
+        "Willingness to commit to a research project",
+        "Faculty reference usually expected"
+      ]
+    },
+    {
+      "id": "OPP012",
+      "title": "Student Innovation Competition (Sustainability)",
+      "organization": "GreenSpark Challenge (sample)",
+      "category": "Innovation Competition",
+      "description": "Pitch an innovation addressing sustainability, energy or waste. Shortlisted teams get mentorship and a final pitch round.",
+      "required_skills": [
+        "Technical Writing",
+        "Communication"
+      ],
+      "preferred_skills": [
+        "Process Engineering",
+        "Data Visualization",
+        "Excel"
+      ],
+      "interests": [
+        "Entrepreneurship",
+        "Sustainability",
+        "Research"
+      ],
+      "tags": [
+        "competition",
+        "sustainability"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Hybrid",
+      "location": "India",
+      "stipend_or_award": "Grants and prizes for shortlisted teams",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 40,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to undergraduate and postgraduate students",
+        "Idea-stage and prototype-stage entries both accepted"
+      ]
+    },
+    {
+      "id": "OPP013",
+      "title": "Open Source Contribution Programme (Beginner Track)",
+      "organization": "OpenWorks Community (sample)",
+      "category": "Open Source Program",
+      "description": "Contribute to real open-source projects with mentor support — a strong beginner pathway to a public track record.",
+      "required_skills": [
+        "Git",
+        "Python"
+      ],
+      "preferred_skills": [
+        "JavaScript",
+        "Technical Writing",
+        "Linux"
+      ],
+      "interests": [
+        "Open Source",
+        "Software Engineering"
+      ],
+      "tags": [
+        "open-source"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Stipend for accepted contributors (varies)",
+      "deadline": null,
+      "deadline_kind": "rolling",
+      "opens_on": null,
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to all students and beginners",
+        "No prior open-source experience required"
+      ]
+    },
+    {
+      "id": "OPP014",
+      "title": "Competitive Programming Fellowship",
+      "organization": "AlgoForge (sample)",
+      "category": "Software Engineering Internship",
+      "description": "Intensive fellowship on algorithms and competitive programming with weekly contests.",
+      "required_skills": [
+        "Data Structures",
+        "C++"
+      ],
+      "preferred_skills": [
+        "Python",
+        "Java"
+      ],
+      "interests": [
+        "Software Engineering"
+      ],
+      "tags": [
+        "algorithms"
+      ],
+      "min_cgpa": 8.4,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E."
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Fellowship stipend (varies)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 15,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Strong problem-solving record",
+        "Weekly contest participation expected"
+      ]
+    },
+    {
+      "id": "OPP015",
+      "title": "Summer Analytics Challenge (past cohort)",
+      "organization": "Insight Guild (sample)",
+      "category": "Hackathon",
+      "description": "A data-analytics challenge run over two weeks with a public leaderboard.",
+      "required_skills": [
+        "Python",
+        "Pandas"
+      ],
+      "preferred_skills": [
+        "Data Visualization"
+      ],
+      "interests": [
+        "Data Science"
+      ],
+      "tags": [
+        "analytics"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Prizes for top teams",
+      "deadline": "2026-01-15",
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": null,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "closed",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to all students"
+      ]
+    },
+    {
+      "id": "OPP016",
+      "title": "Robotics & Embedded Systems Hackathon",
+      "organization": "Makers Guild (sample)",
+      "category": "Hackathon",
+      "description": "Design and build a working robotics prototype in a team over a weekend.",
+      "required_skills": [
+        "C++",
+        "Embedded C"
+      ],
+      "preferred_skills": [
+        "Python",
+        "Linux",
+        "Verilog"
+      ],
+      "interests": [
+        "Robotics",
+        "Software Engineering"
+      ],
+      "tags": [
+        "robotics"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "On-site",
+      "location": "Chennai, India",
+      "stipend_or_award": "Prizes and component kits for winners",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 22,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Open to engineering students",
+        "Hardware access helpful but not mandatory"
+      ]
+    },
+    {
+      "id": "OPP017",
+      "title": "Computational Chemistry Research Internship",
+      "organization": "Advanced Materials Group (sample)",
+      "category": "Research Internship",
+      "description": "Use computational tools to study material properties and reaction behaviour.",
+      "required_skills": [
+        "Python",
+        "Thermodynamics"
+      ],
+      "preferred_skills": [
+        "MATLAB",
+        "Process Simulation",
+        "Technical Writing"
+      ],
+      "interests": [
+        "Research",
+        "Chemical Engineering"
+      ],
+      "tags": [
+        "research",
+        "chem"
+      ],
+      "min_cgpa": 7.0,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Sc",
+        "M.Tech"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Unpaid or small stipend (varies by project)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 28,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Advanced",
+      "eligibility": [
+        "Chemical/Materials Engineering or Chemistry students",
+        "Interest in modelling and simulation"
+      ]
+    },
+    {
+      "id": "OPP018",
+      "title": "Frontend Web Development Intern",
+      "organization": "Lumen Labs (sample)",
+      "category": "Software Engineering Internship",
+      "description": "Build responsive UI components for a customer dashboard.",
+      "required_skills": [
+        "JavaScript",
+        "HTML/CSS",
+        "Git"
+      ],
+      "preferred_skills": [
+        "React",
+        "Data Visualization"
+      ],
+      "interests": [
+        "Web Development",
+        "Software Engineering"
+      ],
+      "tags": [
+        "frontend"
+      ],
+      "min_cgpa": null,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "BCA",
+        "Any"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 10,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Beginner",
+      "eligibility": [
+        "Enrolled student or recent graduate",
+        "Portfolio of web projects preferred"
+      ]
+    },
+    {
+      "id": "OPP019",
+      "title": "Backend Engineering Intern (Cloud Services)",
+      "organization": "Skylake Cloud (sample)",
+      "category": "Software Engineering Internship",
+      "description": "Work on scalable backend services and learn cloud deployment practices.",
+      "required_skills": [
+        "Java",
+        "Data Structures",
+        "SQL"
+      ],
+      "preferred_skills": [
+        "Docker",
+        "Linux",
+        "Cloud (AWS)"
+      ],
+      "interests": [
+        "Software Engineering",
+        "Cybersecurity"
+      ],
+      "tags": [
+        "backend",
+        "cloud"
+      ],
+      "min_cgpa": 7.0,
+      "eligible_years": [
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "MCA",
+        "M.Tech"
+      ],
+      "eligible_branches": null,
+      "work_mode": "On-site",
+      "location": "Hyderabad, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 35,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Enrolled in a CS/IT-related programme",
+        "Strong fundamentals in data structures"
+      ]
+    },
+    {
+      "id": "OPP020",
+      "title": "Process Simulation & Optimisation Intern",
+      "organization": "Aarohi Energy (sample)",
+      "category": "Chemical Engineering Internship",
+      "description": "Model and optimise a renewable-fuel process flowsheet, comparing energy and yield across design cases.",
+      "required_skills": [
+        "Process Simulation",
+        "Aspen Plus",
+        "Thermodynamics"
+      ],
+      "preferred_skills": [
+        "MATLAB",
+        "Heat Transfer",
+        "Excel"
+      ],
+      "interests": [
+        "Chemical Engineering",
+        "Energy",
+        "Sustainability"
+      ],
+      "tags": [
+        "process",
+        "simulation"
+      ],
+      "min_cgpa": 6.5,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "M.Tech"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Hybrid",
+      "location": "Pune, India",
+      "stipend_or_award": "Paid (monthly stipend)",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 8,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Intermediate",
+      "eligibility": [
+        "Chemical Engineering students with simulation coursework",
+        "Final-year students preferred"
+      ]
+    },
+    {
+      "id": "OPP021",
+      "title": "Green Chemistry Innovation Sprint",
+      "organization": "Vasundhara Labs (sample)",
+      "category": "Innovation Competition",
+      "description": "A short sprint to propose greener routes for a common industrial reaction. Adjacent to chemical engineering.",
+      "required_skills": [
+        "Process Simulation",
+        "MATLAB"
+      ],
+      "preferred_skills": [
+        "Thermodynamics"
+      ],
+      "interests": [
+        "Sustainability",
+        "Energy"
+      ],
+      "tags": [
+        "sustainability",
+        "green-chem"
+      ],
+      "min_cgpa": 6.5,
+      "eligible_years": [
+        2,
+        3,
+        4
+      ],
+      "eligible_degrees": [
+        "B.Tech",
+        "B.E.",
+        "B.Sc"
+      ],
+      "eligible_branches": null,
+      "work_mode": "Remote",
+      "location": "Remote",
+      "stipend_or_award": "Prizes for shortlisted teams",
+      "deadline": null,
+      "deadline_kind": "fixed",
+      "opens_on": null,
+      "demo_deadline_offset_days": 45,
+      "apply_url": null,
+      "source_url": null,
+      "last_verified": "2026-10-20",
+      "verification_status": "sample",
+      "women_only": null,
+      "experience_level": "Advanced",
+      "eligibility": [
+        "Open to science and engineering students",
+        "Team or individual entry"
+      ]
+    }
+  ]
+}
